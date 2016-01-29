@@ -9,13 +9,16 @@ abstract public class Quest {
 	private boolean isComplete;
 	private God god;
 	
-	public Quest(String questName, String questDescription, God god) {
+	//Relationship value to god
+	private int value;
+	
+	public Quest(String questName, String questDescription, int value, God god) {
 		this.questName = questName;
 		this.questDescription = questDescription;
 		this.god = god;
 	}
 	
-	public boolean isComplete() {
+	public boolean getIsComplete() {
 		return isComplete;
 	}
 	
@@ -28,4 +31,6 @@ abstract public class Quest {
 		//TODO God is unhappy
 		isComplete = true;
 	}
+	
+	abstract boolean checkIfComplete();
 }

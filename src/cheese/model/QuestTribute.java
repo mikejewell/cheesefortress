@@ -2,8 +2,19 @@ package cheese.model;
 
 public class QuestTribute extends Quest {
 	
-	public QuestTribute(String questName, String questDescription, God god) {
-		super(questName,questDescription,god);
+	//Amount of tribute
+	private Cost cost;
+	
+	
+	public QuestTribute(String questName, String questDescription, int value, God god, Cost cost) {
+		super(questName,questDescription, value, god);
+		this.cost = cost;
+	}
+	
+	public boolean checkIfComplete() {
+		//TODO check if tribute has been paid
+		return false;
+		
 	}
 	
 }
