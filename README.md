@@ -4,9 +4,8 @@ Created in 48 hours as part of the Global Game Jam 2015 using Slick2D. Now in pr
 
 ## Collaborators
 
-* adimote
+* s-williams
 * agjlewis
-* mattconsto
 * mikejewell
 * steppers
 
