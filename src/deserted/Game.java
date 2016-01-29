@@ -21,9 +21,7 @@ public class Game extends StateBasedGame {
 		this.name = name;
 	}
 
-	public void draw() {
-		System.out.println(name);
-	}
+	public void draw() {	}
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
