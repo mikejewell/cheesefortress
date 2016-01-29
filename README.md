@@ -2,9 +2,8 @@
 
 ## Collaborators
 
-* adimote
+* s-williams
 * agjlewis
-* mattconsto
 * mikejewell
 * steppers
 
