@@ -10,6 +10,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
+import cheese.graphics.WedgeGFX;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -32,6 +33,8 @@ public class TileSystem {
 	//private Renderer r;
 	
 	//private final Color semi = new Color(0, 0, 0, 0.3f);
+	
+	private WedgeGFX gfx = new WedgeGFX(10);
 
 	public enum TileId{
 		GRASS,
@@ -140,7 +143,8 @@ public class TileSystem {
         		finalY = (y*resTimesScale)-offsets.y;
         		if(isOnScreen(x, y)){
             		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
-            		g.drawImage(tileMap, finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);
+            		gfx.testImage();
+            		//g.drawImage(tileMap, finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);
             	}
             }
         }

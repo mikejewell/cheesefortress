@@ -2,7 +2,7 @@
 
 uniform sampler2D texture_diffuse;
 
-in vec4 pass_color;
+in vec3 pass_color;
 in vec2 pass_texCoord;
 
 out vec4 out_color;
