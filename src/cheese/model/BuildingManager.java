@@ -1,6 +1,10 @@
 package cheese.model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import org.newdawn.slick.SlickException;
 
 public class BuildingManager {
 	ArrayList<BaseBuilding> availableBuildings;
@@ -9,7 +13,7 @@ public class BuildingManager {
 		availableBuildings.add(building);
 	}
 
-	public BuildingManager() {
+	public BuildingManager() throws SlickException {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
 
 		addBuilding(new ResourceBuilding("Farm", "A lovely farm", new Cost(5,
@@ -23,5 +27,23 @@ public class BuildingManager {
 			}
 		});
 
+		addBuilding(new ResourceBuilding("Farm", "", "images/buildings/farm.png"));
+		addBuilding(new ResourceBuilding("Town Hall", "","images/buildings/town_hall.png"));
+		addBuilding(new ResourceBuilding("Barracks", "","images/buildings/barracks.png"));
+		addBuilding(new ResourceBuilding("Gold Mine", "","images/buildings/gold_mine.png"));
+		addBuilding(new ResourceBuilding("Lumber Mill", "","images/buildings/human_lumber_mill.png"));
+		
+		Vector<String> wsImages = new Vector<String>();
+		for(int i=0; i<7; i++)
+			wsImages.add("images/buildings/weaponsmith/renders/work/45/00"+i+".png");
+		addBuilding(new ResourceBuilding("Weaponsmith", "", wsImages));	
+
 	}
+	public ArrayList<BaseBuilding>currentBuildingOptions()
+	{
+		return this.availableBuildings;
+	}
+	
 }
+
+	

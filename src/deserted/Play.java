@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Vector;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
@@ -20,6 +21,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import cheese.model.BaseBuilding;
+import cheese.model.BuildingManager;
 import deserted.model.Agent;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -49,6 +52,7 @@ public class Play extends BasicGameState implements GameState,
 	MonsterManager monsterManager;
 	MiniMap miniMap;
 	Messenger messenger;
+	BuildingManager buildingManager;
 
 	List<PlayerUI> players;
 	List<Item> selectedItems;
@@ -134,6 +138,7 @@ public class Play extends BasicGameState implements GameState,
 		recipeBook = new RecipeBook();
 
 		monsterManager = new MonsterManager(ts, players);
+		buildingManager = new BuildingManager();
 
 		ts.getCamera().x = players.get(0).location.x;
 		ts.getCamera().y = players.get(0).location.y;
@@ -380,9 +385,24 @@ public class Play extends BasicGameState implements GameState,
 		g.setColor(Color.lightGray);
 		g.fillRect(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		// int agent_zone_x = 500;
+		
+		ArrayList<BaseBuilding> currentBuildingOptions = buildingManager.currentBuildingOptions();
+		
+		for (int i =0; i< currentBuildingOptions.size(); i++)
+		{
+			BaseBuilding building = currentBuildingOptions.get(i);
+			int y = ag_y + i * 60;
+			int pad = 7;
+			g.setColor(Color.black);
+			g.drawString(building.getName(), ag_x + pad+70, y + pad);
+		
+			building.renderBuilding( ag_x, y,50,50);
+		}
+		
+		
 		List<Agent> agents = gs.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
-		int agent_height = 70;
+		/*int agent_height = 70;
 		for (int i = 0; i < agents.size(); i++) {
 
 			int y = ag_y + (i * agent_height);
@@ -471,7 +491,7 @@ public class Play extends BasicGameState implements GameState,
 					agent_bar_width, agent_height);
 			agentZones.add(rect);
 
-		}
+		}*/
 
 		// Draw inventory
 		int inventory_zone_x = 10;
