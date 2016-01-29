@@ -62,7 +62,7 @@ public class Agent {
 	}
 
 	private void generateInventory() {
-		ItemType[] itemTypes = { ItemType.LIFEJACKET, ItemType.SNACK };
+		ItemType[] itemTypes = { };
 		for (ItemType itemType : itemTypes) {
 			if (Math.random() > 0.8) {
 				getInventory().addItem(itemType);

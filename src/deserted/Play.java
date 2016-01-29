@@ -671,7 +671,7 @@ public class Play extends BasicGameState implements GameState,
 								monster.agent.decHealth(20);
 								if (monster.agent.getHealth() <= 0) {
 									monster.agent.setState(AgentState.DEAD);
-									gs.getInventory().addItem(ItemType.MEAT);
+//									gs.getInventory().addItem(ItemType.MEAT);
 								}
 
 								monsterSelectionHappens = true;
@@ -752,56 +752,16 @@ public class Play extends BasicGameState implements GameState,
 
 	private String getDescription(ItemType item) {
 		switch (item) {
-		case FISH:
-			return "Fills the stomach.";
-		case STICK:
-			return "Used to craft other items.";
-		case ROCK:
-			return "Used to light fires.";
-		case PLANK:
-			return "Used to make advanced items.";
-		case LEAF:
-			return "Can carry liquids.";
-		case MUD:
-			return "Used for brick building.";
-		case GRASS:
-			return "Used for brick building.";
-		case CLOTH:
-			return "Used to make sails.";
-		case LIFEJACKET:
-			return "Pretty useless now...";
-		case SNACK:
-			return "Fills the stomach.";
-		case BRICK:
-			return "Used to build a hut.";
-		case SPEAR:
-			return "Used for fishing.";
-		case VINE:
-			return "Used to tie items for crafting.";
-		case CORPSE:
-			return "Delicious, juicy goodness! :P";
-		case FIRESTICK:
-			return "Provides a larger fog blaster!";
-		case MEAT:
-			return "Fills the stomach.";
-		case ARTIFACT:
-			return "Used in space craft construction.";
-		case BERRIES:
-			return "Fills the stomach.";
-		case AXE:
-			return "Used to chop down trees.";
-		case WEB:
-			return "Can be used to make cloth.";
-		case SAIL:
-			return "Used to build escape craft.";
+		case FOOD:
+			return "Cheese";
+		case STONE:
+			return "Stone.";
+		case GOLD:
+			return "Gold";
 		case METAL:
-			return "Used to build escape craft.";
-		case OIL:
-			return "Used for firesticks or fuel.";
-		case WATER:
-			return "Hydrates.";
-		case FLIGHT:
-			return "Powered by souls!";
+			return "Metal";
+		case WOOD:
+			return "Wood";
 		default:
 			return "";
 		}
