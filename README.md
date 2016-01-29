@@ -1,12 +1,9 @@
-# Deserted
 
-Created in 48 hours as part of the Global Game Jam 2015 using Slick2D. Now in process of being improved and ported to lwjgl for better performance and compatability.
 
 ## Collaborators
 
-* adimote
+* s-williams
 * agjlewis
-* mattconsto
 * mikejewell
 * steppers
 
