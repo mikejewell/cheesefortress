@@ -39,7 +39,17 @@ public class BuildingManager {
 						"images/buildings/herbary/renders/work/45/"
 								+ getNumber(i) + ".png"));
 			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage,
-					workingImage, null, 5000, 0.6);
+					workingImage, null, 5000, 0.6) { 
+				@Override
+				public void onBuildingTick() {
+					GameSession.getInstance().getInventory().addItem(ItemType.FOOD);
+				}
+				
+				@Override
+				public double getDuration() {
+					return 24*60;
+				}
+			};
 			herbary.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(herbary);
 		}
@@ -270,7 +280,17 @@ public class BuildingManager {
 			subBuildings.add(goldMine);
 
 			clayPit = new ResourceBuilding("Clay Pit", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 0.6);
+					idleImage, idleImage, subBuildings, 100, 0.6)  { 
+				@Override
+				public void onBuildingTick() {
+					GameSession.getInstance().getInventory().addItem(ItemType.STONE);
+				}
+				
+				@Override
+				public double getDuration() {
+					return 24*60;
+				}
+			};
 			clayPit.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(clayPit);
 		}
@@ -283,7 +303,17 @@ public class BuildingManager {
 			Vector<Image> lmWorkingImage = new Vector<Image>();
 			lmWorkingImage.add(lmImage.getSubImage(0, 0, 96, 96));
 			lumberMill = new ResourceBuilding("Lumber Mill", "",
-					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100);
+					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100)  { 
+				@Override
+				public void onBuildingTick() {
+					GameSession.getInstance().getInventory().addItem(ItemType.WOOD);
+				}
+				
+				@Override
+				public double getDuration() {
+					return 6*60;
+				}
+			};
 			lumberMill.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(lumberMill);
 		}
@@ -299,7 +329,17 @@ public class BuildingManager {
 			subBuildings.add(lumberMill);
 
 			lumberJack = new ResourceBuilding("Lumber Jack", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 0.6);
+					idleImage, idleImage, subBuildings, 100, 0.6)  { 
+				@Override
+				public void onBuildingTick() {
+					GameSession.getInstance().getInventory().addItem(ItemType.WOOD);
+				}
+				
+				@Override
+				public double getDuration() {
+					return 12*60;
+				}
+			};
 			lumberJack.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(lumberJack);
 		}
@@ -380,7 +420,17 @@ public class BuildingManager {
 			subBuildings.add(farm);
 
 			hunterTent = new ResourceBuilding("Hunter Abode", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 0.6);
+					idleImage, idleImage, subBuildings, 100, 0.6)  { 
+				@Override
+				public void onBuildingTick() {
+					GameSession.getInstance().getInventory().addItem(ItemType.FOOD);
+				}
+				
+				@Override
+				public double getDuration() {
+					return 12*60;
+				}
+			};
 			hunterTent.setCost(new Cost(0, 2, 0, 0));
 			addBuilding(hunterTent);
 		}
@@ -414,7 +464,22 @@ public class BuildingManager {
 			subBuildings.add(blacksmith);
 
 			townHall = new ResourceBuilding("Town Hall", "", thProgressImage,
-					thWorkingImage, thWorkingImage, subBuildings, 100);
+					thWorkingImage, thWorkingImage, subBuildings, 100)   { 
+				@Override
+				public void onBuildingTick() {
+					Inventory inv = GameSession.getInstance().getInventory();
+					if(inv.getItemCount(ItemType.FOOD) > 2) {
+						// TODO: Check for at least 2 villages
+						inv.removeItem(ItemType.FOOD, 2);
+						// TODO: Add a villager
+					}
+				}
+				
+				@Override
+				public double getDuration() {
+					return 24*60;
+				}
+			};
 			townHall.setCost(new Cost(0, 2, 2, 2));
 			addBuilding(townHall);
 

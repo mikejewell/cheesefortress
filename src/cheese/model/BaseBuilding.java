@@ -40,7 +40,10 @@ public abstract class BaseBuilding implements IBuilding {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-		
+	
+	public double getDuration() {
+		return 24*60;
+	}
 	
 	public BaseBuilding(String nameIn, String desc, String imageNameIn)throws SlickException
 	{

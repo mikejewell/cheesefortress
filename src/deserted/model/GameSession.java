@@ -34,9 +34,9 @@ public class GameSession {
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
 		inventory.addItem(ItemType.FOOD, 10);
-		inventory.addItem(ItemType.WOOD, 15);
-		inventory.addItem(ItemType.METAL, 15);
-		inventory.addItem(ItemType.STONE, 15);
+		inventory.addItem(ItemType.WOOD, 25);
+		inventory.addItem(ItemType.METAL, 25);
+		inventory.addItem(ItemType.STONE, 25);
 		
 		this.gameTimer = 0;
 		this.timeSurvived = 0;
@@ -71,6 +71,9 @@ public class GameSession {
 	public void update(float delta) {
 		this.gameTimer += delta;
 		this.timeSurvived = gameTimer * GameConfig.MINS_PER_SEC;
+		
+		
+		
 		// Update agent stats
 		for (Agent agent : agents) {
 			agent.update(delta);

@@ -906,6 +906,10 @@ public class Play extends BasicGameState implements GameState,
 			building.update(seconds);
 		}
 		
+		for (Quest quest: questManager.getCurrentQuests()) {
+			quest.update(seconds);
+		}
+		
 		for (PlayerUI player : players) {
 			if (player.bored) {
 				if (buildingManager.getBuildingsInPlay().size() > 0) {
@@ -916,6 +920,9 @@ public class Play extends BasicGameState implements GameState,
 				}
 			}
 		}
+		
+		
+		
 //		monsterManager.update(seconds);
 		ts.update(players, gs, seconds);
 		gs.update(seconds);
