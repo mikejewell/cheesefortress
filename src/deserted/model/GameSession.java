@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.joda.time.LocalDateTime;
 
-import cheese.model.God;
+import cheese.model.GodType;
 import cheese.model.Quest;
 
 public class GameSession {
@@ -25,7 +25,7 @@ public class GameSession {
 
 	private ArrayList<Agent> agents;
 	
-	private HashMap<God, Quest> questSlots;
+	private HashMap<GodType, Quest> questSlots;
 
 	private GameSession() {
 		this.setCompleted(false);
@@ -46,7 +46,7 @@ public class GameSession {
 			getAgents().add(new Agent());
 		}
 		
-		this.questSlots = new HashMap<God, Quest>();
+		this.questSlots = new HashMap<GodType, Quest>();
 		
 	}
 

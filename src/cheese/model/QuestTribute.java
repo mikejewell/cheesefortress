@@ -6,7 +6,7 @@ public class QuestTribute extends Quest {
 	private Cost cost;
 	
 	
-	public QuestTribute(String questName, String questDescription, int value, God god, Cost cost) {
+	public QuestTribute(String questName, String questDescription, int value, GodType god, Cost cost) {
 		super(questName,questDescription, value, god);
 		this.cost = cost;
 	}

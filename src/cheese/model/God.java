@@ -1,10 +1,17 @@
 package cheese.model;
 
-public enum God {
-	THOR,
-	FREYA,
-	LOKI,
-	HEL,
-	NEUTRAL,
-	TRIBE,
+public class God {
+	private String name;
+	
+	public God(String name) {
+		setName(name);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

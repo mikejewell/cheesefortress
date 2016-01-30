@@ -7,12 +7,13 @@ abstract public class Quest {
 	private String questName;
 	private String questDescription;
 	private boolean isComplete;
-	private God god;
+	private GodType god;
+	private double validFrom;
 	
 	//Relationship value to god
 	private int value;
 	
-	public Quest(String questName, String questDescription, int value, God god) {
+	public Quest(String questName, String questDescription, int value, GodType god) {
 		this.setQuestName(questName);
 		this.setQuestDescription(questDescription);
 		this.setGod(god);
@@ -34,11 +35,11 @@ abstract public class Quest {
 	
 	abstract boolean checkIfComplete();
 
-	public God getGod() {
+	public GodType getGod() {
 		return god;
 	}
 
-	public void setGod(God god) {
+	public void setGod(GodType god) {
 		this.god = god;
 	}
 
@@ -56,5 +57,13 @@ abstract public class Quest {
 
 	public void setQuestDescription(String questDescription) {
 		this.questDescription = questDescription;
+	}
+
+	public double getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(double validFrom) {
+		this.validFrom = validFrom;
 	}
 }

@@ -24,6 +24,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import cheese.model.BaseBuilding;
 import cheese.model.BuildingManager;
 import cheese.model.God;
+import cheese.model.GodManager;
+import cheese.model.GodType;
 import cheese.model.Quest;
 import cheese.model.QuestManager;
 import deserted.model.Agent;
@@ -106,6 +108,8 @@ public class Play extends BasicGameState implements GameState,
 
 	private QuestManager questManager;
 
+	private GodManager godManager;
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -149,6 +153,7 @@ public class Play extends BasicGameState implements GameState,
 		monsterManager = new MonsterManager(ts, players);
 		buildingManager = new BuildingManager();
 		questManager = new QuestManager();
+		godManager = new GodManager();
 
 		ts.getCamera().x = players.get(0).location.x;
 		ts.getCamera().y = players.get(0).location.y;
@@ -427,17 +432,26 @@ public class Play extends BasicGameState implements GameState,
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
 
 		int quest_zone_x = 6;
+		int quest_label_y = quest_bar_y;
+		int quest_card_y = quest_bar_y + 20;
 		// Draw quests
-		God[] order = {God.THOR, God.FREYA, God.HEL, God.LOKI, God.TRIBE};
+		GodType[] order = {GodType.THOR, GodType.FREYA, GodType.HEL, GodType.LOKI, GodType.TRIBE};
+		for(int i=0; i<order.length; i++) {
+			God god = godManager.getGod(order[i]);
+			int x = quest_zone_x + (i * quest_width) + (i*7);
+			g.setColor(Color.white);
+			g.drawString(god.getName(), x, quest_label_y);
+		}
+		
 		for(int i=0; i<order.length; i++) {
 			int x = quest_zone_x + (i * quest_width) + (i*7);
 			g.setColor(Color.black);
-			g.fillRect(x, quest_bar_y, quest_width, quest_bar_height);
+			g.fillRect(x, quest_card_y, quest_width, quest_bar_height);
 			
 			if(questManager.hasQuest(order[i])) {
 				Quest quest = questManager.getQuest(order[i]);
 				g.setColor(Color.white);
-				g.drawString("Hello", x+5, quest_bar_y+5);
+				g.drawString(quest.getQuestName(), x+5, quest_card_y+5);
 			}
 			
 		}
