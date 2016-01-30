@@ -34,7 +34,7 @@ public class TileSystem {
 	
 	//private final Color semi = new Color(0, 0, 0, 0.3f);
 	
-	private WedgeGFX gfx = new WedgeGFX(10);
+	private WedgeGFX gfx = new WedgeGFX();
 
 	public enum TileId{
 		GRASS,
@@ -143,11 +143,11 @@ public class TileSystem {
         		finalY = (y*resTimesScale)-offsets.y;
         		if(isOnScreen(x, y)){
             		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
-            		gfx.testImage();
             		//g.drawImage(tileMap, finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);
             	}
             }
         }
+		gfx.loopCycle();
 	}
 	
 	public void renderGroundSprites(Graphics g, int row){

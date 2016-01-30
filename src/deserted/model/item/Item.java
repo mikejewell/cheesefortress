@@ -31,6 +31,7 @@ public  class Item {
 	}
 	
 	public boolean hasImage() {
-		return (this.imageName != null);
+		//return (this.imageName != null);
+		return false;
 	}
 }
