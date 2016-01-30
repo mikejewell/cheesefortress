@@ -26,6 +26,7 @@ public class BuildingManager {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
 		this.buildingsInPlay = new ArrayList<Building>();
 
+		
 
 		BaseBuilding herbary = null;
 		{
@@ -387,6 +388,10 @@ public class BuildingManager {
 			}
 		}
 		return validBuildings;
+	}
+	
+	public ArrayList<Building> getBuildingsInPlay() {
+		return buildingsInPlay;
 	}
 }
 

@@ -27,11 +27,19 @@ public class Building
 	
 	public Image getCurrentImage() {
 		
-		int imageIndex =(int)(( System.currentTimeMillis()/ base.animationSpeed) % base.buildingWorkingImages.size());
+		Image image = null;
 		
-		Image image = base.buildingWorkingImages.get(imageIndex);
+		if (buildProcess < 1) {
+			int imageIndex = (int)(base.buildingInProgressImages.size() * buildProcess);
+			
+			image = base.buildingInProgressImages.get(imageIndex);
+		}
+		else {
+			int imageIndex =(int)(( System.currentTimeMillis()/ base.animationSpeed) % base.buildingWorkingImages.size());
 		
-		//Do animation here then its different for each instance
+			image = base.buildingWorkingImages.get(imageIndex);
+		}
+		
 		return image;
 		
 	}
@@ -53,11 +61,12 @@ public class Building
 	}
 	
 	public void renderOverlay(Graphics g, float scale) {
+		if (buildProcess<1) {
+			Vector2f screenLocation = ts.worldToScreenPos(location.x, location.y);
 		
-		Vector2f screenLocation = ts.worldToScreenPos(location.x, location.y);
-		
-		float progress = buildProcess/100.0f;
-		g.fillRect(screenLocation.x-20*scale,  screenLocation.y-30*scale, 40*scale * progress, 10*scale);
-		g.drawRect(screenLocation.x-20*scale,  screenLocation.y-30*scale, 40*scale, 10*scale);
+			float progress = buildProcess;
+			g.fillRect(screenLocation.x-20*scale,  screenLocation.y-30*scale, 40*scale * progress, 10*scale);
+			g.drawRect(screenLocation.x-20*scale,  screenLocation.y-30*scale, 40*scale, 10*scale);
+		}
 	}
 }

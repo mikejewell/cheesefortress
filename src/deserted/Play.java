@@ -376,6 +376,10 @@ public class Play extends BasicGameState implements GameState,
 			player.renderOverlay(g, ts.camera.zoom);
 		}
 
+		for (Building building : buildingManager.getBuildingsInPlay()) {
+			building.renderOverlay(g, ts.camera.zoom);
+		}
+		
 		monsterManager.renderOverlay(g, ts.camera.zoom);
 
 		ts.renderFog(g);
@@ -880,6 +884,9 @@ public class Play extends BasicGameState implements GameState,
 			player.update(seconds);
 		}
 		
+		for (Building building : buildingManager.getBuildingsInPlay()) {
+			building.update(seconds);
+		}
 		
 		
 		monsterManager.update(seconds);

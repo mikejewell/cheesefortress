@@ -17,7 +17,7 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int width = 0;
 	public int height = 0;
-	public double buildSpeed = 1;
+	public double buildSpeed = 0.5;
 	public int fowArea = 1;
 	
 	public BaseBuilding(String name, String desc) {
@@ -63,6 +63,9 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages = resizeImages(buildingIdleImagesIn,imageScale);
 		subBuildings = subBuildingsIn;
 		animationSpeed = animationSpeedIn;		
+	
+		Image constructionStarted = new Image("images/buildings/tent_ruin/as_tent_ruin0/idle/45/0.png");
+		buildingInProgressImages.insertElementAt(constructionStarted, 0);
 		
 		width = buildingIdleImagesIn.get(0).getWidth();
 		height = buildingIdleImagesIn.get(0).getHeight();
