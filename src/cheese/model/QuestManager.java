@@ -61,13 +61,10 @@ public class QuestManager {
 	
 	public Quest pickQuest(GodType god) {
 		Random r = new Random();
-		ArrayList<Quest> options = new ArrayList<Quest>();
-		for(Quest quest: questList) {
-			if(quest.getGod() == god) {
-				options.add(quest);
-			}
-		}
+		ArrayList<Quest> options = questsForGod(god);
+		
 		if(options.size() == 0) {
+			System.out.println("No options for quest");
 			return null;
 		}
 		
@@ -75,17 +72,33 @@ public class QuestManager {
 		return options.get(index);
 	}
 	
+	public ArrayList<Quest> questsForGod(GodType god) {
+
+		ArrayList<Quest> options = new ArrayList<Quest>();
+		for(Quest quest: questList) {
+			if(quest.getGod() == god) {
+				options.add(quest);
+			}
+		}
+		return options;
+	}
+	
 	public GodType pickGod() {
 		Random r = new Random();
+		
 		ArrayList<GodType> options = new ArrayList<GodType>();
 		for(GodType god: order) {
-			if(!hasQuest(god)) {
+			if(!hasQuest(god) && questsForGod(god).size() > 0) {
 				options.add(god);
 			}
 		}
+		
+		
 		if(options.size() == 0) {
+			System.out.println("No options for god");
 			return null;
 		}
+		
 		int index = r.nextInt(options.size());
 		return options.get(index);
 	}

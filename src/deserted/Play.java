@@ -808,6 +808,9 @@ public class Play extends BasicGameState implements GameState,
 		for (PlayerUI player : players) {
 			player.update(seconds);
 		}
+		
+		
+		
 		monsterManager.update(seconds);
 		ts.update(players, gs, seconds);
 		gs.update(seconds);

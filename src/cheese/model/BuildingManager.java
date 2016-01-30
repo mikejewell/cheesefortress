@@ -20,15 +20,6 @@ public class BuildingManager {
 	public BuildingManager() throws SlickException {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
 
-	/*	addBuilding(new ResourceBuilding("Farm", "A lovely farm", new Cost(5,
-				0, 0), 2));
-		
-		addBuilding(new DecorBuilding("Thor Statue","An amazing statue of Thor", new Cost(0, 0, 5)) {
-			@Override
-			public void onBuildComplete() {
-				// Do something here.
-			}
-		});*/
 
 		BaseBuilding herbary = null;
 		{
