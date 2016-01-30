@@ -163,9 +163,11 @@ public class SoundManager {
     	instance.track = (instance.shuffle) ? new Random().nextInt(instance.music.size()) : instance.track + 1;
     	
     	if(instance.track >= instance.music.size()) instance.track = 0;
-    	
+
+		instance.music.get(instance.track).setPosition(0);
     	if(instance.playing) {
         	instance.music.get(instance.track).play();
+        	instance.music.get(instance.track).removeListener(adapter);
         	instance.music.get(instance.track).addListener(adapter);
     	}
     }

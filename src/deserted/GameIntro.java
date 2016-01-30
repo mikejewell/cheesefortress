@@ -1,10 +1,15 @@
 package deserted;
-import org.newdawn.slick.*;
+import java.util.Date;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import org.newdawn.slick.Color;
 
 public class GameIntro extends BasicGameState implements GameState {
 	public static final int STATE_INTRO = 0;
@@ -36,7 +41,6 @@ public class GameIntro extends BasicGameState implements GameState {
 			arg1.enterState(Play.STATE_PLAY);
 			arg1.getState(1).init(arg0, arg1);
 		}
-
 	}
 
 	@Override

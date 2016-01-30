@@ -2,6 +2,7 @@ package deserted;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -931,19 +932,11 @@ public class Play extends BasicGameState implements GameState,
 			}
 		}
 		
-		
-		
-//		monsterManager.update(seconds);
 		ts.update(playerManager.getPlayers(), gs, seconds);
 		gs.update(seconds);
 		messenger.update(seconds);
 
 		Input input = container.getInput();
-		Agent newAgent = null;
-		if (newAgent != null) {
-			selectedAgent = newAgent;
-			ts.getCamera().isFollowing = true;
-		}
 
 		for (int i = 0; i < playerManager.getPlayers().size(); i++) {
 			PlayerUI player = playerManager.getPlayers().get(i);
