@@ -8,8 +8,13 @@ public class Building
 
 	
 	public Image getCurrentImage() {
+		
+		int imageIndex =(int)(( System.currentTimeMillis()/ base.animationSpeed) % base.buildingWorkingImages.size());
+		
+		Image image = base.buildingWorkingImages.get(imageIndex);
+		
 		//Do animation here then its different for each instance
-		return base.buildingWorkingImages.get(0);
+		return image;
 		
 	}
 	

@@ -75,15 +75,15 @@ public class BuildingManager {
 		
 		BaseBuilding barracksAdvanced = null;
 		{
-			Vector<Image> bk2IdleImage = new Vector<Image>();
-			bk2IdleImage.add(new Image("images/buildings/barracks/renders/idle/45/000.png"));
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/barracks/renders/idle/45/000.png"));
 			
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(barracksTraining);
 			subBuildings.add(barracksStable);
 			subBuildings.add(barracksWatchTower);
 			
-			barracksAdvanced = new ResourceBuilding("Barracks", "",bk2IdleImage, bk2IdleImage, bk2IdleImage, subBuildings, 100);
+			barracksAdvanced = new ResourceBuilding("Barracks", "",idleImage, idleImage, idleImage, subBuildings, 100);
 			addBuilding(barracksAdvanced);
 		}
 		
@@ -93,7 +93,7 @@ public class BuildingManager {
 			sfIdleImage.add(new Image("images/buildings/signal_fire/renders/idle/45/000.png"));
 			Vector<Image> sfWorkingImage = new Vector<Image>();
 			for(int i=0; i<16; i++)
-				sfIdleImage.add(new Image("images/buildings/signal_fire/renders/work/45/"+getNumber(i)+".png"));
+				sfWorkingImage.add(new Image("images/buildings/signal_fire/renders/work/45/"+getNumber(i)+".png"));
 			signalFire = new ResourceBuilding("Signal Fire", "", sfIdleImage, sfIdleImage, sfWorkingImage, null, 100);
 			addBuilding(signalFire);
 		}
@@ -104,7 +104,7 @@ public class BuildingManager {
 			wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/idle/45/000.png"));
 			Vector<Image> wsWorkingImage = new Vector<Image>();
 			for(int i=0; i<8; i++)
-				wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/work/45/"+getNumber(i)+".png"));
+				wsWorkingImage.add(new Image("images/buildings/weaponsmith/renders/work/45/"+getNumber(i)+".png"));
 			weaponSmith = new ResourceBuilding("Weaponsmith", "", wsIdleImage, wsIdleImage, wsWorkingImage, null, 100);
 			addBuilding(weaponSmith);
 		}
@@ -142,7 +142,7 @@ public class BuildingManager {
 			idleImage.add(new Image("images/buildings/UH/as_mine5x5/idle/45/0.png"));
 			Vector<Image> workingImage = new Vector<Image>();
 			for(int i=1; i<24; i++)
-				idleImage.add(new Image("images/buildings/UH/as_mine5x5/work/45/"+getNumber2(i)+".png"));
+				workingImage.add(new Image("images/buildings/UH/as_mine5x5/work/45/"+getNumber2(i)+".png"));
 			megaMine = new ResourceBuilding("Mega Mine", "", idleImage, idleImage, workingImage, null, 100);
 			addBuilding(megaMine);
 		}

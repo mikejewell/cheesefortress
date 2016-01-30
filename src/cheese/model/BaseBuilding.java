@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 public abstract class BaseBuilding implements IBuilding {
 	private String name;
 	private String description;
-	private int animationSpeed;
+	public int animationSpeed;
 	Vector<Image> buildingInProgressImages = null;
 	Vector<Image> buildingIdleImages = null;
 	Vector<Image> buildingWorkingImages = null;
