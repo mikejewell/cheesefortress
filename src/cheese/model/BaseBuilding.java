@@ -2,6 +2,7 @@ package cheese.model;
 
 import java.util.Vector;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -16,7 +17,7 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int width = 0;
 	public int height = 0;
-
+	public double buildSpeed = 1;
 	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
@@ -103,5 +104,7 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int getPlusYFootPrint()	{ 
 		return 1; }
+	
+	
 	
 }
