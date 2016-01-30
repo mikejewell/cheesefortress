@@ -80,4 +80,17 @@ public abstract class BaseBuilding implements IBuilding {
 			}
 		}
 	}
+	
+	public int getMinusXFootPrint()	{ 
+		return -1; }
+	
+	public int getPlusXFootPrint()	{ 
+		return 1; }
+	
+	public int getMinusYFootPrint()	{ 
+		return -0; }
+	
+	public int getPlusYFootPrint()	{ 
+		return 1; }
+	
 }
