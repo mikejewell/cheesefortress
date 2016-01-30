@@ -133,12 +133,10 @@ public class TileSystem {
 	
 	public Vector2f screenToWorldPos(int scX, int scY){
 		return gfx.camera.screenToWorldPos(scX, scY);
-		//return camera.screenToWorldPos(scX, scY);
 	}
 	
 	public Vector2f worldToScreenPos(float worldX, float worldY){
 		return gfx.camera.worldToScreenPos(worldX, worldY);
-		//return camera.worldToScreenPos(worldX, worldY);
 	}
 	
 	public void zoom(float zoomDelta){
@@ -147,123 +145,23 @@ public class TileSystem {
 	}
 	
 	public void renderTiles(Graphics g){		
-//		float finalX, finalY;
-//		
-//		tileMap.startUse();
-//		Vector2f offsets = camera.getOffsets();
-//		for(int x = 0; x < size; x++){
-//            for(int y = 0; y < size; y++){
-//        		finalX = (x*resTimesScale)-offsets.x;
-//        		finalY = (y*resTimesScale)-offsets.y;
-//        		if(isOnScreen(x, y)){
-//            		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
-//            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);          		
-//            	}
-//            }
-//        }
-//		tileMap.endUse();
-//		
 		gfx.drawTileSystem(ts);
 	}
 	
 	public void renderGroundSprites(Graphics g, int row){
 		gfx.renderGroundSprites(ts,g,spriteMap,row);
-//		
-//		float finalX, finalY, scale, scaleOffset;
-//		Sprite sprite;
-//		SpriteType type;
-//		
-//		Vector2f offsets = camera.getOffsets();
-//        for(int x = 0; x < size; x++){
-//        	type = tiles[x][row].getSpriteToDraw();
-//        	sprite = SpriteManager.getSprite(type);
-//        	if(sprite != null && sprite.isOnGround()){
-//	        	scale = sprite.getScale();
-//	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-//	    		finalX = (x*resTimesScale)-offsets.x-scaleOffset;
-//	    		finalY = (row*resTimesScale)-offsets.y-scaleOffset;
-//	    		if(isOnScreen(x, row)){
-//            		Point src = sprite.getTexCoord(tiles[x][row].getSpriteData(type).timeOffset);
-//            		if(src != null)
-//            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);
-//	        	}
-//        	}
-//        }
 	}
 	
 	public void render3DSprites(Graphics g, int row){
-		
 		gfx.render3DSprites(ts, g, spriteMap, row);
-				
-//		float finalX, finalY, scale, scaleOffset;
-//		Sprite sprite;
-//		SpriteType type;
-//		
-//		Vector2f offsets = camera.getOffsets();
-//        for(int x = 0; x < size; x++){
-//        	type = tiles[x][row].getSpriteToDraw();
-//        	sprite = SpriteManager.getSprite(type);
-//        	if(sprite != null && !sprite.isOnGround()){
-//	        	scale = sprite.getScale();
-//	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-//	    		finalX = (x*resTimesScale)-offsets.x-scaleOffset;
-//	    		finalY = (row*resTimesScale)-offsets.y-scaleOffset*2;
-//	    		if(isOnScreen(x, row)){
-//	    			Point src = sprite.getTexCoord(tiles[x][row].getSpriteData(type).timeOffset);
-//            		if(src != null)
-//            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);
-//	        	}
-//        	}
-//        }
 	}
 	
 	public void render3DBuildings(Graphics g, int row){
 		gfx.render3DBuildings(ts, g, row);
-		
-//		float finalX, finalY, scaleX, scaleXOffset, scaleY, scaleYOffset;
-//		Building type;
-//		
-//		Vector2f offsets = camera.getOffsets();
-//        for(int x = 0; x < size; x++){
-//        	type = tiles[x][row].getBuildingToDraw();
-//        	//sprite = SpriteManager.getSprite(type);
-//        	if(type != null){
-//        		Image buildingImage = type.getCurrentImage();
-//	    		scaleX = buildingImage.getWidth()/35;
-//	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
-//	        	scaleY = buildingImage.getHeight()/35;
-//	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
-//	        	finalX = (x*resTimesScale)-offsets.x-scaleXOffset;
-//	    		finalY = (row*resTimesScale)-offsets.y-scaleYOffset*2;
-//	    		
-//	    		if(isOnScreen(x, row)){
-//            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
-//	        	}
-//        	}
-//        }
 	}
 
 	public void render3DBuilding(Graphics g, int row, Tile tile, BaseBuilding building){
 		gfx.render3DBuilding(ts, g, row, tile, building);
-//		float finalX, finalY, scaleX, scaleXOffset, scaleY, scaleYOffset;
-//		//REALLY LAZY NEW TILE RENDERER COMING SOON :)
-//		Vector2f offsets = camera.getOffsets();
-//     //   for(int x = 0; x < size; x++){
-//        	if (tile.y == row)
-//        	{
-//        		Image buildingImage = building.getCurrentImage();
-//	    		scaleX = buildingImage.getWidth()/35;
-//	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
-//	        	scaleY = buildingImage.getHeight()/35;
-//	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
-//	        	finalX = (tile.x*resTimesScale)-offsets.x-scaleXOffset;
-//	    		finalY = (row*resTimesScale)-offsets.y-scaleYOffset*2;
-//	    		
-//	    		if(isOnScreen(tile.x, row)){
-//            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
-//	        	}
-//        	}
-//       // }
 	}
 	
 	

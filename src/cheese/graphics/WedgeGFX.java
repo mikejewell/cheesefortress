@@ -110,6 +110,7 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
+		
         for(int x = 0; x < tiles[0].length; x++){
         	type = tiles[x][row].tile.getBuildingToDraw();
         	//sprite = SpriteManager.getSprite(type);
