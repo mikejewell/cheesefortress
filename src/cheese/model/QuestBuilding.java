@@ -1,5 +1,9 @@
 package cheese.model;
 
+import java.util.ArrayList;
+
+import deserted.model.GameSession;
+
 public class QuestBuilding extends Quest {
 	private String buildingType;
 
@@ -8,12 +12,19 @@ public class QuestBuilding extends Quest {
 		this.buildingType = buildingType;
 	}
 	
-	public boolean checkIfComplete() {
-		
-		// Go through all buildings that were built as of the quest being given
-		
-		return false;
-		
+	@Override
+	public boolean canComplete() {
+		BuildingManager buildingManager = GameSession.getInstance().getBuildingManager();
+		ArrayList<Building> suitableBuildings = buildingManager.getNonOfferedBuildingsOfType(this.buildingType);
+		return suitableBuildings.size() > 0;
+	}
+	
+	@Override
+	public void onComplete() {
+		BuildingManager buildingManager = GameSession.getInstance().getBuildingManager();
+		ArrayList<Building> suitableBuildings = buildingManager.getNonOfferedBuildingsOfType(this.buildingType);
+		suitableBuildings.get(0).setOffered(true);
+		super.onComplete();
 	}
 
 }

@@ -2,11 +2,12 @@ package cheese.model;
 
 import java.util.List;
 
+import deserted.model.GameSession;
+
 abstract public class Quest {
 
 	private String questName;
 	private String questDescription;
-	private boolean isComplete;
 	private GodType god;
 	private double validFrom;
 	
@@ -19,21 +20,20 @@ abstract public class Quest {
 		this.setGod(god);
 	}
 	
-	public boolean getIsComplete() {
-		return isComplete;
+	public abstract boolean canComplete();
+	
+	public void complete() {
+		QuestManager questManager = GameSession.getInstance().getQuestManager();
+		questManager.removeQuest(this);
+		questManager.assignQuest();
+		onComplete();
 	}
 	
 	public void onComplete() {
-		//TODO God is happy
-		isComplete = true;
 	}
 	
 	public void onFailure() {
-		//TODO God is unhappy
-		isComplete = true;
 	}
-	
-	abstract boolean checkIfComplete();
 
 	public GodType getGod() {
 		return god;

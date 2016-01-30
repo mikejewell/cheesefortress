@@ -2,6 +2,7 @@ package cheese.model;
 
 import java.util.Vector;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -16,6 +17,8 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int width = 0;
 	public int height = 0;
+	public double buildSpeed = 0.5;
+	public int fowArea = 1;
 	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
@@ -52,18 +55,31 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages.add(new Image(imageNameIn));
 	}
 	
-	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn)throws SlickException
+	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn, double imageScale)throws SlickException
 	{
 		name = nameIn;
-		buildingInProgressImages = buildingInProgressImagesIn;
-		buildingWorkingImages = buildingWorkingImagesIn;
-		buildingIdleImages = buildingIdleImagesIn;
+		buildingInProgressImages = resizeImages(buildingInProgressImagesIn,imageScale);
+		buildingWorkingImages = resizeImages(buildingWorkingImagesIn,imageScale);
+		buildingIdleImages = resizeImages(buildingIdleImagesIn,imageScale);
 		subBuildings = subBuildingsIn;
-		animationSpeed = animationSpeedIn;
+		animationSpeed = animationSpeedIn;		
+	
+		Image constructionStarted = new Image("images/buildings/tent_ruin/as_tent_ruin0/idle/45/0.png");
+		buildingInProgressImages.insertElementAt(constructionStarted, 0);
 		
 		width = buildingIdleImagesIn.get(0).getWidth();
 		height = buildingIdleImagesIn.get(0).getHeight();
 		
+	}
+	
+	private Vector<Image> resizeImages(Vector<Image> original, double scale) {
+		
+		Vector<Image> images = new Vector<Image>();
+		for(int i=0; i< original.size(); i++) {
+			Image img = original.get(i);
+			images.add(img.getScaledCopy((int)(img.getWidth()*scale), (int)(img.getHeight()*scale)));
+		}
+		return images;
 	}
 	
 
@@ -92,5 +108,7 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int getPlusYFootPrint()	{ 
 		return 1; }
+	
+	
 	
 }

@@ -1,12 +1,12 @@
 package deserted.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.joda.time.LocalDateTime;
+import org.newdawn.slick.SlickException;
 
-import cheese.model.GodType;
-import cheese.model.Quest;
+import cheese.model.BuildingManager;
+import cheese.model.QuestManager;
 import deserted.model.item.ItemType;
 
 public class GameSession {
@@ -26,9 +26,10 @@ public class GameSession {
 
 	private ArrayList<Agent> agents;
 	
-	private HashMap<GodType, Quest> questSlots;
-
-	private GameSession() {
+	private BuildingManager buildingManager;
+	private QuestManager questManager;
+	
+	private GameSession()  {
 		this.setCompleted(false);
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
@@ -49,8 +50,13 @@ public class GameSession {
 			getAgents().add(new Agent());
 		}
 		
-		this.questSlots = new HashMap<GodType, Quest>();
-		
+		try {
+			this.setBuildingManager(new BuildingManager());
+			this.setQuestManager(new QuestManager());
+		}
+		catch(SlickException se) {
+			System.err.println("Slick exception :(");
+		}
 	}
 
 	public static GameSession getInstance() {
@@ -103,5 +109,21 @@ public class GameSession {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public BuildingManager getBuildingManager() {
+		return buildingManager;
+	}
+
+	public void setBuildingManager(BuildingManager buildingManager) {
+		this.buildingManager = buildingManager;
+	}
+
+	public QuestManager getQuestManager() {
+		return questManager;
+	}
+
+	public void setQuestManager(QuestManager questManager) {
+		this.questManager = questManager;
 	}
 }

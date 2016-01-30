@@ -21,10 +21,14 @@ public class ResourceBuilding extends BaseBuilding {
 		this.villagers = 3232;
 	}
 	
-
 	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
 			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn, int animationSpeed)throws SlickException {
-		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed);
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed,1);
+	}
+
+	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
+			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn, int animationSpeed, double scale)throws SlickException {
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed, scale);
 	}
 
 

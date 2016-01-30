@@ -45,14 +45,20 @@ public class QuestManager {
 	
 		// Shuffle
 		Collections.shuffle(questList);
-		
-		assignQuest();
 	}
 
 	public List<Quest> getQuestList() {
 		return questList;
 	}
 
+	public void removeQuest(Quest quest) {
+		for(GodType god: questSlots.keySet()) {
+			if(questSlots.get(god) == quest) {
+				questSlots.remove(god);
+			}
+		}
+	}
+	
 	public void assignQuest() {
 		// How many slots are currently taken?
 		// TODO: Only allow 1 quest for now
@@ -97,8 +103,12 @@ public class QuestManager {
 		
 		ArrayList<GodType> options = new ArrayList<GodType>();
 		for(GodType god: order) {
-			if(!hasQuest(god) && questsForGod(god).size() > 0) {
-				options.add(god);
+			if(!hasQuest(god)) {
+				System.out.println("God "+god+" has no quest");
+				if(questsForGod(god).size() > 0) {
+					System.out.println("Have some quests we can use");
+					options.add(god);
+				}
 			}
 		}
 		
@@ -123,6 +133,7 @@ public class QuestManager {
 	}
 	
 	public boolean hasQuest(GodType god) {
+		// If the key exists, return true if it has a quest.
 		if(questSlots.containsKey(god)) {
 			return questSlots.get(god) != null;
 		}

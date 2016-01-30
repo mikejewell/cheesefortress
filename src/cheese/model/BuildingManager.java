@@ -8,10 +8,15 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class BuildingManager {
+	ArrayList<Building> buildingsInPlay;
 	ArrayList<BaseBuilding> availableBuildings;
 
 	private void addBuilding(BaseBuilding building) {
 		availableBuildings.add(building);
+	}
+	
+	public void addBuildingInPlay(Building building) {
+		buildingsInPlay.add(building);
 	}
 
 	public BaseBuilding rootBuilding = null; 
@@ -19,7 +24,9 @@ public class BuildingManager {
 	
 	public BuildingManager() throws SlickException {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
+		this.buildingsInPlay = new ArrayList<Building>();
 
+		
 
 		BaseBuilding herbary = null;
 		{
@@ -28,7 +35,7 @@ public class BuildingManager {
 			Vector<Image> workingImage = new Vector<Image>();
 			for(int i=0; i<4; i++)
 				workingImage.add(new Image("images/buildings/herbary/renders/work/45/"+getNumber(i)+".png"));
-			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage, workingImage, null,5000);
+			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage, workingImage, null,5000,0.6);
 			addBuilding(herbary);
 		}
 		
@@ -43,24 +50,39 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(herbary);
 			
-			farm=new ResourceBuilding("Farm", "", fmProgressImage, fmWorkingImage, fmWorkingImage, subBuildings, 100);
+			farm=new ResourceBuilding("Farm", "", fmProgressImage, fmWorkingImage, fmWorkingImage, subBuildings, 100,1.5);
 			addBuilding(farm);
 		}
 
+		BaseBuilding barracksTower = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/tower.png"));
+			barracksTower = new ResourceBuilding("Watch Tower", "",idleImage, idleImage, idleImage, null, 100);
+			addBuilding(barracksTower);
+		}
 	
-		BaseBuilding barracksWatchTower = null;
+		BaseBuilding barracksWatchTowerWood = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/watchtower_wooden_full_size.png"));
+			barracksWatchTowerWood = new ResourceBuilding("Watch Tower", "",idleImage, idleImage, idleImage, null, 100,0.1);
+			addBuilding(barracksWatchTowerWood);
+		}
+		
+		BaseBuilding barracksWatchTowerStone = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/watchtower_lvl2-exp_full_size.png"));
-			barracksWatchTower = new ResourceBuilding("Watch Tower", "",idleImage, idleImage, idleImage, null, 100);
-			addBuilding(barracksWatchTower);
+			barracksWatchTowerStone = new ResourceBuilding("Watch Tower", "",idleImage, idleImage, idleImage, null, 100,0.1);
+			addBuilding(barracksWatchTowerStone);
 		}
 		
 		BaseBuilding barracksStable = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/stable (1).png"));
-			barracksStable = new ResourceBuilding("Stable", "",idleImage, idleImage, idleImage, null, 100);
+			barracksStable = new ResourceBuilding("Stable", "",idleImage, idleImage, idleImage, null, 100,0.4);
 			addBuilding(barracksStable);
 		}
 		
@@ -68,10 +90,22 @@ public class BuildingManager {
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/archery_range.png"));
-			barracksTraining = new ResourceBuilding("Training", "",idleImage, idleImage, idleImage, null, 100);
+			barracksTraining = new ResourceBuilding("Training", "",idleImage, idleImage, idleImage, null, 100,0.4);
 			addBuilding(barracksTraining);
 		}
 		
+		BaseBuilding castle = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/castle.png"));
+			
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(barracksWatchTowerWood);
+			subBuildings.add(barracksWatchTowerStone);
+			
+			castle = new ResourceBuilding("Barracks", "",idleImage, idleImage, idleImage, subBuildings, 100,0.3);
+			addBuilding(castle);
+		}
 		
 		BaseBuilding barracksAdvanced = null;
 		{
@@ -81,10 +115,22 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(barracksTraining);
 			subBuildings.add(barracksStable);
-			subBuildings.add(barracksWatchTower);
+			subBuildings.add(barracksTower);
+			subBuildings.add(castle);
 			
-			barracksAdvanced = new ResourceBuilding("Barracks", "",idleImage, idleImage, idleImage, subBuildings, 100);
+			barracksAdvanced = new ResourceBuilding("Barracks", "",idleImage, idleImage, idleImage, subBuildings, 100,0.7);
 			addBuilding(barracksAdvanced);
+		}
+
+		BaseBuilding signalFireWooden = null;
+		{
+			Vector<Image> sfIdleImage = new Vector<Image>();
+			sfIdleImage.add(new Image("images/buildings/signalfire_wooden/as_signalfire_wooden0/idle/45/0060.png"));
+			Vector<Image> sfWorkingImage = new Vector<Image>();
+			for(int i=60; i<135; i+=5)
+				sfWorkingImage.add(new Image("images/buildings/signalfire_wooden/as_signalfire_wooden0/idle/45/0" + getNumber(i) + ".png"));
+			signalFireWooden = new ResourceBuilding("Signal Fire", "", sfIdleImage, sfIdleImage, sfWorkingImage, null, 100,1.5);
+			addBuilding(signalFireWooden);
 		}
 		
 		BaseBuilding signalFire = null;
@@ -94,7 +140,7 @@ public class BuildingManager {
 			Vector<Image> sfWorkingImage = new Vector<Image>();
 			for(int i=0; i<16; i++)
 				sfWorkingImage.add(new Image("images/buildings/signal_fire/renders/work/45/"+getNumber(i)+".png"));
-			signalFire = new ResourceBuilding("Signal Fire", "", sfIdleImage, sfIdleImage, sfWorkingImage, null, 100);
+			signalFire = new ResourceBuilding("Signal Fire", "", sfIdleImage, sfIdleImage, sfWorkingImage, null, 100,1.5);
 			addBuilding(signalFire);
 		}
 		
@@ -120,8 +166,8 @@ public class BuildingManager {
 			
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(barracksAdvanced);
+			subBuildings.add(signalFireWooden);
 			subBuildings.add(signalFire);
-			subBuildings.add(weaponSmith);
 			
 			barracks = new ResourceBuilding("Barracks", "",bkProgressImage, bkWorkingImage, bkWorkingImage, subBuildings, 100);
 			addBuilding(barracks);
@@ -131,7 +177,7 @@ public class BuildingManager {
 		{
 			Vector<Image> bk2IdleImage = new Vector<Image>();
 			bk2IdleImage.add(new Image("images/buildings/firestation/renders/idle/45/000.png"));
-			fireStation = new ResourceBuilding("Fire Station", "",bk2IdleImage, bk2IdleImage, bk2IdleImage, null, 100);
+			fireStation = new ResourceBuilding("Fire Station", "",bk2IdleImage, bk2IdleImage, bk2IdleImage, null, 100,0.6);
 			addBuilding(fireStation);
 		}
 		
@@ -173,7 +219,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(goldMine);
 			
-			clayPit = new ResourceBuilding("Clay Pit", "",idleImage, idleImage, idleImage, subBuildings, 100);
+			clayPit = new ResourceBuilding("Clay Pit", "",idleImage, idleImage, idleImage, subBuildings, 100,0.6);
 			addBuilding(clayPit);
 		}
 		
@@ -196,18 +242,50 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(lumberMill);
 			
-			lumberJack =new ResourceBuilding("Lumber Mill", "",idleImage, idleImage, idleImage, subBuildings, 100);
+			lumberJack =new ResourceBuilding("Lumber Jack", "",idleImage, idleImage, idleImage, subBuildings, 100,0.6);
 			addBuilding(lumberJack);
+		}
+		
+		BaseBuilding gargoyl = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/gargyle.png"));
+			gargoyl = new ResourceBuilding("Gargoyl", "",idleImage, idleImage, idleImage, null, 100);
+			addBuilding(gargoyl);
+		}
+		
+		BaseBuilding demon = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/demon01.png"));
+			demon = new ResourceBuilding("Demon", "",idleImage, idleImage, idleImage, null, 100);
+			addBuilding(demon);
 		}
 		
 		BaseBuilding church = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/church/renders/idle/45/000.png"));
-			church = new ResourceBuilding("Advanced Religion", "",idleImage, idleImage, idleImage, null, 100);
+			
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(gargoyl);
+			subBuildings.add(demon);
+			
+			church = new ResourceBuilding("Advanced Religion", "",idleImage, idleImage, idleImage, subBuildings, 100,0.6);
 			addBuilding(church);
 		}
 
+		BaseBuilding blacksmith = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/blacksmith.png"));
+			
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(weaponSmith);
+			
+			blacksmith = new ResourceBuilding("Blacksmith", "",idleImage, idleImage, idleImage, subBuildings, 100, 0.43);
+			addBuilding(blacksmith);
+		}
 		
 		
 		BaseBuilding religionTent = null;
@@ -218,7 +296,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(church);
 			
-			religionTent = new ResourceBuilding("Religion", "",idleImage, idleImage, idleImage, subBuildings, 100);
+			religionTent = new ResourceBuilding("Religion", "",idleImage, idleImage, idleImage, subBuildings, 100,0.6);
 			addBuilding(religionTent);
 		}
 	
@@ -230,8 +308,16 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(farm);
 			
-			hunterTent = new ResourceBuilding("Hunter Abode", "",idleImage, idleImage, idleImage, subBuildings, 100);
+			hunterTent = new ResourceBuilding("Hunter Abode", "",idleImage, idleImage, idleImage, subBuildings, 100,0.6);
 			addBuilding(hunterTent);
+		}
+		
+		BaseBuilding well = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/Well/Well_00000.png"));		
+			well = new ResourceBuilding("Well", "",idleImage, idleImage, idleImage, null, 100,0.1);
+			addBuilding(well);
 		}
 		
 		
@@ -251,6 +337,8 @@ public class BuildingManager {
 			subBuildings.add(lumberJack);
 			subBuildings.add(clayPit);
 			subBuildings.add(religionTent);
+			subBuildings.add(well);
+			subBuildings.add(blacksmith);
 										
 			townHall = new ResourceBuilding("Town Hall", "",thProgressImage, thWorkingImage, thWorkingImage, subBuildings, 100);
 			addBuilding(townHall);
@@ -274,7 +362,10 @@ public class BuildingManager {
 		if (val < 10) 
 			return "00" + val;
 		
-		return "0" + val;
+		if (val < 100)			
+			return "0" + val;
+		
+		return "" +val;
 	}
 	
 	public Vector<BaseBuilding>currentBuildingOptions(Building currentBuilding)
@@ -289,6 +380,19 @@ public class BuildingManager {
 		return currentBuilding.base.subBuildings;
 	}
 	
+	public ArrayList<Building> getNonOfferedBuildingsOfType(String type) {
+		ArrayList<Building> validBuildings = new ArrayList<Building>();
+		for(Building building: buildingsInPlay) {
+			if(building.base.getName().equals(type) && !building.isOffered()) {
+				validBuildings.add(building);
+			}
+		}
+		return validBuildings;
+	}
+	
+	public ArrayList<Building> getBuildingsInPlay() {
+		return buildingsInPlay;
+	}
 }
 
 	
