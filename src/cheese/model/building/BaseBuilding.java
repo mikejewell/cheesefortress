@@ -1,4 +1,4 @@
-package cheese.model;
+package cheese.model.building;
 
 import java.util.Vector;
 
@@ -6,7 +6,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import cheese.model.Cost;
+
 public abstract class BaseBuilding implements IBuilding {
+
+	private Cost cost;
 	private String name;
 	private String description;
 	public int animationSpeed;
@@ -38,7 +42,10 @@ public abstract class BaseBuilding implements IBuilding {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-		
+	
+	public double getDuration() {
+		return 24*60;
+	}
 	
 	public BaseBuilding(String nameIn, String desc, String imageNameIn)throws SlickException
 	{
@@ -112,6 +119,14 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int getPlusYFootPrint()	{ 
 		return 1; }
+
+	public Cost getCost() {
+		return cost;
+	}
+
+	public void setCost(Cost cost) {
+		this.cost = cost;
+	}
 	
 	
 	

@@ -1,18 +1,19 @@
-package cheese.model;
+package cheese.model.building;
 
 import java.util.Vector;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import cheese.model.Cost;
+
 public class ResourceBuilding extends BaseBuilding {
 
-	private Cost cost;
 	private int villagers;
 
 	public ResourceBuilding(String name, String desc, Cost cost, int villagers) {
 		super(name, desc);
-		this.cost = cost;
+		this.setCost(cost);
 		this.villagers = villagers;
 	}
 	

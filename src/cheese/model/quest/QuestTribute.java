@@ -1,4 +1,7 @@
-package cheese.model;
+package cheese.model.quest;
+
+import cheese.model.Cost;
+import cheese.model.god.GodType;
 
 public class QuestTribute extends Quest {
 	

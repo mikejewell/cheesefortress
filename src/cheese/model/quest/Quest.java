@@ -1,10 +1,13 @@
-package cheese.model;
+package cheese.model.quest;
 
 import java.util.List;
 
+import cheese.model.TimedItem;
+import cheese.model.god.GodType;
+
 import deserted.model.GameSession;
 
-abstract public class Quest {
+abstract public class Quest extends TimedItem {
 
 	private String questName;
 	private String questDescription;
@@ -13,11 +16,13 @@ abstract public class Quest {
 	
 	//Relationship value to god
 	private int value;
+	private int hours;
 	
 	public Quest(String questName, String questDescription, int value, GodType god) {
 		this.setQuestName(questName);
 		this.setQuestDescription(questDescription);
 		this.setGod(god);
+		this.hours = 0;
 	}
 	
 	public abstract boolean canComplete();
@@ -27,6 +32,27 @@ abstract public class Quest {
 		questManager.removeQuest(this);
 		questManager.assignQuest();
 		onComplete();
+	}
+	
+	public double getHoursToFinish() {
+		return 24;
+	}
+	
+	@Override
+	public void onTick() {
+		hours++;
+		if(hours >= getHoursToFinish()) {
+			stopTiming();
+			GameSession.getInstance().getQuestManager().removeQuest(this);
+			GameSession.getInstance().getQuestManager().assignQuest();
+			this.hours = 0;
+			onFailure();
+		}
+	}
+	
+	@Override
+	public double getDuration() {
+		return 60;
 	}
 	
 	public void onComplete() {

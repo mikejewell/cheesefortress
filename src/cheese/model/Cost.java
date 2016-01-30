@@ -5,30 +5,24 @@ public class Cost {
 	private int stone;
 	private int food;
 	private int metal;
-	private int gold;
-	
+
 	public Cost(int food) {
-		this(food, 0, 0, 0, 0);
-	}
-	
-	public Cost(int food, int wood) {
-		this(food, wood, 0, 0, 0);
-	}
-	
-	public Cost(int food, int wood, int stone) {
-		this(food, wood, stone, 0, 0);
-	}
-	
-	public Cost(int food, int wood, int stone, int metal) {
-		this(food, wood, stone, metal, 0);
+		this(food, 0, 0, 0);
 	}
 
-	public Cost(int food, int wood, int stone, int metal, int gold) {
+	public Cost(int food, int wood) {
+		this(food, wood, 0, 0);
+	}
+
+	public Cost(int food, int wood, int stone) {
+		this(food, wood, stone, 0);
+	}
+
+	public Cost(int food, int wood, int stone, int metal) {
 		this.setFood(food);
 		this.setWood(wood);
 		this.setStone(stone);
 		this.setMetal(metal);
-		this.setGold(gold);
 	}
 
 	public int getWood() {
@@ -63,13 +57,4 @@ public class Cost {
 		this.metal = metal;
 	}
 
-	public int getGold() {
-		return gold;
-	}
-
-	public void setGold(int gold) {
-		this.gold = gold;
-	}
-	
-	
 }
