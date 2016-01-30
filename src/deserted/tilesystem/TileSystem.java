@@ -27,8 +27,7 @@ import deserted.sprite.SpriteType;
 public class TileSystem {
 	
 	public WedgeCamera camera;
-	public int tileResX = 64;
-	public int tileResY = 32;
+	public int tileRes = 64;
 	public int size;
 	float resTimesScale = 32;
 	
@@ -90,7 +89,6 @@ public class TileSystem {
 		variantChooser.setVariants();
 
 		camera = new WedgeCamera((int)(size/2), 0, tileRes, windowSize);
-		resTimesScale = tileRes * camera.zoom;
 		gfx.camera  = camera;
 		
 		for(int x = 0; x < size; x++){
@@ -157,7 +155,22 @@ public class TileSystem {
 	}
 	
 	public void render3DBuildings(Graphics g, int row){
+
 		gfx.render3DBuildings(ts, g, row);
+	}
+	
+	
+	private boolean isOnScreen(float x, float y){
+		Vector2f sc = camera.worldToScreenPos(x, y);
+		if(sc.x < -resTimesScale)
+			return false;
+		if(sc.x > (camera.windowSize.getX()+resTimesScale))
+			return false;
+		if(sc.y < -resTimesScale)
+			return false;
+		if(sc.y > (camera.windowSize.getY()+resTimesScale))
+			return false;
+		return true;
 	}
 
 	public void render3DBuilding(Graphics g, int row, Tile tile, BaseBuilding building){
