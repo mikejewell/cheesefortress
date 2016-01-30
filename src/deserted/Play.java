@@ -863,15 +863,15 @@ public class Play extends BasicGameState implements GameState,
 	private String getDescription(ItemType item) {
 		switch (item) {
 		case FOOD:
-			return "Cheese";
+			return "Cheese is everyone's favourite food.";
 		case STONE:
-			return "Stone.";
+			return "Breaks bones.";
 		case GOLD:
-			return "Gold";
+			return "Keep away from dragons.";
 		case METAL:
-			return "Metal";
+			return "Harder than rock.";
 		case WOOD:
-			return "Wood";
+			return "From trees.";
 		default:
 			return "";
 		}
@@ -934,37 +934,6 @@ public class Play extends BasicGameState implements GameState,
 
 		Input input = container.getInput();
 		Agent newAgent = null;
-		if (input.isKeyDown(Input.KEY_0)) {
-			newAgent = agents.get(9);
-		}
-		if (input.isKeyDown(Input.KEY_1)) {
-			newAgent = agents.get(0);
-		}
-		if (input.isKeyDown(Input.KEY_2)) {
-			newAgent = agents.get(1);
-		}
-		if (input.isKeyDown(Input.KEY_3)) {
-			newAgent = agents.get(2);
-		}
-		if (input.isKeyDown(Input.KEY_4)) {
-			newAgent = agents.get(3);
-		}
-		if (input.isKeyDown(Input.KEY_5)) {
-			newAgent = agents.get(4);
-		}
-		if (input.isKeyDown(Input.KEY_6)) {
-			newAgent = agents.get(5);
-		}
-		if (input.isKeyDown(Input.KEY_7)) {
-			newAgent = agents.get(6);
-		}
-		if (input.isKeyDown(Input.KEY_8)) {
-			newAgent = agents.get(7);
-		}
-		if (input.isKeyDown(Input.KEY_9)) {
-			newAgent = agents.get(8);
-		}
-
 		if (newAgent != null) {
 			selectedAgent = newAgent;
 			ts.getCamera().isFollowing = true;
