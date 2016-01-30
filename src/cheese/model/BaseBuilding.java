@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 public abstract class BaseBuilding implements IBuilding {
 	private String name;
 	private String description;
+	private int animationSpeed;
 	Vector<Image> buildingInProgressImages = null;
 	Vector<Image> buildingIdleImages = null;
 	Vector<Image> buildingWorkingImages = null;
@@ -20,6 +21,7 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public String getName() {
 		return name;
+
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -47,13 +49,14 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages.add(new Image(imageNameIn));
 	}
 	
-	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn)throws SlickException
+	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn)throws SlickException
 	{
 		name = nameIn;
 		buildingInProgressImages = buildingInProgressImagesIn;
 		buildingWorkingImages = buildingWorkingImagesIn;
 		buildingIdleImages = buildingIdleImagesIn;
 		subBuildings = subBuildingsIn;
+		animationSpeed = animationSpeedIn;
 	}
 	
 
@@ -63,7 +66,7 @@ public abstract class BaseBuilding implements IBuilding {
 		{
 			if (buildingIdleImages.size() > 0)
 			{
-				int imageIndex =(int)(( System.currentTimeMillis()/ 100) % buildingIdleImages.size());
+				int imageIndex =(int)(( System.currentTimeMillis()/ animationSpeed) % buildingIdleImages.size());
 				
 				Image image = buildingIdleImages.get(imageIndex);
 				image.draw(x,y,x+width,y+height,0,0, image.getWidth(), image.getHeight());
