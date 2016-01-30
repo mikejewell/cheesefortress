@@ -34,7 +34,9 @@ public class GameSession {
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
 		inventory.addItem(ItemType.FOOD, 10);
-		inventory.addItem(ItemType.WOOD, 5);
+		inventory.addItem(ItemType.WOOD, 15);
+		inventory.addItem(ItemType.METAL, 15);
+		inventory.addItem(ItemType.STONE, 15);
 		
 		this.gameTimer = 0;
 		this.timeSurvived = 0;

@@ -7,12 +7,11 @@ import org.newdawn.slick.SlickException;
 
 public class ResourceBuilding extends BaseBuilding {
 
-	private Cost cost;
 	private int villagers;
 
 	public ResourceBuilding(String name, String desc, Cost cost, int villagers) {
 		super(name, desc);
-		this.cost = cost;
+		this.setCost(cost);
 		this.villagers = villagers;
 	}
 	

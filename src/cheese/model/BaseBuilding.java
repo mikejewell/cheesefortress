@@ -7,6 +7,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public abstract class BaseBuilding implements IBuilding {
+
+	private Cost cost;
 	private String name;
 	private String description;
 	public int animationSpeed;
@@ -108,6 +110,14 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int getPlusYFootPrint()	{ 
 		return 1; }
+
+	public Cost getCost() {
+		return cost;
+	}
+
+	public void setCost(Cost cost) {
+		this.cost = cost;
+	}
 	
 	
 	
