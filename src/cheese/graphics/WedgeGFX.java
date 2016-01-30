@@ -131,7 +131,7 @@ public class WedgeGFX {
 	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
 	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;     		
 	    		if(camera.isOnScreen(x, row)){
-            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleXOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
         	}
         }
@@ -157,7 +157,7 @@ public class WedgeGFX {
 	    		finalY = (((tile.x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;
 	    		
 	    		if(camera.isOnScreen(tile.x, row)){
-            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleYOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
         	}
        // }
