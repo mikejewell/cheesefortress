@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -14,14 +13,11 @@ import cheese.graphics.WedgeCamera;
 import cheese.graphics.WedgeGFX;
 import cheese.graphics.WedgeTileSystem;
 import cheese.model.building.BaseBuilding;
-import cheese.model.building.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
-import deserted.model.item.ItemType;
 import deserted.player.PlayerUI;
 import deserted.sprite.Sprite;
-import deserted.sprite.SpriteManager;
 import deserted.sprite.SpriteType;
 
 public class TileSystem {
