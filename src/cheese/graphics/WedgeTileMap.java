@@ -27,10 +27,16 @@ public class WedgeTileMap {
 		
 		switch(tileId){
 		case 0:
-			r = new int[]{0,0};
+			r = new int[]{256,512};
 			break;
 		case 1:
-			r = new int[]{64,448};
+			r = new int[]{128,0};
+			break;
+		case 2:
+			r = new int[]{0,0};
+			break;
+		case 3:
+			r = new int[]{256,320};
 			break;
 		default:
 			r = new int[]{0,0};

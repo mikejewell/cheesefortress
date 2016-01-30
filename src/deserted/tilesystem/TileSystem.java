@@ -37,7 +37,7 @@ public class TileSystem {
 	//private final Color semi = new Color(0, 0, 0, 0.3f);
 	
 	WedgeGFX gfx = new WedgeGFX();
-	WedgeTileSystem ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64);
+	WedgeTileSystem ts;
 
 	public enum TileId{
 		GRASS,
@@ -70,6 +70,7 @@ public class TileSystem {
 		LocalMapLoader loader = new LocalMapLoader();
 		//PerlinMapGenerator loader = new PerlinMapGenerator();
 
+		ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64, "assets/maps/2.map", windowSize);
 		camera = new Camera(20, 20, tileRes, windowSize);
 		resTimesScale = tileRes * camera.zoom;
 		
@@ -137,23 +138,23 @@ public class TileSystem {
 	}
 	
 	public void renderTiles(Graphics g){		
-		float finalX, finalY;
+//		float finalX, finalY;
+////		
+//////		tileMap.startUse();
+//////		Vector2f offsets = camera.getOffsets();
+//////		for(int x = 0; x < size; x++){
+//////            for(int y = 0; y < size; y++){
+//////        		finalX = (x*resTimesScale)-offsets.x;
+//////        		finalY = (y*resTimesScale)-offsets.y;
+//////        		if(isOnScreen(x, y)){
+//////            		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
+//////            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);          		
+//////            	}
+//////            }
+//////        }
+//////		tileMap.endUse();
 		
-		tileMap.startUse();
-		Vector2f offsets = camera.getOffsets();
-		for(int x = 0; x < size; x++){
-            for(int y = 0; y < size; y++){
-        		finalX = (x*resTimesScale)-offsets.x;
-        		finalY = (y*resTimesScale)-offsets.y;
-        		if(isOnScreen(x, y)){
-            		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
-            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);          		
-            	}
-            }
-        }
-		tileMap.endUse();
-		
-		//gfx.drawTileSystem(ts);
+		gfx.drawTileSystem(ts);
 	}
 	
 	public void renderGroundSprites(Graphics g, int row){
