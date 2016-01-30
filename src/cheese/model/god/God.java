@@ -1,4 +1,4 @@
-package cheese.model;
+package cheese.model.god;
 
 public class God {
 	private String name;

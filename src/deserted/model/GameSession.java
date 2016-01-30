@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.joda.time.LocalDateTime;
 import org.newdawn.slick.SlickException;
 
-import cheese.model.BuildingManager;
-import cheese.model.QuestManager;
+import cheese.model.building.BuildingManager;
+import cheese.model.quest.QuestManager;
 import deserted.model.item.ItemType;
 
 public class GameSession {

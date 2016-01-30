@@ -1,10 +1,12 @@
-package cheese.model;
+package cheese.model.building;
 
 import java.util.Random;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
+import cheese.model.TimedItem;
 
 import deserted.model.GameSession;
 import deserted.tilesystem.TileSystem;

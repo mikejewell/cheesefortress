@@ -1,4 +1,4 @@
-package cheese.model;
+package cheese.model.god;
 
 import java.util.*;
 

@@ -1,4 +1,6 @@
-package cheese.model;
+package cheese.model.building;
+
+import cheese.model.Cost;
 
 
 public class DecorBuilding extends BaseBuilding {

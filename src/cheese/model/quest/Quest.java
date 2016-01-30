@@ -1,6 +1,9 @@
-package cheese.model;
+package cheese.model.quest;
 
 import java.util.List;
+
+import cheese.model.TimedItem;
+import cheese.model.god.GodType;
 
 import deserted.model.GameSession;
 

@@ -1,9 +1,11 @@
-package cheese.model;
+package cheese.model.building;
 
 import java.util.Vector;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import cheese.model.Cost;
 
 public class ResourceBuilding extends BaseBuilding {
 

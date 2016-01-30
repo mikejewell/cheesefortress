@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import deserted.sprite.SpriteType;
-import cheese.model.Building;;
+import cheese.model.building.Building;
 
 /**
 * Created by andy on 24/01/15.

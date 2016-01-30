@@ -12,8 +12,8 @@ import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeGFX;
 import cheese.graphics.WedgeTileSystem;
-import cheese.model.BaseBuilding;
-import cheese.model.Building;
+import cheese.model.building.BaseBuilding;
+import cheese.model.building.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
 import deserted.model.GameSession;

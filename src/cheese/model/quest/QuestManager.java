@@ -1,4 +1,4 @@
-package cheese.model;
+package cheese.model.quest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import cheese.model.god.GodType;
 
 import deserted.model.GameSession;
 import deserted.model.item.ItemType;
