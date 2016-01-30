@@ -28,10 +28,13 @@ public class WedgeTileMap {
 		switch(tileId){
 		case 0:
 			r = new int[]{0,0};
+			break;
 		case 1:
 			r = new int[]{64,448};
+			break;
 		default:
 			r = new int[]{0,0};
+			break;
 		}
 		
 		return r;
