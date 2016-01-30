@@ -247,6 +247,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(hunterTent);
 			subBuildings.add(fireStation);
+			subBuildings.add(barracks);
 			subBuildings.add(lumberJack);
 			subBuildings.add(clayPit);
 			subBuildings.add(religionTent);
@@ -276,12 +277,16 @@ public class BuildingManager {
 		return "0" + val;
 	}
 	
-	public Vector<BaseBuilding>currentBuildingOptions(BaseBuilding currentBuilding)
+	public Vector<BaseBuilding>currentBuildingOptions(Building currentBuilding)
 	{
 		if (currentBuilding == null)
-			return rootBuilding.subBuildings;
+		{
+			Vector<BaseBuilding> rootBuildings = new Vector<BaseBuilding> ();
+			rootBuildings.add(rootBuilding);
+			return rootBuildings;
+		}
 		
-		return currentBuilding.subBuildings;
+		return currentBuilding.base.subBuildings;
 	}
 	
 }

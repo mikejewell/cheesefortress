@@ -113,6 +113,7 @@ public class Play extends BasicGameState implements GameState,
 	private GodManager godManager;
 
 	BaseBuilding currentDragging = null;
+	Building currentBuilding = null;
 	
 
 	@Override
@@ -419,7 +420,7 @@ public class Play extends BasicGameState implements GameState,
 		g.fillRect(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		// int agent_zone_x = 500;
 		
-		Vector<BaseBuilding> currentBuildingOptions = buildingManager.currentBuildingOptions(null);
+		Vector<BaseBuilding> currentBuildingOptions = buildingManager.currentBuildingOptions(currentBuilding);
 		
 		ArrayList<Rectangle> buildingZones = new ArrayList<Rectangle>();
 		ArrayList<BaseBuilding> validBuildings = new ArrayList<BaseBuilding>();
@@ -596,7 +597,7 @@ public class Play extends BasicGameState implements GameState,
 		}else{
 			if (currentDragging != null) {
 				currentDragging.renderBuilding(mouseX-currentDragging.width/2, mouseY -currentDragging.height/2, currentDragging.width, currentDragging.height);
-			}
+			}			
 		}
 		
 
@@ -675,66 +676,74 @@ public class Play extends BasicGameState implements GameState,
 				}
 				else {
 					
-					// See if we are attacking a monster
-					boolean monsterSelectionHappens = false;
-					boolean playerSelectionHappens = false;
-					Vector2f pos = ts.screenToWorldPos(mouseX, mouseY);
-	
-					// Rearranged these functions to ensure fighting monsters
-					// overrides selecting and moving players
-					if (selectedAgent != null) {
-						for (int i = 0; i < monsterManager.monsters.size(); i++) {
-							MonsterUI monster = monsterManager.monsters.get(i);
-							float difX = monster.location.x - pos.x;
-							float difY = monster.location.y - pos.y;
-							float len = (float) Math.sqrt((difX * difX)
-									+ (difY * difY));
-							if (len < 0.5) {
-								if (selectedAgent != null
-										&& selectedAgent.getState() != AgentState.DEAD) {
-									monster.agent.decHealth(20);
-									if (monster.agent.getHealth() <= 0) {
-										monster.agent.setState(AgentState.DEAD);
-	//									gs.getInventory().addItem(ItemType.MEAT);
-									}
-	
-									monsterSelectionHappens = true;
-								}
-							}
-						}
+					Tile t = ts.getTileFromScreen(mouseX, mouseY);
+					if (t.building != null)
+					{
+						currentBuilding = t.building;	
+					
 					}
-	
-					if (!monsterSelectionHappens) {
-						// This code handles mouse selection of other players
-	
-						for (int i = 0; i < players.size(); i++) {
-							PlayerUI player = players.get(i);
-							if (player.agent.getState() != AgentState.DEAD) {
-								float difX = player.location.x - pos.x;
-								float difY = player.location.y - pos.y;
+					else {
+						// See if we are attacking a monster
+						boolean monsterSelectionHappens = false;
+						boolean playerSelectionHappens = false;
+						Vector2f pos = ts.screenToWorldPos(mouseX, mouseY);
+		
+						// Rearranged these functions to ensure fighting monsters
+						// overrides selecting and moving players
+						if (selectedAgent != null) {
+							for (int i = 0; i < monsterManager.monsters.size(); i++) {
+								MonsterUI monster = monsterManager.monsters.get(i);
+								float difX = monster.location.x - pos.x;
+								float difY = monster.location.y - pos.y;
 								float len = (float) Math.sqrt((difX * difX)
 										+ (difY * difY));
 								if (len < 0.5) {
-									selectedAgent = player.agent;
-									playerSelectionHappens = true;
+									if (selectedAgent != null
+											&& selectedAgent.getState() != AgentState.DEAD) {
+										monster.agent.decHealth(20);
+										if (monster.agent.getHealth() <= 0) {
+											monster.agent.setState(AgentState.DEAD);
+		//									gs.getInventory().addItem(ItemType.MEAT);
+										}
+		
+										monsterSelectionHappens = true;
+									}
 								}
 							}
 						}
-					}
-	
-					if ((!playerSelectionHappens) && (!monsterSelectionHappens)) {
-						if (selectedAgent != null
-								&& selectedAgent.getState() != AgentState.DEAD) {
-							if (selectedAgent.hasAction()) {
-								selectedAgent.stopAction();
+		
+						if (!monsterSelectionHappens) {
+							// This code handles mouse selection of other players
+		
+							for (int i = 0; i < players.size(); i++) {
+								PlayerUI player = players.get(i);
+								if (player.agent.getState() != AgentState.DEAD) {
+									float difX = player.location.x - pos.x;
+									float difY = player.location.y - pos.y;
+									float len = (float) Math.sqrt((difX * difX)
+											+ (difY * difY));
+									if (len < 0.5) {
+										selectedAgent = player.agent;
+										playerSelectionHappens = true;
+									}
+								}
 							}
-							players.get(agents.indexOf(selectedAgent)).moveto(
-									pos.x, pos.y);
-							ts.getCamera().x = players.get(agents
-									.indexOf(selectedAgent)).location.x;
-							ts.getCamera().y = players.get(agents
-									.indexOf(selectedAgent)).location.y;
-							ts.getCamera().isFollowing = true;
+						}
+		
+						if ((!playerSelectionHappens) && (!monsterSelectionHappens)) {
+							if (selectedAgent != null
+									&& selectedAgent.getState() != AgentState.DEAD) {
+								if (selectedAgent.hasAction()) {
+									selectedAgent.stopAction();
+								}
+								players.get(agents.indexOf(selectedAgent)).moveto(
+										pos.x, pos.y);
+								ts.getCamera().x = players.get(agents
+										.indexOf(selectedAgent)).location.x;
+								ts.getCamera().y = players.get(agents
+										.indexOf(selectedAgent)).location.y;
+								ts.getCamera().isFollowing = true;
+							}
 						}
 					}
 				}
