@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeGFX;
 import cheese.graphics.WedgeTileSystem;
+import cheese.model.BaseBuilding;
 import cheese.model.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
@@ -37,7 +38,7 @@ public class TileSystem {
 	//private final Color semi = new Color(0, 0, 0, 0.3f);
 	
 	WedgeGFX gfx = new WedgeGFX();
-	WedgeTileSystem ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64);
+	WedgeTileSystem ts;
 
 	public enum TileId{
 		GRASS,
@@ -70,6 +71,7 @@ public class TileSystem {
 		LocalMapLoader loader = new LocalMapLoader();
 		//PerlinMapGenerator loader = new PerlinMapGenerator();
 
+		ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64, "assets/maps/2.map", windowSize);
 		camera = new Camera(20, 20, tileRes, windowSize);
 		resTimesScale = tileRes * camera.zoom;
 		
@@ -153,7 +155,7 @@ public class TileSystem {
         }
 		tileMap.endUse();
 		
-		//gfx.drawTileSystem(ts);
+//		gfx.drawTileSystem(ts);
 	}
 	
 	public void renderGroundSprites(Graphics g, int row){
@@ -224,6 +226,28 @@ public class TileSystem {
 	        	}
         	}
         }
+	}
+
+	public void render3DBuilding(Graphics g, int row, Tile tile, BaseBuilding building){
+		float finalX, finalY, scaleX, scaleXOffset, scaleY, scaleYOffset;
+		//REALLY LAZY NEW TILE RENDERER COMING SOON :)
+		Vector2f offsets = camera.getOffsets();
+     //   for(int x = 0; x < size; x++){
+        	if (tile.y == row)
+        	{
+        		Image buildingImage = building.getCurrentImage();
+	    		scaleX = buildingImage.getWidth()/35;
+	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
+	        	scaleY = buildingImage.getHeight()/35;
+	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
+	        	finalX = (tile.x*resTimesScale)-offsets.x-scaleXOffset;
+	    		finalY = (row*resTimesScale)-offsets.y-scaleYOffset*2;
+	    		
+	    		if(isOnScreen(tile.x, row)){
+            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+	        	}
+        	}
+       // }
 	}
 	
 	

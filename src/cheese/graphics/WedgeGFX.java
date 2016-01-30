@@ -16,10 +16,10 @@ public class WedgeGFX {
     	Image tex = tileMap.getTexture();
     	
     	tex.startUse();
-    	for(int i = 0; i < 20; i++){
-    		for(int j = 20-1; j >= 0; j--){
+    	for(int i = 0; i < tiles.length; i++){
+    		for(int j = tiles.length-1; j >= 0; j--){
     			int[] uv = tileMap.getUV(tiles[i][j].getId());
-        		tex.drawEmbedded((j*32)+(i*32), 400+(i*16)-(j*16), (j*32)+(i*32)+32, 400+(i*16)-(j*16)+32, uv[0], uv[1], uv[0]+64, uv[1]+64);
+        		tex.drawEmbedded((j*32)+(i*32)-600, (i*16)-(j*16)+400, (j*32)+(i*32)+64-600, (i*16)-(j*16)+64+400, uv[0], uv[1], uv[0]+64, uv[1]+64);
         	}
     	}
     	tex.endUse();

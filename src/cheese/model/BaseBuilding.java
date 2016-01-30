@@ -102,6 +102,10 @@ public abstract class BaseBuilding implements IBuilding {
 		}
 	}
 	
+	public Image getCurrentImage() {
+		return buildingIdleImages.get(0);	
+	}
+	
 	public int getMinusXFootPrint()	{ 
 		return -1; }
 	

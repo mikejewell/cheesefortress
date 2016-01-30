@@ -109,8 +109,9 @@ public class Play extends BasicGameState implements GameState,
 	private GodManager godManager;
 
 	BaseBuilding currentDragging = null;
+	Tile currentDraggingTile = null;
 	Building currentBuilding = null;
-
+	
 	private Rectangle questRect;
 
 	private int quest_bar_pad;
@@ -186,13 +187,13 @@ public class Play extends BasicGameState implements GameState,
 
 		container.setShowFPS(false);
 
-		messenger.addMessage("Collect items using action buttons below.",
-				Color.green, 20);
 		messenger.addMessage("Use WASD or ARROW keys to move the camera.",
 				Color.green, 20);
-		messenger.addMessage("Click to move the selected player.", Color.green,
+		messenger.addMessage("Build a town hall first and do other quests for your tribe.",
+				Color.green, 20);
+		messenger.addMessage("You must do tasks for your Gods to survive.", Color.green,
 				20);
-		messenger.addMessage("WELCOME TO THE ISLAND OF THE LOST", Color.green,
+		messenger.addMessage("Your Vikings are far from home.", Color.green,
 				20);
 
 		// Initialise UI Variables---------------------------------------
@@ -364,8 +365,11 @@ public class Play extends BasicGameState implements GameState,
 					player.render(g, ts.camera.zoom);
 			}
 
-			ts.render3DBuildings(g, y);
-
+			ts.render3DBuildings(g, y);	
+			if (currentDragging != null && currentDraggingTile != null) {
+				ts.render3DBuilding(g, y, currentDraggingTile, currentDragging);
+			}
+			
 			ts.render3DSprites(g, y);
 
 			monsterManager.render(g, ts.camera.zoom, y);
@@ -388,6 +392,8 @@ public class Play extends BasicGameState implements GameState,
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 
+		
+	
 		Input input = container.getInput();
 
 		renderWorld(g);
@@ -396,6 +402,8 @@ public class Play extends BasicGameState implements GameState,
 
 		messenger.render(g, container.getHeight());
 
+		currentDraggingTile = null;
+		
 		// Header
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, container.getWidth(), header_height);
@@ -460,6 +468,7 @@ public class Play extends BasicGameState implements GameState,
 				}
 			}
 		}
+
 
 		List<Agent> agents = gs.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
@@ -646,10 +655,9 @@ public class Play extends BasicGameState implements GameState,
 		} else if (miniMap.isWithin(mouseX, mouseY)) {
 		} else {
 			if (currentDragging != null) {
-				currentDragging.renderBuilding(mouseX - currentDragging.width
-						/ 2, mouseY - currentDragging.height / 2,
-						currentDragging.width, currentDragging.height);
-			}
+
+				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
+			}			
 		}
 
 		if (input.isMousePressed(1) || input.isMousePressed(2)) {
@@ -723,20 +731,13 @@ public class Play extends BasicGameState implements GameState,
 			} else {
 
 				if (currentDragging != null) {
-					currentDragging.renderBuilding(mouseX
-							- currentDragging.width / 2, mouseY
-							- currentDragging.height / 2,
-							currentDragging.width, currentDragging.height);
 
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
-					Building b = new Building(ts, currentDragging,
-							new Vector2f(t.x, t.y));
-
-					for (int x = b.base.getMinusXFootPrint(); x < b.base
-							.getPlusXFootPrint() + 1; x++) {
-						for (int y = b.base.getMinusYFootPrint(); y < b.base
-								.getPlusYFootPrint() + 1; y++) {
-							Tile baseTile = ts.getTile(t.x + x, t.y + y);
+					Building b = new Building(ts, currentDragging, new Vector2f(t.x,t.y));
+					
+					for(int x=b.base.getMinusXFootPrint(); x< b.base.getPlusXFootPrint()+1; x++) {
+						for(int y=b.base.getMinusYFootPrint(); y< b.base.getPlusYFootPrint()+1; y++) {
+							Tile baseTile = ts.getTile(t.x +x, t.y-y);
 							baseTile.addBuilding(b, false);
 						}
 					}
@@ -747,7 +748,9 @@ public class Play extends BasicGameState implements GameState,
 					buildingManager.buyBuilding(b.base);
 
 					currentDragging = null;
-				} else {
+					currentDraggingTile = null;
+				}
+				else {
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
 					if (t.building != null) {
 						currentBuilding = t.building;
@@ -878,6 +881,7 @@ public class Play extends BasicGameState implements GameState,
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		boolean alive = false;
+
 
 		List<Agent> agents = gs.getAgents();
 		for (int i = 0; i < agents.size(); i++) {

@@ -20,7 +20,7 @@ public class GameOver extends BasicGameState implements GameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		image = new Image("images/backgrounds/lose-nograd.png");
+		image = new Image("images/backgrounds/LoseScreen.png");
 		scroller = 0;
 	}
 
@@ -43,7 +43,7 @@ public class GameOver extends BasicGameState implements GameState {
 		g.setColor(Color.black);*/
 		
 		play.renderWorld(g);
-		g.setColor(Color.white);
+		g.setColor(Color.red);
 		
 		image.draw(0, 0, container.getWidth(), container.getHeight());
 		
@@ -54,7 +54,7 @@ public class GameOver extends BasicGameState implements GameState {
 			offset-=30;
 		}
 		
-		g.drawString("press Escape to exit or Enter to start again", container.getWidth()/2-250, container.getHeight()/2 + 300);
+		g.drawString("press Escape to exit", container.getWidth()-250, 0 /*container.getHeight()/2 + 300*/);
 	}
 
 	@Override
@@ -63,10 +63,10 @@ public class GameOver extends BasicGameState implements GameState {
 		if (arg0.getInput().isKeyDown(Input.KEY_ESCAPE)) {
 			arg0.exit();
 		}
-		if (arg0.getInput().isKeyDown(Input.KEY_ENTER)) {
-			arg1.enterState(Play.STATE_PLAY);
-			arg1.getState(1).init(arg0, arg1);
-		}
+//		if (arg0.getInput().isKeyDown(Input.KEY_ENTER)) {
+//			arg1.enterState(Play.STATE_PLAY);
+//			arg1.getState(1).init(arg0, arg1);
+//		}
 		
 		scroller += ((float)arg2)/100;
 	}
