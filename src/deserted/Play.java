@@ -188,14 +188,14 @@ public class Play extends BasicGameState implements GameState,
 		RandomTileObject(TileId.DIRT, SpriteType.WRECKAGE, 20, false);
 
 		container.setShowFPS(false);
-
+		
 		messenger.addMessage("Use WASD or ARROW keys to move the camera.",
-				Color.green, 20);
+				Color.black, 20);
 		messenger.addMessage("Build a town hall first and do other quests for your tribe.",
-				Color.green, 20);
-		messenger.addMessage("You must do tasks for your Gods to survive.", Color.green,
+				Color.black, 20);
+		messenger.addMessage("You must do tasks for your Gods to survive.", Color.black,
 				20);
-		messenger.addMessage("Your Vikings are far from home.", Color.green,
+		messenger.addMessage("Your Vikings are far from home.", Color.black,
 				20);
 
 		// Initialise UI Variables---------------------------------------
