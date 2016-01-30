@@ -18,6 +18,7 @@ public abstract class BaseBuilding implements IBuilding {
 	public int width = 0;
 	public int height = 0;
 	public double buildSpeed = 1;
+	public int fowArea = 1;
 	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);

@@ -199,7 +199,7 @@ public class TileSystem {
 	}
 	
 	public void render3DBuildings(Graphics g, int row){
-		float finalX, finalY, scale, scaleOffset;
+		float finalX, finalY, scaleX, scaleXOffset, scaleY, scaleYOffset;
 		Building type;
 		
 		Vector2f offsets = camera.getOffsets();
@@ -208,13 +208,15 @@ public class TileSystem {
         	//sprite = SpriteManager.getSprite(type);
         	if(type != null){
         		Image buildingImage = type.getCurrentImage();
-	    		scale = buildingImage.getWidth()/35;
-	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-	    		finalX = (x*resTimesScale)-offsets.x-scaleOffset;
-	    		finalY = (row*resTimesScale)-offsets.y-scaleOffset*2;
+	    		scaleX = buildingImage.getWidth()/35;
+	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
+	        	scaleY = buildingImage.getHeight()/35;
+	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
+	        	finalX = (x*resTimesScale)-offsets.x-scaleXOffset;
+	    		finalY = (row*resTimesScale)-offsets.y-scaleYOffset*2;
 	    		
 	    		if(isOnScreen(x, row)){
-            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
         	}
         }
@@ -262,6 +264,14 @@ public class TileSystem {
             	if(tiles[x][y].vis > 30)
             		tiles[x][y].vis = 30;
             	tiles[x][y].update();
+            }
+		}
+		
+		for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+            	if(tiles[x][y].building != null){
+            		clearFowArea((float)x, (float)y,tiles[x][y].building.base.fowArea);
+            	}
             }
 		}
 		
