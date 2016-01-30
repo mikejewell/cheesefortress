@@ -16,6 +16,7 @@ public class BuildingManager {
 	ArrayList<Building> buildingsInPlay;
 	ArrayList<BaseBuilding> availableBuildings;
 
+	//Adds a building
 	private void addBuilding(BaseBuilding building) {
 		availableBuildings.add(building);
 	}
@@ -511,6 +512,10 @@ public class BuildingManager {
 
 			rootBuilding = townHall;
 		}
+		
+		//Descriptions
+		herbary.setDescription("Vikings don't like plants but will eat them when needed.");
+		farm.setDescription("Its almost harvesting season!");
 
 	}
 
