@@ -55,6 +55,7 @@ public class Game extends StateBasedGame {
 			appgc.setVSync(true);
 			appgc.setDisplayMode(1024, 768, false);
 			appgc.setTargetFrameRate(gd.getDisplayMode().getRefreshRate());
+			appgc.setIcon("images/icons/WindowIcon.png");
 			appgc.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
