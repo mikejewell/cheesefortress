@@ -3,11 +3,11 @@ package cheese.graphics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeTile.Type;
-import deserted.tilesystem.Tile;
 
 public class WedgeTileSystem {
 	
@@ -28,6 +28,48 @@ public class WedgeTileSystem {
 		} catch (IOException e) {
 			System.err.println("ERROR: Cannot load map " + mapFileName);
 			e.printStackTrace();
+		}
+	}
+	
+	public void addGrass(float density){
+		Random r = new Random();
+		int grass = (int)(tiles.length*tiles.length*density);
+		int x, y;
+		for(int i = 0; i < grass; i++){
+			x = r.nextInt(tiles.length);
+			y = r.nextInt(tiles.length);
+			if(tiles[x][y].getId() == 2 && tiles[x][y].getOverlay() == 0 && tiles[x][y].getId() != 3 )
+			{
+				tiles[x][y].setOverlay(100);
+			}
+		}
+	}
+	
+	public void addSticks(float density){
+		Random r = new Random();
+		int grass = (int)(tiles.length*tiles.length*density);
+		int x, y;
+		for(int i = 0; i < grass; i++){
+			x = r.nextInt(tiles.length);
+			y = r.nextInt(tiles.length);
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == 0 && tiles[x][y].getId() != 3)
+			{
+				tiles[x][y].setOverlay(101 + r.nextInt(2));
+			}
+		}
+	}
+	
+	public void addBushes(float density){
+		Random r = new Random();
+		int grass = (int)(tiles.length*tiles.length*density);
+		int x, y;
+		for(int i = 0; i < grass; i++){
+			x = r.nextInt(tiles.length);
+			y = r.nextInt(tiles.length);
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == 0 && tiles[x][y].getId() != 3)
+			{
+				tiles[x][y].setOverlay(103);
+			}
 		}
 	}
 	

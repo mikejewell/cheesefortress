@@ -3,7 +3,6 @@ package cheese.graphics;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.geom.Point;
 
-import deserted.tilesystem.Camera;
 
 public class WedgeCamera {
 	
@@ -14,8 +13,6 @@ public class WedgeCamera {
 	public int tileRes;
 	public boolean isFollowing = false;
 	public Point windowSize;
-	
-	public Camera camera;
 	
 	public WedgeCamera(float x, float y, int tileRes, Point windowSize){
 		this.x = x;
@@ -37,54 +34,46 @@ public class WedgeCamera {
 		if (zoom <= 0.5f)
 			zoom = 0.5f;
 	}
-	
-	public void update()
-	{
-		x = camera.x;
-		y = camera.y;
-		zoom = camera.zoom;
-		windowSize = camera.windowSize;
-	}
+
 	
 	
 	public Vector2f screenToWorldPos(int scX, int scY){
-		update();
-		float resTimesZoom = tileRes * zoom;
-		
 		float wx2 = windowSize.getX()/2;
 		float wy2 = (windowSize.getY()/2);
 		
-		//float rx = (resTimesZoom*x);
-		//float ry = (resTimesZoom*y);
-		
-		float vx = (scX+(0-wx2))/camera.zoom;
-		float vy = (scY+(0-wy2))/camera.zoom;
+		float vx = (scX+(0-wx2))/zoom;
+		float vy = (scY+(0-wy2))/zoom;
 		
 		float wy = (vx-2*vy)/64;
 		float wx = ((2*vy)+(32*wy))/32;
-		
-		//float vx = (worldX*32)+(worldY*32); 
-		//float vy = (worldX*16)-(worldY*16);
 		
 		return new Vector2f(wx+x,wy+y);
 	}
 	
 	
 	public Vector2f worldToScreenPos(float worldX, float worldY){
-		update();
-		//float resTimesScale = tileRes * zoom;
-		//float xd = x - worldX;
-		//float yd = y - worldY;
-		//return new Vector2f(windowSize.getX()/2 - xd*resTimesScale, windowSize.getY()/2 - yd*resTimesScale);
 		Vector2f offsets = getOffsets();
-		float finalX = (((worldX-x)*32)+((worldY-y)*32))*camera.zoom-offsets.x; 
-		float finalY = (((worldX-x)*16)-((worldY-y)*16))*camera.zoom-offsets.y; 
+		float finalX = (((worldX-x)*32)+((worldY-y)*32))*zoom-offsets.x; 
+		float finalY = (((worldX-x)*16)-((worldY-y)*16))*zoom-offsets.y; 
 		return new Vector2f(finalX, finalY);
 	}
 	
 	public Vector2f getOffsets(){
-		update();
-		float resTimesZoom = tileRes * zoom;
 		return new Vector2f(-windowSize.getX()/2, -windowSize.getY()/2);
+	}
+	
+	public boolean isOnScreen(float x, float y){
+		float resTimesScale = tileRes * zoom;
+		
+		Vector2f sc = worldToScreenPos(x, y);
+		if(sc.x < -resTimesScale)
+			return false;
+		if(sc.x > (windowSize.getX()+resTimesScale))
+			return false;
+		if(sc.y < -resTimesScale)
+			return false;
+		if(sc.y > (windowSize.getY()+resTimesScale))
+			return false;
+		return true;
 	}
 }
