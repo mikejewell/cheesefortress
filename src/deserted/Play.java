@@ -661,7 +661,17 @@ public class Play extends BasicGameState implements GameState,
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
 					Building b = new Building();
 					b.base = currentDragging;
+					
+					for(int x=b.base.getMinusXFootPrint(); x< b.base.getPlusXFootPrint()+1; x++) {
+						for(int y=b.base.getMinusYFootPrint(); y< b.base.getPlusYFootPrint()+1; y++) {
+							Tile baseTile = ts.getTile(t.x +x, t.y+y);
+							baseTile.addBuilding(b, false);
+						}
+					}
+					
 					t.addBuilding(b, true);
+					
+					currentDragging = null;
 				}
 				else {
 					
