@@ -1,5 +1,6 @@
 package cheese.graphics.tileSystem;
 
+import cheese.graphics.tileSystem.WedgeTileOverlay.OverlayType;
 import deserted.tilesystem.Tile;
 
 public class WedgeTile {
@@ -14,7 +15,7 @@ public class WedgeTile {
 	
 	private Type type;	//Tile Type
 	private int id;		//Tile id in texture
-	private int overlayId;	//E.g. Grass, water edge, bush etc.
+	private OverlayType overlay = OverlayType.EMPTY;	//E.g. Grass, water edge, bush etc.
 	
 	public Tile tile = null;
 	
@@ -23,8 +24,8 @@ public class WedgeTile {
 		this.id = textureId;
 	}
 	
-	public void setOverlay(int id){
-		this.overlayId = id;
+	public void setOverlay(OverlayType type){
+		this.overlay = type;
 	}
 	
 	public Type getType(){
@@ -35,8 +36,8 @@ public class WedgeTile {
 		return id;
 	}
 	
-	public int getOverlay(){
-		return overlayId;
+	public OverlayType getOverlay(){
+		return overlay;
 	}
 
 }
