@@ -888,6 +888,17 @@ public class Play extends BasicGameState implements GameState,
 			building.update(seconds);
 		}
 		
+		for (PlayerUI player : players) {
+			if (player.bored) {
+				if (buildingManager.getBuildingsInPlay().size() > 0) {
+					Random r = new Random();
+					int index = (int)(r.nextDouble() * buildingManager.getBuildingsInPlay().size());
+					Building b = buildingManager.getBuildingsInPlay().get(index);
+					player.moveto(b.location.x,  b.location.y, false);
+				}
+			}
+		}
+		
 		
 		monsterManager.update(seconds);
 		ts.update(players, gs, seconds);
