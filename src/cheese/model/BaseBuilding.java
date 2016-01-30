@@ -14,6 +14,9 @@ public abstract class BaseBuilding implements IBuilding {
 	Vector<Image> buildingWorkingImages = null;
 	Vector<BaseBuilding> subBuildings = null;
 	
+	public int width = 0;
+	public int height = 0;
+	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
 		this.setDescription(desc);
@@ -57,6 +60,10 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages = buildingIdleImagesIn;
 		subBuildings = subBuildingsIn;
 		animationSpeed = animationSpeedIn;
+		
+		width = buildingIdleImagesIn.get(0).getWidth();
+		height = buildingIdleImagesIn.get(0).getHeight();
+		
 	}
 	
 

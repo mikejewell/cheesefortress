@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import deserted.sprite.SpriteType;
+import cheese.model.Building;;
 
 /**
 * Created by andy on 24/01/15.
@@ -18,6 +19,9 @@ public class Tile {
     
     public static float deltaPassed = 0;
     public static int spriteSwitchInterval = 1;
+    
+    public Building building = null;
+    public boolean primaryBuildingTile = false;
     
     public class SpriteData{
     	public SpriteType type;
@@ -60,6 +64,11 @@ public class Tile {
     	sprites.add(new SpriteData(type, (float)Math.random()*100));
     }
 
+    public void addBuilding(Building buildingIn, boolean primary) {
+    	building = buildingIn;
+    	primaryBuildingTile = primary;
+    }
+    
     public void update(){
     	ArrayList<SpriteData> r = new ArrayList<>();
     	for(SpriteData d : sprites){
@@ -75,6 +84,12 @@ public class Tile {
     	}
     	return null;
     }
+    
+    public Building getBuildingToDraw() {
+    	if (!primaryBuildingTile) return null;
+    	return building;
+    }
+        
     
     public SpriteData getSpriteData(SpriteType type){
     	for(SpriteData d : sprites){

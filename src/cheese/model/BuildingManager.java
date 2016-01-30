@@ -15,6 +15,7 @@ public class BuildingManager {
 	}
 
 	public BaseBuilding rootBuilding = null; 
+
 	
 	public BuildingManager() throws SlickException {
 		this.availableBuildings = new ArrayList<BaseBuilding>();

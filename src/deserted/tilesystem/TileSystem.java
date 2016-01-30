@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeGFX;
+import cheese.model.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -195,6 +196,29 @@ public class TileSystem {
         	}
         }
 	}
+	
+	public void render3DBuildings(Graphics g, int row){
+		float finalX, finalY, scale, scaleOffset;
+		Building type;
+		
+		Vector2f offsets = camera.getOffsets();
+        for(int x = 0; x < size; x++){
+        	type = tiles[x][row].getBuildingToDraw();
+        	//sprite = SpriteManager.getSprite(type);
+        	if(type != null){
+        		Image buildingImage = type.getCurrentImage();
+	    		scale = buildingImage.getWidth()/35;
+	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
+	    		finalX = (x*resTimesScale)-offsets.x-scaleOffset;
+	    		finalY = (row*resTimesScale)-offsets.y-scaleOffset*2;
+	    		
+	    		if(isOnScreen(x, row)){
+            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+	        	}
+        	}
+        }
+	}
+	
 	
 	private boolean isOnScreen(float x, float y){
 		Vector2f sc = camera.worldToScreenPos(x, y);
