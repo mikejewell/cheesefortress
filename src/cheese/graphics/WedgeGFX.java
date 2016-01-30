@@ -29,7 +29,8 @@ public class WedgeGFX {
     	
     	
     	float finalX, finalY;
-    	
+    	float x = camera.x;
+    	float y = camera.y;
     	
     	tex.startUse();
     	for(int i = 0; i < tiles.length; i++){
@@ -39,7 +40,7 @@ public class WedgeGFX {
     			finalX = offsets.x;
     			finalY = offsets.y;
     			
-        		tex.drawEmbedded(((j*32)+(i*32))*camera.zoom-finalX, ((i*16)-(j*16))*camera.zoom-finalY, ((j*32)+(i*32)+64)*camera.zoom-finalX, ((i*16)-(j*16)+64)*camera.zoom-finalY, uv[0], uv[1], uv[0]+64, uv[1]+64);
+        		tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uv[0], uv[1], uv[0]+64, uv[1]+64);
         	}
     	}
     	tex.endUse();
@@ -63,9 +64,9 @@ public class WedgeGFX {
         	if(sprite != null && sprite.isOnGround()){
 	        	scale = sprite.getScale();
 	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-	    		finalX = ((x*32)+(row*32))*camera.zoom-offsets.x; 
-	    		finalY = ((x*16)-(row*16))*camera.zoom-offsets.y; 
-	    	//	if(isOnScreen(x, row)){
+	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;
+	    		//if(isOnScreen(x, row)){
             		Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
             		if(src != null)
             			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
@@ -90,9 +91,9 @@ public class WedgeGFX {
         	if(sprite != null && !sprite.isOnGround()){
 	        	scale = sprite.getScale();
 	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-	    		finalX = ((x*32)+(row*32))*camera.zoom-offsets.x; 
-	    		finalY = ((x*16)-(row*16))*camera.zoom-offsets.y; 
-	    		//if(isOnScreen(x, row)){
+	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y; 
+	    		//if(ts.isOnScreen(x, row)){
 	    			Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
             		if(src != null)
             			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
@@ -110,7 +111,6 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
-		
         for(int x = 0; x < tiles[0].length; x++){
         	type = tiles[x][row].tile.getBuildingToDraw();
         	//sprite = SpriteManager.getSprite(type);
@@ -120,9 +120,9 @@ public class WedgeGFX {
 	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
 	        	scaleY = buildingImage.getHeight()/35;
 	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
-	        	finalX = ((x*32)+(row*32))*camera.zoom-offsets.x; 
-	    		finalY = ((x*16)-(row*16))*camera.zoom-offsets.y; 	    		
-	    		//if(isOnScreen(x, row)){
+	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;     		
+	    		//if(ts.isOnScreen(x, row)){
             			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	//}
         	}
@@ -145,10 +145,10 @@ public class WedgeGFX {
 	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
 	        	scaleY = buildingImage.getHeight()/35;
 	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
-	        	finalX = ((tile.x*32)+(row*32))*camera.zoom-offsets.x; 
-	    		finalY = ((tile.x*16)-(row*16))*camera.zoom-offsets.y; 	  
+	        	finalX = (((tile.x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((tile.x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;
 	    		
-	    		//if(isOnScreen(tile.x, row)){
+	    		//if(ts.isOnScreen(tile.x, row)){
             			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	//}
         	}
