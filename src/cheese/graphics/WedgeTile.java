@@ -14,12 +14,17 @@ public class WedgeTile {
 	
 	private Type type;	//Tile Type
 	private int id;		//Tile id in texture
+	private int overlayId;
 	
 	public Tile tile = null;
 	
 	public WedgeTile(int textureId, Type type){
 		this.type = type;
 		this.id = textureId;
+	}
+	
+	public void setOverlay(int id){
+		this.overlayId = id;
 	}
 	
 	public int getId(){
