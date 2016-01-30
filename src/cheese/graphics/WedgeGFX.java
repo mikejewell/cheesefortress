@@ -5,8 +5,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import cheese.model.BaseBuilding;
-import cheese.model.Building;
+import cheese.model.building.BaseBuilding;
+import cheese.model.building.Building;
 import deserted.sprite.Sprite;
 import deserted.sprite.SpriteManager;
 import deserted.sprite.SpriteType;

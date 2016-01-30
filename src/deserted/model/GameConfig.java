@@ -4,7 +4,7 @@ public class GameConfig {
 	// 30 seconds = 1 hour
 	// 1 second = 2 minutes
 	public static final int MINS_PER_SEC = 48;
-	public static final int NUMBER_AGENTS = 8;
+	public static final int NUMBER_AGENTS = 3;
 
 	public static final float FOOD_PER_SEC_WALK = 1.5f;
 	public static final float FOOD_PER_SEC_STAND = 1.25f;
