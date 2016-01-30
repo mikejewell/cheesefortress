@@ -1,5 +1,7 @@
 package cheese.graphics;
 
+import deserted.tilesystem.Tile;
+
 public class WedgeTile {
 	
 	public enum Type{
@@ -12,6 +14,8 @@ public class WedgeTile {
 	
 	private Type type;	//Tile Type
 	private int id;		//Tile id in texture
+	
+	public Tile tile = null;
 	
 	public WedgeTile(int textureId, Type type){
 		this.type = type;

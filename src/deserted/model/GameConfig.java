@@ -15,5 +15,11 @@ public class GameConfig {
 	public static final float WATER_PER_SEC_SLEEP = 0.2f;
 
 	public static final float HEALTH_PER_SEC = 0.25f;
+	
+	//Starting resources
+	public static final int STARTING_FOOD = 10;
+	public static final int STARTING_WOOD = 10;
+	public static final int STARTING_STONE = 10;
+	public static final int STARTING_METAL = 10;
 
 }

@@ -35,12 +35,14 @@ public class GameSession {
 		this.setCompleted(false);
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
-		inventory.addItem(ItemType.FOOD, 10);
-		inventory.addItem(ItemType.WOOD, 25);
-		inventory.addItem(ItemType.METAL, 25);
-		inventory.addItem(ItemType.STONE, 25);
 
 		this.setPlayerManager(new PlayerManager());
+
+		inventory.addItem(ItemType.FOOD, GameConfig.STARTING_FOOD);
+		inventory.addItem(ItemType.WOOD, GameConfig.STARTING_WOOD);
+		inventory.addItem(ItemType.METAL, GameConfig.STARTING_METAL);
+		inventory.addItem(ItemType.STONE, GameConfig.STARTING_STONE);
+
 		this.gameTimer = 0;
 		this.timeSurvived = 0;
 		int year = (int) (2010 + (Math.round(Math.random() * 5) - 10));
