@@ -5,8 +5,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import cheese.model.BaseBuilding;
-import cheese.model.Building;
+import cheese.model.building.BaseBuilding;
+import cheese.model.building.Building;
 import deserted.sprite.Sprite;
 import deserted.sprite.SpriteManager;
 import deserted.sprite.SpriteType;
@@ -110,6 +110,7 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
+		
         for(int x = 0; x < tiles[0].length; x++){
         	type = tiles[x][row].tile.getBuildingToDraw();
         	//sprite = SpriteManager.getSprite(type);
