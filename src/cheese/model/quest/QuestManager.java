@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import cheese.model.Cost;
 import cheese.model.god.GodType;
-
 import deserted.model.GameSession;
 import deserted.model.item.ItemType;
 
@@ -44,6 +45,8 @@ public class QuestManager {
 		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there that we could be eating!", 5, GodType.TRIBE, "Hunter Abode"));
 		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get resources from other villages.", 5, GodType.TRIBE, "Stable"));
 		
+		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 10 food!", 5, GodType.LOKI, new Cost(10,0,0,0)));
+		
 		// Shuffle
 		Collections.shuffle(questList);
 	}
@@ -57,10 +60,14 @@ public class QuestManager {
 	}
 	
 	public void removeQuest(Quest quest) {
+		ArrayList<GodType> toRemove = new ArrayList<GodType>();
 		for(GodType god: questSlots.keySet()) {
 			if(questSlots.get(god) == quest) {
-				questSlots.remove(god);
+				toRemove.add(god);
 			}
+		}
+		for(GodType remove: toRemove) {
+			questSlots.remove(remove);
 		}
 		// TODO: Add a 'repeatable' flag.
 		questList.remove(quest);
