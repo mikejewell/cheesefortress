@@ -18,6 +18,7 @@ public class QuestManager {
 		this.questSlots = new HashMap<GodType, Quest>();
 		// TODO make all the quests
 		this.questList = new ArrayList<Quest>();
+//<<<<<<< Updated upstream
 		
 		// Tribe Quests
 		questList.add(new QuestBuilding("Big Farma", "We need food to keep our villagers alive - please build a farm!", 5, GodType.TRIBE, "Farm"));
@@ -32,6 +33,14 @@ public class QuestManager {
 //		questList.add(new QuestTribute("Cheese for Freya", "Freya is hosting a feast but lacks Cheese", 5, GodType.FREYA, new Cost(0, 20, 0)));
 //		questList.add(new QuestTribute("Cheese for Thor", "Thor is hosting a feast but lacks Cheese", 5, GodType.THOR, new Cost(0, 20, 0)));
 //		questList.add(new QuestTribute("Cheese for All", "Tribe is hosting a feast but lacks Cheese", 5, GodType.TRIBE, new Cost(0, 20, 0)));
+//=======
+//		questList.add(new QuestTribute("Iron for Hel", "The armies of Hel requires iron", 10, God.HEL, new Cost(0, 0, 0, 10)));
+//		questList.add(new QuestTribute("Cheese for Loki", "Loki is hosting a feast but lacks Cheese", 5, God.LOKI, new Cost(20)));
+//		questList.add(new QuestTribute("Cheese for Freya", "Freya is hosting a feast but lacks Cheese", 5, God.FREYA, new Cost(20)));
+//		questList.add(new QuestTribute("Cheese for Thor", "Thor is hosting a feast but lacks Cheese", 5, God.THOR, new Cost(20)));
+//		questList.add(new QuestTribute("Cheese for All", "Tribe is hosting a feast but lacks Cheese", 5, God.TRIBE, new Cost(20)));
+//		questList.add(new QuestTribute("Cheese for Hel", "Hel is hosting a feast but lacks Cheese", 5, God.HEL, new Cost(20)));
+//>>>>>>> Stashed changes
 //		questList.add(new QuestBuilding("Farm Please!", "Your villagers demand a farm", 5, God.TRIBE, BuildingType.FARM));
 	
 		// Shuffle

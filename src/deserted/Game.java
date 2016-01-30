@@ -51,7 +51,7 @@ public class Game extends StateBasedGame {
 			GraphicsDevice gd = GraphicsEnvironment
 					.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-			appgc = new AppGameContainer(new Game("Deserted"));
+			appgc = new AppGameContainer(new Game("Cheese Fortress"));
 			appgc.setVSync(true);
 			appgc.setDisplayMode(1024, 768, false);
 			appgc.setTargetFrameRate(gd.getDisplayMode().getRefreshRate());

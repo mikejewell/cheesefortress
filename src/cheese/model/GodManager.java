@@ -1,10 +1,11 @@
 package cheese.model;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class GodManager {
 	
 	private HashMap<GodType, God> gods;
+	private Map<God, Integer> relationshipMap = new HashMap<God, Integer>();
 	
 	public GodManager() {
 		this.gods = new HashMap<GodType, God>();
@@ -18,5 +19,10 @@ public class GodManager {
 	public God getGod(GodType godType) {
 		return gods.get(godType);
 	}
+	
+	public void changeRelationship(God god, int change) {
+		
+	}
 
+	
 }
