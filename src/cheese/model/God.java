@@ -5,5 +5,6 @@ public enum God {
 	FREYA,
 	LOKI,
 	HEL,
-	NEUTRAL
+	NEUTRAL,
+	TRIBE,
 }

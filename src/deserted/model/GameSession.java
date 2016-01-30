@@ -1,8 +1,12 @@
 package deserted.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.joda.time.LocalDateTime;
+
+import cheese.model.God;
+import cheese.model.Quest;
 
 public class GameSession {
 	private static GameSession instance;
@@ -17,13 +21,17 @@ public class GameSession {
 	private boolean completed;
 	private int completionType;
 	private Inventory inventory;
+	
 
 	private ArrayList<Agent> agents;
+	
+	private HashMap<God, Quest> questSlots;
 
 	private GameSession() {
 		this.setCompleted(false);
 		this.setCompletionType(0);
 		this.setInventory(new Inventory());
+		
 		this.gameTimer = 0;
 		this.timeSurvived = 0;
 		this.agents = new ArrayList<Agent>();
@@ -37,6 +45,9 @@ public class GameSession {
 		for (int i = 0; i < GameConfig.NUMBER_AGENTS; i++) {
 			getAgents().add(new Agent());
 		}
+		
+		this.questSlots = new HashMap<God, Quest>();
+		
 	}
 
 	public static GameSession getInstance() {
@@ -82,7 +93,7 @@ public class GameSession {
 	public void setCompletionType(int completionType) {
 		this.completionType = completionType;
 	}
-
+	
 	public Inventory getInventory() {
 		return inventory;
 	}

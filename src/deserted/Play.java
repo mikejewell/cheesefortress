@@ -23,6 +23,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import cheese.model.BaseBuilding;
 import cheese.model.BuildingManager;
+import cheese.model.God;
 import deserted.model.Agent;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -96,6 +97,10 @@ public class Play extends BasicGameState implements GameState,
 	Rectangle footerRect;
 	Rectangle actionRect;
 	Rectangle agentRect;
+
+	private int quest_bar_y;
+	private int quest_bar_height;
+	private int quest_width;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -174,10 +179,14 @@ public class Play extends BasicGameState implements GameState,
 		// Initialise UI Variables---------------------------------------
 
 		// Header vars
-		header_height = 50;
+		header_height = 25;
 		header_pad = 3;
 		h_y = header_pad;
 		h_h = header_height - (2 * header_pad);
+		
+		quest_bar_y = header_height;
+		quest_bar_height = 80;
+		quest_width = 145;
 
 		// Footer vars
 		footer_height = 60;
@@ -375,6 +384,12 @@ public class Play extends BasicGameState implements GameState,
 		g.setColor(Color.lightGray);
 		g.fillRect(0, footer_y, container.getWidth(), footer_height);
 
+		// Quest bar
+		g.setColor(Color.gray);
+		g.drawRect(0, quest_bar_y, container.getWidth(), quest_bar_height);
+		g.setColor(Color.lightGray);
+		g.fillRect(0, quest_bar_y, container.getWidth(), quest_bar_height);
+		
 		// Action bar
 		g.setColor(Color.gray);
 		g.drawRect(0, action_bar_y, container.getWidth(), action_bar_height);
@@ -405,97 +420,16 @@ public class Play extends BasicGameState implements GameState,
 		
 		List<Agent> agents = gs.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
-		/*int agent_height = 70;
-		for (int i = 0; i < agents.size(); i++) {
 
-			int y = ag_y + (i * agent_height);
-			int pad = 7;
-			Agent agent = agents.get(i);
-
-			g.setColor(Color.gray);
-			g.drawRect(ag_x, y, agent_bar_width, agent_height - 2);
-			g.setColor(Color.lightGray);
-			g.fillRect(ag_x, y, agent_bar_width, agent_height - 2);
-
-			if (selectedAgent == agent) {
-				g.setColor(Color.red);
-				g.drawRect(ag_x, y, agent_bar_width, agent_height - 2);
-			} else {
-
-			}
-
+		int quest_zone_x = 6;
+		// Draw quests
+		God[] order = {God.THOR, God.FREYA, God.HEL, God.LOKI, God.TRIBE};
+		for(int i=0; i<order.length; i++) {
+			int x = quest_zone_x + (i * quest_width) + (i*7);
 			g.setColor(Color.black);
-			g.drawString((i == 9 ? 0 : (i + 1)) + "", ag_x + pad, y + pad);
-			g.drawString(agent.getName(), ag_x + pad + 25, y + pad);
-
-			if (agent.getState() != AgentState.DEAD) {
-				// Draw fills first
-				// health
-				g.setColor(Color.green);
-				g.fillRect(ag_x + pad, y + 18 + pad,
-						(agent.getHealth() * 80) / 100, 16);
-				// thirst
-				g.setColor(Color.blue);
-				g.fillRect(ag_x + pad + 100, y + pad,
-						(agent.getWater() * 80) / 100, 16);
-				// hunger
-				g.setColor(Color.red);
-				g.fillRect(ag_x + pad + 100, y + 18 + pad,
-						(agent.getFood() * 80) / 100, 16);
-
-				// Draw outlines
-				g.setColor(Color.black);
-				g.drawRect(ag_x + pad, y + 18 + pad, 80, 16);
-				g.drawRect(ag_x + pad + 100, y + pad, 80, 16);
-				g.drawRect(ag_x + pad + 100, y + 18 + pad, 80, 16);
-
-				// Doing
-				if (agent.hasAction()) {
-					String doing = agent.getAction().getDescription();
-					g.setColor(Color.black);
-					g.drawString(
-							doing.substring(0, 1).toUpperCase()
-									+ doing.substring(1) + ".", ag_x + pad, y
-									+ 36 + pad);
-				}
-			} else {
-				g.setColor(Color.red);
-				g.drawString("DEAD", ag_x + pad + 100, y + pad);
-			}
-
-			if (selectedAgent != agent) {
-				int t_w = g.getFont().getWidth("Play");
-				int t_h = g.getFont().getHeight("Play");
-				int b_w = t_w + 6;
-				int b_h = a_h;
-				int t_y = (a_h - t_h) / 2;
-				int t_x = (b_w - t_w) / 2;
-
-				int button_offset_x = 10;
-				int button_offset_y = (50 - b_h) / 2;
-
-				g.setColor(Color.white);
-				g.fillRect(ag_x + agent_bar_width - t_w - button_offset_x - 1,
-						y + button_offset_y - 1, b_w, b_h);
-
-				g.setColor(Color.darkGray);
-				g.fillRect(ag_x + agent_bar_width - t_w - button_offset_x + 1,
-						y + button_offset_y + 1, b_w, b_h);
-				g.setColor(Color.lightGray);
-				g.fillRect(ag_x + agent_bar_width - t_w - button_offset_x, y
-						+ button_offset_y, b_w, b_h);
-				g.setColor(Color.black);
-				g.drawString("Play", ag_x + agent_bar_width - t_w
-						- button_offset_x + t_x, y + t_y + button_offset_y);
-			} else {
-				stickFigure.draw(ag_x + agent_bar_width - 32, y + 9, 32, 32);
-			}
-			Rectangle rect = new Rectangle(ag_x + pad, y + pad,
-					agent_bar_width, agent_height);
-			agentZones.add(rect);
-
-		}*/
-
+			g.fillRect(x, quest_bar_y, quest_width, quest_bar_height);
+		}
+		
 		// Draw inventory
 		int inventory_zone_x = 10;
 		List<ItemType> items = gs.getInventory().getItems();
