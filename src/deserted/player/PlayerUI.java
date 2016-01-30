@@ -37,6 +37,10 @@ public class PlayerUI {
 	float lastValue = 100.0f;
 	double lastDecrementTime=0.0;
 	boolean showHealth = false;
+	double timeToWaitAtDestination=0.0;
+	
+	public boolean bored = false;
+	private boolean playerControlled = false;
 	
 	public PlayerUI(Agent agentIn, TileSystem tsIn, Vector2f nearbyLocation) throws SlickException
 	{
@@ -85,6 +89,10 @@ public class PlayerUI {
 	}
 	
 	public void moveto(float destinationX, float destinationY){
+		moveto(destinationX, destinationY,true);
+	}
+	
+	public void moveto(float destinationX, float destinationY, boolean playerControlsIn){
 		if(destinationX < 0) destinationX = 0;
 		if(destinationX >= ts.size) destinationX = ts.size-1;
 		if(destinationY < 0) destinationY = 0;
@@ -93,6 +101,11 @@ public class PlayerUI {
 		PathFinder p = new PathFinder(ts, location);
 		destination = new Vector2f(destinationX, destinationY);
 		destinations = p.findPath( destination);
+		
+		bored = false;
+		Random r = new Random();
+		timeToWaitAtDestination = r.nextDouble() * 20;
+		playerControlled = playerControlsIn;
 	}
 	
 	int imageWidth = 80;
@@ -146,16 +159,17 @@ public class PlayerUI {
 		
 
 	
-		
-		g.setColor(new Color(0,0,255));
-		Vector2f lastPoint = ts.worldToScreenPos(location.x, location.y);
-		for(int i =destinations.size()-1; i>=0 ; i--)
-		{
-			Tile dest = destinations.get(i);
-			Vector2f pos = new Vector2f(dest.x+0.5f, dest.y+0.5f);
-            Vector2f destPos = ts.worldToScreenPos(pos.x, pos.y);
-            g.drawLine(destPos.x, destPos.y, lastPoint.x, lastPoint.y);
-            lastPoint = destPos;
+		if (playerControlled) {
+			g.setColor(new Color(0,0,255));
+			Vector2f lastPoint = ts.worldToScreenPos(location.x, location.y);
+			for(int i =destinations.size()-1; i>=0 ; i--)
+			{
+				Tile dest = destinations.get(i);
+				Vector2f pos = new Vector2f(dest.x+0.5f, dest.y+0.5f);
+	            Vector2f destPos = ts.worldToScreenPos(pos.x, pos.y);
+	            g.drawLine(destPos.x, destPos.y, lastPoint.x, lastPoint.y);
+	            lastPoint = destPos;
+			}
 		}
 	}
 	
@@ -211,8 +225,13 @@ public class PlayerUI {
 		
 		if (agent.getState() ==  AgentState.DEAD) return;
 			
-		if (atDestination) return;
-		
+		if (atDestination) { 
+			timeToWaitAtDestination -= deltaTime;
+			if (timeToWaitAtDestination<0) {
+				bored = true;
+			}			
+			return;
+		}
 		
 		
 		animationFrame += deltaTime*10;

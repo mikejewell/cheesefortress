@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeGFX;
+import cheese.graphics.WedgeTileSystem;
 import cheese.model.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
@@ -35,7 +36,8 @@ public class TileSystem {
 	
 	//private final Color semi = new Color(0, 0, 0, 0.3f);
 	
-	private WedgeGFX gfx = new WedgeGFX();
+	WedgeGFX gfx = new WedgeGFX();
+	WedgeTileSystem ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64);
 
 	public enum TileId{
 		GRASS,
@@ -134,7 +136,7 @@ public class TileSystem {
 		resTimesScale = tileRes * camera.zoom;
 	}
 	
-	public void renderTiles(Graphics g){
+	public void renderTiles(Graphics g){		
 		float finalX, finalY;
 		
 		tileMap.startUse();
@@ -150,6 +152,8 @@ public class TileSystem {
             }
         }
 		tileMap.endUse();
+		
+		//gfx.drawTileSystem(ts);
 	}
 	
 	public void renderGroundSprites(Graphics g, int row){

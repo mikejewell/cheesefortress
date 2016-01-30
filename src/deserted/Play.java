@@ -182,7 +182,7 @@ public class Play extends BasicGameState implements GameState,
 		RandomTileObject(TileId.ROCK, SpriteType.CAVE, 10, false);
 		RandomTileObject(TileId.DIRT, SpriteType.WRECKAGE, 20, false);
 
-		WreckageSpreader(wreckageCenter, 40, false);
+//		WreckageSpreader(wreckageCenter, 40, false);
 
 		container.setShowFPS(false);
 
@@ -905,8 +905,18 @@ public class Play extends BasicGameState implements GameState,
 		for (Building building : buildingManager.getBuildingsInPlay()) {
 			building.update(seconds);
 		}
-
-		monsterManager.update(seconds);
+		
+		for (PlayerUI player : players) {
+			if (player.bored) {
+				if (buildingManager.getBuildingsInPlay().size() > 0) {
+					Random r = new Random();
+					int index = (int)(r.nextDouble() * buildingManager.getBuildingsInPlay().size());
+					Building b = buildingManager.getBuildingsInPlay().get(index);
+					player.moveto(b.location.x,  b.location.y, false);
+				}
+			}
+		}
+//		monsterManager.update(seconds);
 		ts.update(players, gs, seconds);
 		gs.update(seconds);
 		messenger.update(seconds);
