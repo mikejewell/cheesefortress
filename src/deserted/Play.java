@@ -24,6 +24,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import cheese.model.BaseBuilding;
 import cheese.model.BuildingManager;
 import cheese.model.God;
+import cheese.model.Quest;
+import cheese.model.QuestManager;
 import deserted.model.Agent;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -102,6 +104,8 @@ public class Play extends BasicGameState implements GameState,
 	private int quest_bar_height;
 	private int quest_width;
 
+	private QuestManager questManager;
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -144,6 +148,7 @@ public class Play extends BasicGameState implements GameState,
 
 		monsterManager = new MonsterManager(ts, players);
 		buildingManager = new BuildingManager();
+		questManager = new QuestManager();
 
 		ts.getCamera().x = players.get(0).location.x;
 		ts.getCamera().y = players.get(0).location.y;
@@ -428,6 +433,13 @@ public class Play extends BasicGameState implements GameState,
 			int x = quest_zone_x + (i * quest_width) + (i*7);
 			g.setColor(Color.black);
 			g.fillRect(x, quest_bar_y, quest_width, quest_bar_height);
+			
+			if(questManager.hasQuest(order[i])) {
+				Quest quest = questManager.getQuest(order[i]);
+				g.setColor(Color.white);
+				g.drawString("Hello", x+5, quest_bar_y+5);
+			}
+			
 		}
 		
 		// Draw inventory
