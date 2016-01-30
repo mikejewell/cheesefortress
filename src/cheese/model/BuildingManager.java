@@ -29,6 +29,17 @@ public class BuildingManager {
 			}
 		});*/
 
+		BaseBuilding herbary = null;
+		{
+			/*Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/weaponsmith/renders/idle/45/000.png"));
+			Vector<Image> wsWorkingImage = new Vector<Image>();
+			for(int i=0; i<8; i++)
+				wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/work/45/"+getNumber(i)+".png"));
+			weaponSmith = new ResourceBuilding("Weaponsmith", "", wsIdleImage, wsIdleImage, wsWorkingImage, null);
+			addBuilding(weaponSmith);*/
+		}
+		
 		BaseBuilding farm = null;
 		{
 			Vector<Image> fmProgressImage = new Vector<Image>();
@@ -39,8 +50,7 @@ public class BuildingManager {
 			farm=new ResourceBuilding("Farm", "", fmProgressImage, fmWorkingImage, fmWorkingImage, null);
 			addBuilding(farm);
 		}
-		
-		
+
 		
 		BaseBuilding barracksAdvanced = null;
 		{
@@ -61,6 +71,18 @@ public class BuildingManager {
 			addBuilding(signalFire);
 		}
 		
+		BaseBuilding weaponSmith = null;
+		{
+			Vector<Image> wsIdleImage = new Vector<Image>();
+			wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/idle/45/000.png"));
+			Vector<Image> wsWorkingImage = new Vector<Image>();
+			for(int i=0; i<8; i++)
+				wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/work/45/"+getNumber(i)+".png"));
+			weaponSmith = new ResourceBuilding("Weaponsmith", "", wsIdleImage, wsIdleImage, wsWorkingImage, null);
+			addBuilding(weaponSmith);
+		}
+		
+		
 		BaseBuilding barracks = null;
 		{
 			Vector<Image> bkProgressImage = new Vector<Image>();
@@ -72,17 +94,21 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(barracksAdvanced);
 			subBuildings.add(signalFire);
+			subBuildings.add(weaponSmith);
 			
 			barracks = new ResourceBuilding("Barracks", "",bkProgressImage, bkWorkingImage, bkWorkingImage, null);
 			addBuilding(barracks);
 		}
 		
+		BaseBuilding fireStation = null;
 		{
 			Vector<Image> bk2IdleImage = new Vector<Image>();
 			bk2IdleImage.add(new Image("images/buildings/firestation/renders/idle/45/000.png"));
-			addBuilding(new ResourceBuilding("Fire Station", "",bk2IdleImage, bk2IdleImage, bk2IdleImage, null));
+			fireStation = new ResourceBuilding("Fire Station", "",bk2IdleImage, bk2IdleImage, bk2IdleImage, null);
+			addBuilding(fireStation);
 		}
 		
+		BaseBuilding goldMine = null;
 		{
 			Vector<Image> gmProgressImage = new Vector<Image>();
 			Image gmImage = new Image("images/buildings/gold_mine.png");
@@ -91,29 +117,22 @@ public class BuildingManager {
 			gmIdleImage.add(gmImage.getSubImage(0, 0,96,96));
 			Vector<Image> gmWorkingImage = new Vector<Image>();
 			gmWorkingImage.add(gmImage.getSubImage(0, 96,96,96));
-			addBuilding(new ResourceBuilding("Gold Mine", "",gmProgressImage, gmIdleImage, gmWorkingImage, null));
+			goldMine = new ResourceBuilding("Gold Mine", "",gmProgressImage, gmIdleImage, gmWorkingImage, null);
+			addBuilding(goldMine);
 		}
 		
+		BaseBuilding lumberMill = null;
 		{
 			Vector<Image> lmProgressImage = new Vector<Image>();
 			Image lmImage = new Image("images/buildings/human_lumber_mill.png");
 			lmProgressImage.add(lmImage.getSubImage(0, 96, 96,96));
 			Vector<Image> lmWorkingImage = new Vector<Image>();
 			lmWorkingImage.add(lmImage.getSubImage(0, 0,96,96));
-			addBuilding(new ResourceBuilding("Lumber Mill", "",lmProgressImage, lmWorkingImage,lmWorkingImage, null));
-		}
-		
-		{
-			Vector<Image> wsIdleImage = new Vector<Image>();
-			wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/idle/45/000.png"));
-			Vector<Image> wsWorkingImage = new Vector<Image>();
-			for(int i=0; i<8; i++)
-				wsIdleImage.add(new Image("images/buildings/weaponsmith/renders/work/45/"+getNumber(i)+".png"));
-			addBuilding(new ResourceBuilding("Weaponsmith", "", wsIdleImage, wsIdleImage, wsWorkingImage, null));	
+			lumberMill =new ResourceBuilding("Lumber Mill", "",lmProgressImage, lmWorkingImage,lmWorkingImage, null);
+			addBuilding(lumberMill);
 		}
 		
 
-		
 		BaseBuilding townHall = null;
 		{
 			Vector<Image> thProgressImage = new Vector<Image>();
@@ -124,6 +143,9 @@ public class BuildingManager {
 		
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(farm);
+			subBuildings.add(fireStation);
+			subBuildings.add(lumberMill);
+			subBuildings.add(goldMine);
 										
 			townHall = new ResourceBuilding("Town Hall", "",thProgressImage, thWorkingImage, thWorkingImage, subBuildings);
 			addBuilding(townHall);
