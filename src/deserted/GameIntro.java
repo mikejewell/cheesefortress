@@ -4,6 +4,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import org.newdawn.slick.Color;
 
 public class GameIntro extends BasicGameState implements GameState {
 	public static final int STATE_INTRO = 0;
@@ -12,7 +13,7 @@ public class GameIntro extends BasicGameState implements GameState {
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 
-		 logo = new Image("images/backgrounds/title.png");
+		 logo = new Image("images/backgrounds/TitleScreen.png");
 		 logo.setFilter(Image.FILTER_NEAREST);
 	}
 	
@@ -25,7 +26,7 @@ public class GameIntro extends BasicGameState implements GameState {
 
 		logo.draw(0, 0, container.getWidth(), container.getHeight(),0,0,logo.getWidth(), logo.getHeight());
 
-		g.drawString("Press Enter to continue", container.getWidth() / 2 - 130, container.getHeight() - 150);
+		g.drawString("Press Enter to continue", 20 /*container.getWidth() / 2 - 130*/, 20 /*container.getHeight() - 150*/);
 	}
 
 	@Override
