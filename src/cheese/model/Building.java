@@ -1,5 +1,7 @@
 package cheese.model;
 
+import java.util.Random;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -16,12 +18,16 @@ public class Building
 	
 	public float buildProcess = 0; 
 	
+	public long animationOffset = 0;
+	
 	
 	public Building(TileSystem tsIn, BaseBuilding baseIn, Vector2f locationIn) {
 		ts = tsIn;
 		base = baseIn;
 		location = locationIn;
 		this.isOffered = false;
+		
+		animationOffset = System.currentTimeMillis();
 	}
 	
 	
@@ -35,7 +41,7 @@ public class Building
 			image = base.buildingInProgressImages.get(imageIndex);
 		}
 		else {
-			int imageIndex =(int)(( System.currentTimeMillis()/ base.animationSpeed) % base.buildingWorkingImages.size());
+			int imageIndex =(int)(( (System.currentTimeMillis()-animationOffset)/ base.animationSpeed) % base.buildingWorkingImages.size());
 		
 			image = base.buildingWorkingImages.get(imageIndex);
 		}

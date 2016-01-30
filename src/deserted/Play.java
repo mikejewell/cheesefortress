@@ -389,6 +389,8 @@ public class Play extends BasicGameState implements GameState,
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 
+		
+		
 		Input input = container.getInput();
 
 		renderWorld(g);
@@ -455,8 +457,7 @@ public class Play extends BasicGameState implements GameState,
 		}
 		
 
-		
-		
+	
 		
 		List<Agent> agents = gs.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
@@ -861,6 +862,7 @@ public class Play extends BasicGameState implements GameState,
 			throws SlickException {
 		boolean alive = false;
 
+
 		List<Agent> agents = gs.getAgents();
 		for (int i = 0; i < agents.size(); i++) {
 			if (agents.get(i).getState() != AgentState.DEAD) {
@@ -886,6 +888,17 @@ public class Play extends BasicGameState implements GameState,
 		
 		for (Building building : buildingManager.getBuildingsInPlay()) {
 			building.update(seconds);
+		}
+		
+		for (PlayerUI player : players) {
+			if (player.bored) {
+				if (buildingManager.getBuildingsInPlay().size() > 0) {
+					Random r = new Random();
+					int index = (int)(r.nextDouble() * buildingManager.getBuildingsInPlay().size());
+					Building b = buildingManager.getBuildingsInPlay().get(index);
+					player.moveto(b.location.x,  b.location.y, false);
+				}
+			}
 		}
 		
 		
