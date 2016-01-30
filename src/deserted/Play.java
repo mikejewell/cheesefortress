@@ -992,36 +992,36 @@ public class Play extends BasicGameState implements GameState,
 		}
 
 		if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
-			ts.getCamera().move(-20 / ts.camera.zoom * delta, 0);
+			ts.getCamera().move(-20 / ts.camera.zoom * delta, -20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
-			ts.getCamera().move(0, -20 / ts.camera.zoom * delta);
+			ts.getCamera().move(-20 / ts.camera.zoom * delta, 20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
-			ts.getCamera().move(20 / ts.camera.zoom * delta, 0);
+			ts.getCamera().move(20 / ts.camera.zoom * delta, 20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
-			ts.getCamera().move(0, 20 / ts.camera.zoom * delta);
+			ts.getCamera().move(20 / ts.camera.zoom * delta, -20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (ts.getCamera().x < 0)
 			ts.getCamera().x = 0;
 
-		if (ts.getCamera().y < (-ts.size/4))
-			ts.getCamera().y = (-ts.size/4);
+		if (ts.getCamera().y < 0)
+			ts.getCamera().y = 0;
 
 		if (ts.getCamera().x > ts.size)
 			ts.getCamera().x = ts.size;
 
-		if (ts.getCamera().y > (ts.size/4))
-			ts.getCamera().y = (ts.size/4);
+		if (ts.getCamera().y > ts.size)
+			ts.getCamera().y = ts.size;
 
 		if (ts.getCamera().isFollowing) {
 			for (PlayerUI p : playerManager.getPlayers()) {

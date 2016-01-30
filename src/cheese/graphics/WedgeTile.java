@@ -14,6 +14,7 @@ public class WedgeTile {
 	
 	private Type type;	//Tile Type
 	private int id;		//Tile id in texture
+	private int overlayId;	//E.g. Grass, water edge, bush etc.
 	
 	public Tile tile = null;
 	
@@ -22,8 +23,20 @@ public class WedgeTile {
 		this.id = textureId;
 	}
 	
+	public void setOverlay(int id){
+		this.overlayId = id;
+	}
+	
+	public Type getType(){
+		return type;
+	}
+	
 	public int getId(){
 		return id;
+	}
+	
+	public int getOverlay(){
+		return overlayId;
 	}
 
 }

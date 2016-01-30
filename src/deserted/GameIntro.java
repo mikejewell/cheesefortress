@@ -20,6 +20,7 @@ public class GameIntro extends BasicGameState implements GameState {
 
 		 logo = new Image("images/backgrounds/TitleScreen.png");
 		 logo.setFilter(Image.FILTER_NEAREST);
+		 arg0.setMouseCursor("images/cursor/eagle64.png", 0, 0);
 	}
 	
 	@Override
