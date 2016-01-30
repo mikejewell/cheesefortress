@@ -20,9 +20,7 @@ public class GodManager {
 		return gods.get(godType);
 	}
 	
-	public void changeRelationship(God god, int change) {
-		
-	}
+	
 
 	
 }
