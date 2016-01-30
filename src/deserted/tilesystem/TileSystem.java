@@ -26,8 +26,9 @@ import deserted.sprite.SpriteType;
 
 public class TileSystem {
 	
-	public Camera camera;
-	public int tileRes = 32;
+	public WedgeCamera camera;
+	public int tileResX = 64;
+	public int tileResY = 32;
 	public int size;
 	float resTimesScale = 32;
 	
@@ -88,10 +89,9 @@ public class TileSystem {
 		VariantChooser variantChooser = new VariantChooser(size,tiles);
 		variantChooser.setVariants();
 
-		camera = new Camera((int)(size/2), 0, tileRes, windowSize);
+		camera = new WedgeCamera((int)(size/2), 0, tileRes, windowSize);
 		resTimesScale = tileRes * camera.zoom;
-		gfx.camera  = new WedgeCamera(camera.x, camera.y, camera.tileRes, camera.windowSize);
-		gfx.camera.camera = camera;
+		gfx.camera  = camera;
 		
 		for(int x = 0; x < size; x++){
 			for(int y = 0; y < size; y++){
@@ -165,41 +165,12 @@ public class TileSystem {
 	}
 	
 	
-	private boolean isOnScreen(float x, float y){
-		Vector2f sc = camera.worldToScreenPos(x, y);
-		if(sc.x < -resTimesScale)
-			return false;
-		if(sc.x > (camera.windowSize.getX()+resTimesScale))
-			return false;
-		if(sc.y < -resTimesScale)
-			return false;
-		if(sc.y > (camera.windowSize.getY()+resTimesScale))
-			return false;
-		return true;
-	}
+
 	
 	public void renderFog(Graphics g){
 		float finalX, finalY;
 		
-		if (true ==true) return;
-	
-		Vector2f offsets = camera.getOffsets();
-		for(int x = 0; x < size; x++){
-            for(int y = 0; y < size; y++){
-            	finalX = (x*resTimesScale)-offsets.x;
-        		finalY = (y*resTimesScale)-offsets.y;
-            	if (tiles[x][y].vis ==0)
-            	{
-            		g.setColor(Color.black);
-            		g.fillRect(finalX, finalY, resTimesScale, resTimesScale);
-            	}
-            	else if (tiles[x][y].vis <100)
-            	{
-            		g.setColor(new Color(0, 0, 0,1.0f-((float)tiles[x][y].vis)/100));
-            		g.fillRect(finalX, finalY, resTimesScale, resTimesScale);       
-            	}
-            }
-		}
+		gfx.renderFog(ts, g);
 	}
 	
 	public void update(List<PlayerUI> players, GameSession gs, float delta){
@@ -272,7 +243,7 @@ public class TileSystem {
 		return (float) Math.sqrt((x2-x)*(x2-x)+(y2-y)*(y2-y));
 	}
 	
-	public Camera getCamera(){
+	public WedgeCamera getCamera(){
 		return camera;
 	}
 	
