@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeGFX;
 import cheese.graphics.WedgeTileSystem;
+import cheese.model.BaseBuilding;
 import cheese.model.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
@@ -224,6 +225,28 @@ public class TileSystem {
 	        	}
         	}
         }
+	}
+
+	public void render3DBuilding(Graphics g, int row, Tile tile, BaseBuilding building){
+		float finalX, finalY, scaleX, scaleXOffset, scaleY, scaleYOffset;
+		//REALLY LAZY NEW TILE RENDERER COMING SOON :)
+		Vector2f offsets = camera.getOffsets();
+     //   for(int x = 0; x < size; x++){
+        	if (tile.y == row)
+        	{
+        		Image buildingImage = building.getCurrentImage();
+	    		scaleX = buildingImage.getWidth()/35;
+	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
+	        	scaleY = buildingImage.getHeight()/35;
+	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
+	        	finalX = (tile.x*resTimesScale)-offsets.x-scaleXOffset;
+	    		finalY = (row*resTimesScale)-offsets.y-scaleYOffset*2;
+	    		
+	    		if(isOnScreen(tile.x, row)){
+            			g.drawImage(buildingImage, finalX, finalY, finalX+resTimesScale+scaleXOffset*2, finalY+resTimesScale+scaleYOffset*2, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+	        	}
+        	}
+       // }
 	}
 	
 	

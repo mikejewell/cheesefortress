@@ -109,8 +109,9 @@ public class Play extends BasicGameState implements GameState,
 	private GodManager godManager;
 
 	BaseBuilding currentDragging = null;
+	Tile currentDraggingTile = null;
 	Building currentBuilding = null;
-
+	
 	private Rectangle questRect;
 
 	private int quest_bar_pad;
@@ -367,6 +368,10 @@ public class Play extends BasicGameState implements GameState,
 
 			ts.render3DBuildings(g, y);
 			
+			if (currentDragging != null && currentDraggingTile != null) {
+				ts.render3DBuilding(g, y, currentDraggingTile, currentDragging);
+			}
+			
 			ts.render3DSprites(g, y);
 
 			monsterManager.render(g, ts.camera.zoom, y);
@@ -390,7 +395,7 @@ public class Play extends BasicGameState implements GameState,
 			throws SlickException {
 
 		
-		
+	
 		Input input = container.getInput();
 
 		renderWorld(g);
@@ -399,6 +404,8 @@ public class Play extends BasicGameState implements GameState,
 
 		messenger.render(g, container.getHeight());
 
+		currentDraggingTile = null;
+		
 		// Header
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, container.getWidth(), header_height);
@@ -641,7 +648,7 @@ public class Play extends BasicGameState implements GameState,
 		} else if (miniMap.isWithin(mouseX, mouseY)) {
 		}else{
 			if (currentDragging != null) {
-				currentDragging.renderBuilding(mouseX-currentDragging.width/2, mouseY -currentDragging.height/2, currentDragging.width, currentDragging.height);
+				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
 			}			
 		}
 		
@@ -715,14 +722,12 @@ public class Play extends BasicGameState implements GameState,
 			} else {
 
 				if (currentDragging != null) {
-					currentDragging.renderBuilding(mouseX-currentDragging.width/2, mouseY -currentDragging.height/2, currentDragging.width, currentDragging.height);
-					
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
 					Building b = new Building(ts, currentDragging, new Vector2f(t.x,t.y));
 					
 					for(int x=b.base.getMinusXFootPrint(); x< b.base.getPlusXFootPrint()+1; x++) {
 						for(int y=b.base.getMinusYFootPrint(); y< b.base.getPlusYFootPrint()+1; y++) {
-							Tile baseTile = ts.getTile(t.x +x, t.y+y);
+							Tile baseTile = ts.getTile(t.x +x, t.y-y);
 							baseTile.addBuilding(b, false);
 						}
 					}
@@ -732,6 +737,7 @@ public class Play extends BasicGameState implements GameState,
 					buildingManager.addBuildingInPlay(b);
 					
 					currentDragging = null;
+					currentDraggingTile = null;
 				}
 				else {
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
