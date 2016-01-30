@@ -386,17 +386,20 @@ public class Play extends BasicGameState implements GameState,
 		g.fillRect(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		// int agent_zone_x = 500;
 		
-		ArrayList<BaseBuilding> currentBuildingOptions = buildingManager.currentBuildingOptions();
+		Vector<BaseBuilding> currentBuildingOptions = buildingManager.currentBuildingOptions(null);
 		
-		for (int i =0; i< currentBuildingOptions.size(); i++)
+		if (currentBuildingOptions != null)
 		{
-			BaseBuilding building = currentBuildingOptions.get(i);
-			int y = ag_y + i * 60;
-			int pad = 7;
-			g.setColor(Color.black);
-			g.drawString(building.getName(), ag_x + pad+70, y + pad);
-		
-			building.renderBuilding( ag_x, y,50,50);
+			for (int i =0; i< currentBuildingOptions.size(); i++)
+			{
+				BaseBuilding building = currentBuildingOptions.get(i);
+				int y = ag_y + i * 60;
+				int pad = 7;
+				g.setColor(Color.black);
+				g.drawString(building.getName(), ag_x + pad+70, y + pad);
+			
+				building.renderBuilding( ag_x, y,50,50);
+			}
 		}
 		
 		

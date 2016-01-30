@@ -11,6 +11,7 @@ public abstract class BaseBuilding implements IBuilding {
 	Vector<Image> buildingInProgressImages = null;
 	Vector<Image> buildingIdleImages = null;
 	Vector<Image> buildingWorkingImages = null;
+	Vector<BaseBuilding> subBuildings = null;
 	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
@@ -46,12 +47,13 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages.add(new Image(imageNameIn));
 	}
 	
-	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn)throws SlickException
+	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn)throws SlickException
 	{
 		name = nameIn;
 		buildingInProgressImages = buildingInProgressImagesIn;
 		buildingWorkingImages = buildingWorkingImagesIn;
 		buildingIdleImages = buildingIdleImagesIn;
+		subBuildings = subBuildingsIn;
 	}
 	
 

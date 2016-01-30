@@ -23,8 +23,8 @@ public class ResourceBuilding extends BaseBuilding {
 	
 
 	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
-			Vector<Image> workingImages)throws SlickException {
-		super(name, desc, progressImages,idleImages,workingImages);
+			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn)throws SlickException {
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn);
 	}
 
 	@Override
