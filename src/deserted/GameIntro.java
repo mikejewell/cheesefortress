@@ -32,7 +32,7 @@ public class GameIntro extends BasicGameState implements GameState {
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		if (arg0.getInput().isKeyDown(Input.KEY_ENTER)) {
+		if (arg0.getInput().isKeyDown(Input.KEY_ENTER) || arg0.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			arg1.enterState(Play.STATE_PLAY);
 			arg1.getState(1).init(arg0, arg1);
 		}
