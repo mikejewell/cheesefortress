@@ -36,12 +36,16 @@ public class WedgeGFX {
     	for(int i = 0; i < tiles.length; i++){
     		for(int j = tiles.length-1; j >= 0; j--){
     			int[] uv = tileMap.getUV(tiles[i][j].getId());
+    			int[] uvOver = tileMap.getUV(tiles[i][j].getOverlay());
     			
     			finalX = offsets.x;
     			finalY = offsets.y;
-    			
+   			
         		tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uv[0], uv[1], uv[0]+64, uv[1]+64);
-        	}
+        		if(tiles[i][j].getOverlay() >= 100){
+        			tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uvOver[0], uvOver[1], uvOver[0]+64, uvOver[1]+64);
+        		}
+    		}
     	}
     	tex.endUse();
     }
