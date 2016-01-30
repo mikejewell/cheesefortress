@@ -8,10 +8,15 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class BuildingManager {
+	ArrayList<Building> buildingsInPlay;
 	ArrayList<BaseBuilding> availableBuildings;
 
 	private void addBuilding(BaseBuilding building) {
 		availableBuildings.add(building);
+	}
+	
+	public void addBuildingInPlay(Building building) {
+		buildingsInPlay.add(building);
 	}
 
 	public BaseBuilding rootBuilding = null; 
@@ -19,6 +24,7 @@ public class BuildingManager {
 	
 	public BuildingManager() throws SlickException {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
+		this.buildingsInPlay = new ArrayList<Building>();
 
 
 		BaseBuilding herbary = null;
@@ -373,6 +379,15 @@ public class BuildingManager {
 		return currentBuilding.base.subBuildings;
 	}
 	
+	public ArrayList<Building> getNonOfferedBuildingsOfType(String type) {
+		ArrayList<Building> validBuildings = new ArrayList<Building>();
+		for(Building building: buildingsInPlay) {
+			if(building.base.getName().equals(type) && !building.isOffered()) {
+				validBuildings.add(building);
+			}
+		}
+		return validBuildings;
+	}
 }
 
 	

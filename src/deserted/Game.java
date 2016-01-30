@@ -53,7 +53,7 @@ public class Game extends StateBasedGame {
 
 			appgc = new AppGameContainer(new Game("Cheese Fortress"));
 			appgc.setVSync(true);
-			appgc.setDisplayMode(1024, 768, false);
+			appgc.setDisplayMode(1280, 1024, false);
 			appgc.setTargetFrameRate(gd.getDisplayMode().getRefreshRate());
 			appgc.setIcon("images/icons/WindowIcon.png");
 			appgc.start();

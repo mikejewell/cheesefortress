@@ -5,7 +5,11 @@ import org.newdawn.slick.Image;
 public class Building
 {
 	public BaseBuilding base = null;
+	private boolean isOffered;
 
+	public Building() {
+		this.isOffered = false;
+	}
 	
 	public Image getCurrentImage() {
 		
@@ -16,6 +20,16 @@ public class Building
 		//Do animation here then its different for each instance
 		return image;
 		
+	}
+
+
+	public boolean isOffered() {
+		return isOffered;
+	}
+
+
+	public void setOffered(boolean isOffered) {
+		this.isOffered = isOffered;
 	}
 	
 }

@@ -58,7 +58,6 @@ public class Play extends BasicGameState implements GameState,
 	MonsterManager monsterManager;
 	MiniMap miniMap;
 	Messenger messenger;
-	BuildingManager buildingManager;
 
 	List<PlayerUI> players;
 	List<Item> selectedItems;
@@ -107,13 +106,18 @@ public class Play extends BasicGameState implements GameState,
 	private int quest_bar_height;
 	private int quest_width;
 
-	private QuestManager questManager;
-
-
 	private GodManager godManager;
 
 	BaseBuilding currentDragging = null;
 	Building currentBuilding = null;
+
+	private Rectangle questRect;
+
+	private int quest_bar_pad;
+
+	private BuildingManager buildingManager;
+
+	private QuestManager questManager;
 	
 
 	@Override
@@ -128,7 +132,10 @@ public class Play extends BasicGameState implements GameState,
 
 		ItemFactory.init();
 		gs = GameSession.getInstance();
+		buildingManager = gs.getBuildingManager();
+		questManager = gs.getQuestManager();
 
+		questManager.assignQuest();
 		Vector2f wreckageCenter = WreckageLocationDecider();
 
 		players = new ArrayList<PlayerUI>();
@@ -157,8 +164,6 @@ public class Play extends BasicGameState implements GameState,
 		recipeBook = new RecipeBook();
 
 		monsterManager = new MonsterManager(ts, players);
-		buildingManager = new BuildingManager();
-		questManager = new QuestManager();
 		godManager = new GodManager();
 
 		ts.getCamera().x = players.get(0).location.x;
@@ -202,7 +207,8 @@ public class Play extends BasicGameState implements GameState,
 		
 		quest_bar_y = header_height;
 		quest_bar_height = 80;
-		quest_width = 145;
+		quest_bar_pad = 0;
+		quest_width = ((container.getWidth() - 250) / 5) - (quest_bar_pad * 5);
 
 		// Footer vars
 		footer_height = 60;
@@ -234,6 +240,7 @@ public class Play extends BasicGameState implements GameState,
 		actionRect = new Rectangle(0, action_bar_y, container.getWidth(),
 				action_bar_height);
 		agentRect = new Rectangle(ag_x, ag_y, agent_bar_width, agent_bar_height);
+		questRect = new Rectangle(0, quest_bar_y, container.getWidth(), quest_bar_height);
 	}
 
 	private void RandomTileObject(TileId tileType, SpriteType spriteType,
@@ -450,27 +457,59 @@ public class Play extends BasicGameState implements GameState,
 		List<Agent> agents = gs.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
 
-		int quest_zone_x = 6;
+		int quest_zone_x = 0;
 		int quest_label_y = quest_bar_y;
-		int quest_card_y = quest_bar_y + 20;
+		int quest_y_pad = 20;
+		
+		
+		
 		// Draw quests
+
+		ArrayList<Rectangle> questZones = new ArrayList<Rectangle>();
+		ArrayList<Quest> validQuests = new ArrayList<Quest>();
 		GodType[] order = {GodType.THOR, GodType.FREYA, GodType.HEL, GodType.LOKI, GodType.TRIBE};
 		for(int i=0; i<order.length; i++) {
 			God god = godManager.getGod(order[i]);
-			int x = quest_zone_x + (i * quest_width) + (i*7);
+			int x = quest_zone_x + (i * quest_width) + (i*quest_bar_pad);
 			g.setColor(Color.white);
 			g.drawString(god.getName(), x, quest_label_y);
 		}
 		
+		int quest_button_height = 20;
+		int quest_button_y = quest_bar_y+quest_bar_height-quest_button_height - 5;
 		for(int i=0; i<order.length; i++) {
-			int x = quest_zone_x + (i * quest_width) + (i*7);
+			int x = quest_zone_x + (i * quest_width) + (i*quest_bar_pad);
 			g.setColor(Color.black);
-			g.fillRect(x, quest_card_y, quest_width, quest_bar_height);
+			g.fillRect(x, quest_bar_y+quest_y_pad, quest_width, quest_bar_height-quest_y_pad);
 			
 			if(questManager.hasQuest(order[i])) {
 				Quest quest = questManager.getQuest(order[i]);
 				g.setColor(Color.white);
-				g.drawString(quest.getQuestName(), x+5, quest_card_y+5);
+				g.drawString(quest.getQuestName(), x+5, quest_bar_y+quest_y_pad+5);
+
+				if(quest.canComplete()) {
+					// Draw Complete button
+					String name = "Complete";
+					int t_w = g.getFont().getWidth(name);
+					int t_h = g.getFont().getHeight(name);
+					int b_w = t_w + 6;
+					int b_h = quest_button_height;
+					int t_y = (quest_button_height - t_h) / 2;
+					int t_x = (b_w - t_w) / 2;
+	
+					int b_x = x + (quest_width-b_w)/2;
+					
+					g.setColor(Color.darkGray);
+					g.drawRect(b_x, quest_button_y, b_w, b_h);
+					g.setColor(Color.lightGray);
+					g.fillRect(b_x, quest_button_y, b_w, b_h);
+					g.setColor(Color.black);
+					g.drawString(name, b_x + t_x, quest_button_y + t_y);
+					
+					Rectangle zone = new Rectangle(b_x, quest_button_y, b_w, b_h);
+					questZones.add(zone);
+					validQuests.add(quest);
+				}
 			}
 			
 		}
@@ -592,7 +631,8 @@ public class Play extends BasicGameState implements GameState,
 		if (headerRect.contains(mouseX, mouseY)
 				|| footerRect.contains(mouseX, mouseY)
 				|| actionRect.contains(mouseX, mouseY)
-				|| agentRect.contains(mouseX, mouseY)) {
+				|| agentRect.contains(mouseX, mouseY)
+				|| questRect.contains(mouseX, mouseY)) {
 		} else if (miniMap.isWithin(mouseX, mouseY)) {
 		}else{
 			if (currentDragging != null) {
@@ -611,7 +651,8 @@ public class Play extends BasicGameState implements GameState,
 			if (headerRect.contains(mouseX, mouseY)
 					|| footerRect.contains(mouseX, mouseY)
 					|| actionRect.contains(mouseX, mouseY)
-					|| agentRect.contains(mouseX, mouseY)) {
+					|| agentRect.contains(mouseX, mouseY)
+					|| questRect.contains(mouseX, mouseY)) {
 			
 				// Check the UI elements
 				
@@ -653,6 +694,15 @@ public class Play extends BasicGameState implements GameState,
 							performAction(action);
 						}
 					}
+					
+					for (int i = 0; i < questZones.size(); i++) {
+						Rectangle questZone = questZones.get(i);
+						if (questZone.contains(mouseX, mouseY)) {
+							Quest quest = validQuests.get(i);
+							System.out.println("Try to complete quest: "+quest.getQuestName());
+							quest.complete();
+						}
+					}
 				}
 
 			} else if (miniMap.isWithin(mouseX, mouseY)) {
@@ -675,15 +725,15 @@ public class Play extends BasicGameState implements GameState,
 					
 					t.addBuilding(b, true);
 					
+					buildingManager.addBuildingInPlay(b);
+					
 					currentDragging = null;
 				}
 				else {
-					
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
 					if (t.building != null)
 					{
 						currentBuilding = t.building;	
-					
 					}
 					else {
 						// See if we are attacking a monster

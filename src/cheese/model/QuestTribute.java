@@ -11,7 +11,7 @@ public class QuestTribute extends Quest {
 		this.cost = cost;
 	}
 	
-	public boolean checkIfComplete() {
+	public boolean canComplete() {
 		//TODO check if tribute has been paid
 		return false;
 		
