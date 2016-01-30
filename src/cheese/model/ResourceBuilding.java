@@ -2,6 +2,7 @@ package cheese.model;
 
 import java.util.Vector;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class ResourceBuilding extends BaseBuilding {
@@ -20,10 +21,11 @@ public class ResourceBuilding extends BaseBuilding {
 		this.villagers = 3232;
 	}
 	
-	public ResourceBuilding(String name, String desc, Vector<String> images)throws SlickException  {
-		super(name, desc, images);
+
+	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
+			Vector<Image> workingImages)throws SlickException {
+		super(name, desc, progressImages,idleImages,workingImages);
 	}
-	
 
 	@Override
 	public boolean canBuild() {

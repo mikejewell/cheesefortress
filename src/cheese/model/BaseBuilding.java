@@ -8,8 +8,10 @@ import org.newdawn.slick.SlickException;
 public abstract class BaseBuilding implements IBuilding {
 	private String name;
 	private String description;
-	Vector<Image> images = null;
-
+	Vector<Image> buildingInProgressImages = null;
+	Vector<Image> buildingIdleImages = null;
+	Vector<Image> buildingWorkingImages = null;
+	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
 		this.setDescription(desc);
@@ -32,30 +34,36 @@ public abstract class BaseBuilding implements IBuilding {
 	public BaseBuilding(String nameIn, String desc, String imageNameIn)throws SlickException
 	{
 		name = nameIn;
-		images = new Vector<Image>();
-		images.add(new Image(imageNameIn));
+		buildingInProgressImages = new Vector<Image>();
+		buildingInProgressImages.add(new Image(imageNameIn));
+		
+
+		buildingWorkingImages = new Vector<Image>();
+		buildingWorkingImages.add(new Image(imageNameIn));
+		
+
+		buildingIdleImages = new Vector<Image>();
+		buildingIdleImages.add(new Image(imageNameIn));
 	}
 	
-	public BaseBuilding(String nameIn, String desc, Vector<String> imageNamesIn)throws SlickException
+	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn)throws SlickException
 	{
 		name = nameIn;
-		images = new Vector<Image>();
-		for(int i=0; i< imageNamesIn.size()-1; i++)
-		{
-			images.add(new Image(imageNamesIn.get(i)));
-		}
+		buildingInProgressImages = buildingInProgressImagesIn;
+		buildingWorkingImages = buildingWorkingImagesIn;
+		buildingIdleImages = buildingIdleImagesIn;
 	}
 	
-	int imageIndex = 0;
+
 	public void renderBuilding(int x, int y, int width, int height)
 	{
-		if (images != null)
+		if (buildingIdleImages != null)
 		{
-			if (images.size() > 0)
+			if (buildingIdleImages.size() > 0)
 			{
-				imageIndex++;
-				if (imageIndex >= images.size()) imageIndex = 0;
-				Image image = images.get(imageIndex);
+				int imageIndex =(int)(( System.currentTimeMillis()/ 100) % buildingIdleImages.size());
+				
+				Image image = buildingIdleImages.get(imageIndex);
 				image.draw(x,y,x+width,y+height,0,0, image.getWidth(), image.getHeight());
 			}
 		}
