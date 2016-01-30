@@ -144,7 +144,7 @@ public class TileSystem {
         		finalY = (y*resTimesScale)-offsets.y;
         		if(isOnScreen(x, y)){
             		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
-            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);
+            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);          		
             	}
             }
         }
