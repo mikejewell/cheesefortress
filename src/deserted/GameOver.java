@@ -9,6 +9,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import deserted.model.GameSession;
 import deserted.player.PlayerUI;
 
 
@@ -48,7 +49,7 @@ public class GameOver extends BasicGameState implements GameState {
 		image.draw(0, 0, container.getWidth(), container.getHeight());
 		
 		float offset=0;
-		for (PlayerUI player : play.players)
+		for (PlayerUI player : GameSession.getInstance().getPlayerManager().getPlayers())
 		{
 			g.drawString(player.agent.getName() + " died of exposure after only " + Math.floor(player.agent.getExpiredTime()) + " hours.", 10, scroller+offset);
 			offset-=30;

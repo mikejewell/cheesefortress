@@ -10,15 +10,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import cheese.model.TimedItem;
 import deserted.model.Agent;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
+import deserted.model.item.ItemType;
 import deserted.tilesystem.Tile;
 import deserted.tilesystem.TileSystem;
 import deserted.tilesystem.TileSystem.TileId;
 
 
-public class PlayerUI {
+public class PlayerUI extends TimedItem{
 
 	TileSystem ts;
 	public Agent agent;
@@ -42,10 +44,10 @@ public class PlayerUI {
 	public boolean bored = false;
 	private boolean playerControlled = false;
 	
-	public PlayerUI(Agent agentIn, TileSystem tsIn, Vector2f nearbyLocation) throws SlickException
+	public PlayerUI(Agent agentIn) throws SlickException
 	{
 		agent = agentIn;
-		ts = tsIn;
+		ts = TileSystem.getInstance();
 		
 		imageWidth = 64;
 		imageHeight = 64;
@@ -67,10 +69,13 @@ public class PlayerUI {
 				playerImages.get(y).add(playerImage.getSubImage(imageX, imageY, imageX+64, imageY+64));
 			}
 		}
-		
+		this.startTiming();
+	}
+	
+	public void setRandomLocation(Vector2f nearbyLocation) {
 		//Random Start location
 		location = randomLocation(nearbyLocation);
-		agentIn.setTile(ts.getTileFromWorld(location.x, location.y));
+		this.agent.setTile(ts.getTileFromWorld(location.x, location.y));
 	}
 	
 	private Vector2f randomLocation(Vector2f nearbyLocation)
@@ -220,10 +225,36 @@ public class PlayerUI {
 		}
 	}
 	
+	@Override
+	public double getDuration() {
+		return 60;
+	}
+	
+	@Override
+	public void onTick() {
+		System.out.println("Feed? "+agent.getFood());
+		if(GameSession.getInstance().getInventory().getItemCount(ItemType.FOOD) > 1) {
+			if(agent.getFood() < 80) {
+				if((Math.random()*10) < 0.5) {
+					System.out.println("Feed");
+					agent.incFood(20);
+					GameSession.getInstance().getInventory().removeItem(ItemType.FOOD, 1);
+				}
+			}
+		}
+	}
+	
 	public void update(float deltaTime) {
+		agent.update(deltaTime);
 		updateHealthDisplay();
 		
-		if (agent.getState() ==  AgentState.DEAD) return;
+		
+		if (agent.getState() ==  AgentState.DEAD){
+			this.stopTiming();
+			return;
+		}
+
+		super.update(deltaTime);
 			
 		if (atDestination) { 
 			timeToWaitAtDestination -= deltaTime;
@@ -296,7 +327,6 @@ public class PlayerUI {
 
 		Tile tile = ts.getTileFromWorld(location.x, location.y);
 		agent.setTile(tile);
-		
 		
 	}
 	

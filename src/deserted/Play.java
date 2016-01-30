@@ -1,6 +1,7 @@
 package deserted;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import cheese.model.PlayerManager;
 import cheese.model.building.BaseBuilding;
 import cheese.model.building.Building;
 import cheese.model.building.BuildingManager;
@@ -31,6 +33,7 @@ import cheese.model.quest.Quest;
 import cheese.model.quest.QuestManager;
 import deserted.model.Agent;
 import deserted.model.AgentState;
+import deserted.model.GameConfig;
 import deserted.model.GameSession;
 import deserted.model.RecipeBook;
 import deserted.model.action.BaseAction;
@@ -59,7 +62,6 @@ public class Play extends BasicGameState implements GameState,
 	MiniMap miniMap;
 	Messenger messenger;
 
-	List<PlayerUI> players;
 	List<Item> selectedItems;
 	Map<ItemType, Image> itemImages;
 	int actionKeyPressed = -1;
@@ -119,6 +121,8 @@ public class Play extends BasicGameState implements GameState,
 	private BuildingManager buildingManager;
 
 	private QuestManager questManager;
+	
+	private PlayerManager playerManager;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -134,18 +138,12 @@ public class Play extends BasicGameState implements GameState,
 		gs = GameSession.getInstance();
 		buildingManager = gs.getBuildingManager();
 		questManager = gs.getQuestManager();
+		playerManager = gs.getPlayerManager();
+		gs.setPlay(this);
 
 		questManager.assignQuest();
 		Vector2f wreckageCenter = WreckageLocationDecider();
 
-		players = new ArrayList<PlayerUI>();
-		for (int i = 0; i < gs.getAgents().size(); i++) {
-			Agent agent = gs.getAgents().get(i);
-			PlayerUI pui = new PlayerUI(agent, ts, wreckageCenter);
-			pui.addReachedDestinationEvent(this);
-			players.add(pui);
-		}
-		selectedAgent = gs.getAgents().get(0);
 		selectedItems = new ArrayList<Item>();
 		messenger = new Messenger();
 
@@ -162,13 +160,19 @@ public class Play extends BasicGameState implements GameState,
 		}
 		recipeBook = new RecipeBook();
 
-		monsterManager = new MonsterManager(ts, players);
+		monsterManager = new MonsterManager(ts, playerManager.getPlayers());
 		godManager = new GodManager();
 
-		ts.getCamera().x = players.get(0).location.x;
-		ts.getCamera().y = players.get(0).location.y;
+		for(int i=0; i<GameConfig.NUMBER_AGENTS; i++) {
+			PlayerUI player = playerManager.addPlayer(this);
+			player.setRandomLocation(wreckageCenter);
+		}
+		
+		selectedAgent = playerManager.getAgents().get(0);
+		ts.getCamera().x = playerManager.getPlayers().get(0).location.x;
+		ts.getCamera().y = playerManager.getPlayers().get(0).location.y;
 
-		miniMap = new MiniMap(ts, players);
+		miniMap = new MiniMap(ts, playerManager.getPlayers());
 
 		RandomTileObject(TileId.GRASS, SpriteType.TREE, 700, true);
 		RandomTileObject(TileId.DIRT, SpriteType.PALM_TREE, 200, true);
@@ -182,8 +186,6 @@ public class Play extends BasicGameState implements GameState,
 		RandomTileObject(TileId.GRASS, SpriteType.SHRUB, 30, false);
 		RandomTileObject(TileId.ROCK, SpriteType.CAVE, 10, false);
 		RandomTileObject(TileId.DIRT, SpriteType.WRECKAGE, 20, false);
-
-//		WreckageSpreader(wreckageCenter, 40, false);
 
 		container.setShowFPS(false);
 
@@ -359,7 +361,7 @@ public class Play extends BasicGameState implements GameState,
 		ts.renderTiles(g);
 		for (int y = 0; y < ts.size; y++) {
 			ts.renderGroundSprites(g, y);
-			for (PlayerUI player : players) {
+			for (PlayerUI player : playerManager.getPlayers()) {
 				if (player.location.y >= y - 0.4f
 						&& player.location.y < y + 0.6f)
 					player.render(g, ts.camera.zoom);
@@ -375,7 +377,7 @@ public class Play extends BasicGameState implements GameState,
 			monsterManager.render(g, ts.camera.zoom, y);
 		}
 
-		for (PlayerUI player : players) {
+		for (PlayerUI player : playerManager.getPlayers()) {
 			player.renderOverlay(g, ts.camera.zoom);
 		}
 
@@ -470,7 +472,7 @@ public class Play extends BasicGameState implements GameState,
 		}
 
 
-		List<Agent> agents = gs.getAgents();
+		List<Agent> agents = playerManager.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
 
 		int quest_zone_x = 0;
@@ -791,8 +793,8 @@ public class Play extends BasicGameState implements GameState,
 							// This code handles mouse selection of other
 							// players
 
-							for (int i = 0; i < players.size(); i++) {
-								PlayerUI player = players.get(i);
+							for (int i = 0; i < playerManager.getPlayers().size(); i++) {
+								PlayerUI player = playerManager.getPlayers().get(i);
 								if (player.agent.getState() != AgentState.DEAD) {
 									float difX = player.location.x - pos.x;
 									float difY = player.location.y - pos.y;
@@ -813,11 +815,11 @@ public class Play extends BasicGameState implements GameState,
 								if (selectedAgent.hasAction()) {
 									selectedAgent.stopAction();
 								}
-								players.get(agents.indexOf(selectedAgent))
+								playerManager.getPlayers().get(agents.indexOf(selectedAgent))
 										.moveto(pos.x, pos.y);
-								ts.getCamera().x = players.get(agents
+								ts.getCamera().x = playerManager.getPlayers().get(agents
 										.indexOf(selectedAgent)).location.x;
-								ts.getCamera().y = players.get(agents
+								ts.getCamera().y = playerManager.getPlayers().get(agents
 										.indexOf(selectedAgent)).location.y;
 								ts.getCamera().isFollowing = true;
 							}
@@ -829,8 +831,8 @@ public class Play extends BasicGameState implements GameState,
 	}
 
 	private void performAction(BaseAction action) {
-		int player_index = gs.getAgents().indexOf(selectedAgent);
-		PlayerUI player = players.get(player_index);
+		int player_index = playerManager.getAgents().indexOf(selectedAgent);
+		PlayerUI player = playerManager.getPlayers().get(player_index);
 		selectedAgent.startAction(action);
 		messenger.addMessage(
 				selectedAgent.getName() + " is " + action.getDescription(),
@@ -883,7 +885,7 @@ public class Play extends BasicGameState implements GameState,
 		boolean alive = false;
 
 
-		List<Agent> agents = gs.getAgents();
+		List<Agent> agents = playerManager.getAgents();
 		for (int i = 0; i < agents.size(); i++) {
 			if (agents.get(i).getState() != AgentState.DEAD) {
 				alive = true;
@@ -902,7 +904,7 @@ public class Play extends BasicGameState implements GameState,
 
 		float seconds = (float) (delta / 1000.0);
 		updateCamera(container, seconds);
-		for (PlayerUI player : players) {
+		for (PlayerUI player : playerManager.getPlayers()) {
 			player.update(seconds);
 		}
 
@@ -910,11 +912,15 @@ public class Play extends BasicGameState implements GameState,
 			building.update(seconds);
 		}
 		
-		for (Quest quest: questManager.getCurrentQuests()) {
+		Collection<Quest> quests = questManager.getCurrentQuests();
+		for (Quest quest: quests) {
 			quest.update(seconds);
 		}
+		questManager.flush();
 		
-		for (PlayerUI player : players) {
+		
+		
+		for (PlayerUI player : playerManager.getPlayers()) {
 			if (player.bored) {
 				if (buildingManager.getBuildingsInPlay().size() > 0) {
 					Random r = new Random();
@@ -928,7 +934,7 @@ public class Play extends BasicGameState implements GameState,
 		
 		
 //		monsterManager.update(seconds);
-		ts.update(players, gs, seconds);
+		ts.update(playerManager.getPlayers(), gs, seconds);
 		gs.update(seconds);
 		messenger.update(seconds);
 
@@ -970,9 +976,9 @@ public class Play extends BasicGameState implements GameState,
 			ts.getCamera().isFollowing = true;
 		}
 
-		for (int i = 0; i < players.size(); i++) {
-			PlayerUI player = players.get(i);
-			Agent agent = agents.get(i);
+		for (int i = 0; i < playerManager.getPlayers().size(); i++) {
+			PlayerUI player = playerManager.getPlayers().get(i);
+			Agent agent = player.agent;
 			AgentState state = agent.getState();
 
 			if (agent.hasAction() && agent.haveFinishedAction()) {
@@ -988,7 +994,7 @@ public class Play extends BasicGameState implements GameState,
 				}
 			}
 
-			boolean atDestination = players.get(i).atDestination;
+			boolean atDestination = playerManager.getPlayers().get(i).atDestination;
 
 			if (state == AgentState.WALKING && atDestination) {
 				agents.get(i).setState(AgentState.STANDING);
@@ -1056,7 +1062,7 @@ public class Play extends BasicGameState implements GameState,
 			ts.getCamera().y = ts.size;
 
 		if (ts.getCamera().isFollowing) {
-			for (PlayerUI p : players) {
+			for (PlayerUI p : playerManager.getPlayers()) {
 				if (p.agent == selectedAgent) {
 					ts.getCamera().x = p.location.x;
 					ts.getCamera().y = p.location.y;
@@ -1069,7 +1075,7 @@ public class Play extends BasicGameState implements GameState,
 			// SoundManager.stopSound(SoundManager.walk);
 		}
 
-		for (PlayerUI p : players) {
+		for (PlayerUI p : playerManager.getPlayers()) {
 			if (p.agent == selectedAgent) {
 				if (p.atDestination) {
 					// SoundManager.stopSound(SoundManager.walk);

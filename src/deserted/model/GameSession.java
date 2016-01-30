@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import org.joda.time.LocalDateTime;
 import org.newdawn.slick.SlickException;
 
+import cheese.model.PlayerManager;
 import cheese.model.building.BuildingManager;
 import cheese.model.quest.QuestManager;
 import deserted.model.item.ItemType;
+import deserted.player.PlayerReachedDestinationEvent;
 
 public class GameSession {
 	private static GameSession instance;
 
-	//private boolean walking = false;
+	// private boolean walking = false;
 	// Play time in seconds
 	private double gameTimer;
 	// Game time in minutes
@@ -22,14 +24,14 @@ public class GameSession {
 	private boolean completed;
 	private int completionType;
 	private Inventory inventory;
-	
+	private PlayerReachedDestinationEvent play;
 
-	private ArrayList<Agent> agents;
-	
+
 	private BuildingManager buildingManager;
 	private QuestManager questManager;
-	
-	private GameSession()  {
+	private PlayerManager playerManager;
+
+	private GameSession() {
 		this.setCompleted(false);
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
@@ -37,10 +39,10 @@ public class GameSession {
 		inventory.addItem(ItemType.WOOD, 25);
 		inventory.addItem(ItemType.METAL, 25);
 		inventory.addItem(ItemType.STONE, 25);
-		
+
+		this.setPlayerManager(new PlayerManager());
 		this.gameTimer = 0;
 		this.timeSurvived = 0;
-		this.agents = new ArrayList<Agent>();
 		int year = (int) (2010 + (Math.round(Math.random() * 5) - 10));
 		int month = (int) Math.ceil(Math.random() * 12);
 		int day = (int) Math.ceil(Math.random() * 27);
@@ -48,15 +50,14 @@ public class GameSession {
 		int minute = (int) (Math.random() * 60);
 		this.crashDate = new LocalDateTime(year, month, day, hour, minute);
 
-		for (int i = 0; i < GameConfig.NUMBER_AGENTS; i++) {
-			getAgents().add(new Agent());
-		}
-		
+//		for (int i = 0; i < GameConfig.NUMBER_AGENTS; i++) {
+//			getAgents().add(new Agent());
+//		}
+
 		try {
 			this.setBuildingManager(new BuildingManager());
 			this.setQuestManager(new QuestManager());
-		}
-		catch(SlickException se) {
+		} catch (SlickException se) {
 			System.err.println("Slick exception :(");
 		}
 	}
@@ -71,13 +72,11 @@ public class GameSession {
 	public void update(float delta) {
 		this.gameTimer += delta;
 		this.timeSurvived = gameTimer * GameConfig.MINS_PER_SEC;
-		
-		
-		
-		// Update agent stats
-		for (Agent agent : agents) {
-			agent.update(delta);
-		}
+//
+//		// Update agent stats
+//		for (Agent agent : agents) {
+//			agent.update(delta);
+//		}
 	}
 
 	public double getTimeSurvived() {
@@ -88,9 +87,6 @@ public class GameSession {
 		return this.crashDate.plusMinutes((int) Math.floor(this.timeSurvived));
 	}
 
-	public ArrayList<Agent> getAgents() {
-		return agents;
-	}
 
 	public boolean isCompleted() {
 		return completed;
@@ -107,7 +103,7 @@ public class GameSession {
 	public void setCompletionType(int completionType) {
 		this.completionType = completionType;
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -130,5 +126,21 @@ public class GameSession {
 
 	public void setQuestManager(QuestManager questManager) {
 		this.questManager = questManager;
+	}
+
+	public PlayerManager getPlayerManager() {
+		return playerManager;
+	}
+
+	public void setPlayerManager(PlayerManager playerManager) {
+		this.playerManager = playerManager;
+	}
+
+	public void setPlay(PlayerReachedDestinationEvent play) {
+		this.play = play;
+	}
+	
+	public PlayerReachedDestinationEvent getPlay() {
+		return this.play;
 	}
 }

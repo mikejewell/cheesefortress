@@ -17,21 +17,23 @@ abstract public class Quest extends TimedItem {
 	//Relationship value to god
 	private int value;
 	private int hours;
+	private boolean completed;
 	
 	public Quest(String questName, String questDescription, int value, GodType god) {
 		this.setQuestName(questName);
 		this.setQuestDescription(questDescription);
 		this.setGod(god);
 		this.hours = 0;
+		this.setCompleted(false);
 	}
 	
 	public abstract boolean canComplete();
 	
 	public void complete() {
 		QuestManager questManager = GameSession.getInstance().getQuestManager();
-		questManager.removeQuest(this);
 		questManager.assignQuest();
 		onComplete();
+		this.setCompleted(true);
 	}
 	
 	public double getHoursToFinish() {
@@ -43,8 +45,8 @@ abstract public class Quest extends TimedItem {
 		hours++;
 		if(hours >= getHoursToFinish()) {
 			stopTiming();
-			GameSession.getInstance().getQuestManager().removeQuest(this);
 			GameSession.getInstance().getQuestManager().assignQuest();
+			this.setCompleted(true);
 			this.hours = 0;
 			onFailure();
 		}
@@ -91,5 +93,13 @@ abstract public class Quest extends TimedItem {
 
 	public void setValidFrom(double validFrom) {
 		this.validFrom = validFrom;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 }

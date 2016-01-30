@@ -6,9 +6,9 @@ public class GameConfig {
 	public static final int MINS_PER_SEC = 48;
 	public static final int NUMBER_AGENTS = 8;
 
-	public static final float FOOD_PER_SEC_WALK = 0.5f;
-	public static final float FOOD_PER_SEC_STAND = 0.25f;
-	public static final float FOOD_PER_SEC_SLEEP = 0.2f;
+	public static final float FOOD_PER_SEC_WALK = 1.5f;
+	public static final float FOOD_PER_SEC_STAND = 1.25f;
+	public static final float FOOD_PER_SEC_SLEEP = 1.2f;
 
 	public static final float WATER_PER_SEC_WALK = 0.5f;
 	public static final float WATER_PER_SEC_STAND = 0.25f;

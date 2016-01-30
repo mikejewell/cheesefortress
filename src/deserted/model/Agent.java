@@ -11,7 +11,6 @@ import deserted.tilesystem.Tile;
 
 public class Agent {
 	private float food;
-	private float water;
 	private float health;
 	private String name;
 	private AgentState state;
@@ -31,10 +30,9 @@ public class Agent {
 	private double actionStartTime;
 	private Tile tile;
 
-	public Agent(float food, float water, float health) {
+	public Agent(float food, float health) {
 		this();
 		this.setFood(food);
-		this.setWater(water);
 		this.setHealth(health);
 	}
 
@@ -54,7 +52,6 @@ public class Agent {
 
 	public Agent() {
 		this.setFood(100);
-		this.setWater(100);
 		this.setHealth(100);
 		this.generateName();
 		this.setState(AgentState.STANDING);
@@ -78,14 +75,6 @@ public class Agent {
 		this.food = food;
 	}
 
-	public float getWater() {
-		return water;
-	}
-
-	public void setWater(float water) {
-		this.water = water;
-	}
-
 	public float getHealth() {
 		return health;
 	}
@@ -100,22 +89,6 @@ public class Agent {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void decWater(float w) {
-		this.water -= w;
-		if (this.water < 0)
-			this.water = 0;
-	}
-
-	public void incWater(float w) {
-		this.water += w;
-		if (this.water > 100) {
-			this.water = 100;
-		}
-		if (this.water < 0) {
-			this.water = 0;
-		}
 	}
 
 	public void decFood(float f) {
@@ -222,7 +195,6 @@ public class Agent {
 	public void consume(EdibleItem edibleItem) {
 
 		this.incFood(edibleItem.getFood());
-		this.incWater(edibleItem.getWater());
 		this.incHealth(edibleItem.getHealth());
 	}
 
@@ -233,22 +205,19 @@ public class Agent {
 	public void update(float delta) {
 		if (getState() == AgentState.WALKING) {
 			decFood(GameConfig.FOOD_PER_SEC_WALK * delta);
-			decWater(GameConfig.WATER_PER_SEC_WALK * delta);
 		} else if (getState() == AgentState.STANDING) {
 			decFood(GameConfig.FOOD_PER_SEC_STAND * delta);
-			decWater(GameConfig.WATER_PER_SEC_STAND * delta);
 		} else if (getState() == AgentState.SLEEPING) {
 			// Only gain health if not thirsty or hungry
-			if (getFood() > 0 && getWater() > 0) {
+			if (getFood() > 0) {
 				if (getHealth() < 90) {
 					incHealth(0.1f);
 				}
 			}
 			decFood(GameConfig.FOOD_PER_SEC_SLEEP * delta);
-			decWater(GameConfig.WATER_PER_SEC_SLEEP * delta);
 		}
 
-		if (getFood() == 0 && getWater() == 0) {
+		if (getFood() == 0) {
 			decHealth(GameConfig.HEALTH_PER_SEC * delta);
 		}
 

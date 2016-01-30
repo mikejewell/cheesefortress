@@ -45,7 +45,7 @@ public class QuestManager {
 		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there that we could be eating!", 5, GodType.TRIBE, "Hunter Abode"));
 		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get resources from other villages.", 5, GodType.TRIBE, "Stable"));
 		
-		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 10 food!", 5, GodType.LOKI, new Cost(10,0,0,0)));
+		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 5, GodType.NEUTRAL, new Cost(20,0,0,0)));
 		
 		// Shuffle
 		Collections.shuffle(questList);
@@ -59,18 +59,19 @@ public class QuestManager {
 		return questSlots.values();
 	}
 	
-	public void removeQuest(Quest quest) {
+	public void flush() {
 		ArrayList<GodType> toRemove = new ArrayList<GodType>();
 		for(GodType god: questSlots.keySet()) {
-			if(questSlots.get(god) == quest) {
+			if(questSlots.get(god).isCompleted()) {
 				toRemove.add(god);
+				questList.remove(questSlots.get(god));
 			}
 		}
+		
 		for(GodType remove: toRemove) {
 			questSlots.remove(remove);
 		}
 		// TODO: Add a 'repeatable' flag.
-		questList.remove(quest);
 	}
 	
 	public void assignQuest() {
@@ -85,6 +86,7 @@ public class QuestManager {
 		if(quest != null) {
 			quest.setValidFrom(GameSession.getInstance().getTimeSurvived());
 			questSlots.put(god, quest);
+			questList.remove(quest);
 			quest.startTiming();
 		}
 	}
@@ -106,7 +108,7 @@ public class QuestManager {
 
 		ArrayList<Quest> options = new ArrayList<Quest>();
 		for(Quest quest: questList) {
-			if(quest.getGod() == god) {
+			if(quest.getGod() == god || quest.getGod() == GodType.NEUTRAL) {
 				options.add(quest);
 			}
 		}

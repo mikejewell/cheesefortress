@@ -48,7 +48,7 @@ public class GameWin extends BasicGameState implements GameState {
 		g.setColor(Color.white);
 		
 		float offset=0;
-		for (PlayerUI player : play.players)
+		for (PlayerUI player : GameSession.getInstance().getPlayerManager().getPlayers())
 		{
 			if (player.agent.getState()== AgentState.DEAD)
 			{

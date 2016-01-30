@@ -8,5 +8,5 @@ public interface IBuilding {
 	public void onBuildStart();
 	public void onBuildComplete();
 	
-	public void onBuildingTick();
+	public void onBuildingTick(Building building);
 }

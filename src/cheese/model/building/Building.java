@@ -59,7 +59,7 @@ public class Building extends TimedItem {
 	}
 
 	public void onTick() {
-		base.onBuildingTick();
+		base.onBuildingTick(this);
 	}
 
 	public double getDuration() {

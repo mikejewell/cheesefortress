@@ -28,7 +28,7 @@ public class DecorBuilding extends BaseBuilding {
 	}
 
 	@Override
-	public void onBuildingTick() {
+	public void onBuildingTick(Building building) {
 		
 	}
 }
