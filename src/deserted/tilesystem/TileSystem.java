@@ -26,8 +26,8 @@ import deserted.sprite.SpriteType;
 
 public class TileSystem {
 	
-	public Camera camera;
-	public int tileRes = 32;
+	public WedgeCamera camera;
+	public int tileRes = 64;
 	public int size;
 	float resTimesScale = 32;
 	
@@ -91,10 +91,8 @@ public class TileSystem {
 		VariantChooser variantChooser = new VariantChooser(size,tiles);
 		variantChooser.setVariants();
 
-		camera = new Camera((int)(size/2), 0, tileRes, windowSize);
-		resTimesScale = tileRes * camera.zoom;
-		gfx.camera  = new WedgeCamera(camera.x, camera.y, camera.tileRes, camera.windowSize);
-		gfx.camera.camera = camera;
+		camera = new WedgeCamera((int)(size/2), 0, tileRes, windowSize);
+		gfx.camera  = camera;
 		
 		for(int x = 0; x < size; x++){
 			for(int y = 0; y < size; y++){
@@ -160,11 +158,8 @@ public class TileSystem {
 	}
 	
 	public void render3DBuildings(Graphics g, int row){
-		gfx.render3DBuildings(ts, g, row);
-	}
 
-	public void render3DBuilding(Graphics g, int row, Tile tile, BaseBuilding building){
-		gfx.render3DBuilding(ts, g, row, tile, building);
+		gfx.render3DBuildings(ts, g, row);
 	}
 	
 	
@@ -180,29 +175,18 @@ public class TileSystem {
 			return false;
 		return true;
 	}
+
+	public void render3DBuilding(Graphics g, int row, Tile tile, BaseBuilding building){
+		gfx.render3DBuilding(ts, g, row, tile, building);
+	}
+	
+	
+
 	
 	public void renderFog(Graphics g){
 		float finalX, finalY;
 		
-		if (true ==true) return;
-	
-		Vector2f offsets = camera.getOffsets();
-		for(int x = 0; x < size; x++){
-            for(int y = 0; y < size; y++){
-            	finalX = (x*resTimesScale)-offsets.x;
-        		finalY = (y*resTimesScale)-offsets.y;
-            	if (tiles[x][y].vis ==0)
-            	{
-            		g.setColor(Color.black);
-            		g.fillRect(finalX, finalY, resTimesScale, resTimesScale);
-            	}
-            	else if (tiles[x][y].vis <100)
-            	{
-            		g.setColor(new Color(0, 0, 0,1.0f-((float)tiles[x][y].vis)/100));
-            		g.fillRect(finalX, finalY, resTimesScale, resTimesScale);       
-            	}
-            }
-		}
+		gfx.renderFog(ts, g);
 	}
 	
 	public void update(List<PlayerUI> players, GameSession gs, float delta){
@@ -275,7 +259,7 @@ public class TileSystem {
 		return (float) Math.sqrt((x2-x)*(x2-x)+(y2-y)*(y2-y));
 	}
 	
-	public Camera getCamera(){
+	public WedgeCamera getCamera(){
 		return camera;
 	}
 	
