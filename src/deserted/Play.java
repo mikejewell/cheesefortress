@@ -1027,14 +1027,14 @@ public class Play extends BasicGameState implements GameState,
 		if (ts.getCamera().x < 0)
 			ts.getCamera().x = 0;
 
-		if (ts.getCamera().y < 0)
-			ts.getCamera().y = 0;
+		if (ts.getCamera().y < (-ts.size/4))
+			ts.getCamera().y = (-ts.size/4);
 
 		if (ts.getCamera().x > ts.size)
 			ts.getCamera().x = ts.size;
 
-		if (ts.getCamera().y > ts.size)
-			ts.getCamera().y = ts.size;
+		if (ts.getCamera().y > (ts.size/4))
+			ts.getCamera().y = (ts.size/4);
 
 		if (ts.getCamera().isFollowing) {
 			for (PlayerUI p : players) {

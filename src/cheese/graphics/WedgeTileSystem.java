@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeTile.Type;
+import deserted.tilesystem.Tile;
 
 public class WedgeTileSystem {
 	
@@ -32,6 +33,10 @@ public class WedgeTileSystem {
 	
 	public WedgeTile[][] getTiles() {
 		return tiles;
+	}
+	
+	public WedgeTile getTile(int x, int y){
+		return tiles[x][y];
 	}
 	
 	public WedgeTileMap getTileMap(){
