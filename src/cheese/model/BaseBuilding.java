@@ -16,6 +16,7 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public int width = 0;
 	public int height = 0;
+
 	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
@@ -52,18 +53,28 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages.add(new Image(imageNameIn));
 	}
 	
-	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn)throws SlickException
+	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn, double imageScale)throws SlickException
 	{
 		name = nameIn;
-		buildingInProgressImages = buildingInProgressImagesIn;
-		buildingWorkingImages = buildingWorkingImagesIn;
-		buildingIdleImages = buildingIdleImagesIn;
+		buildingInProgressImages = resizeImages(buildingInProgressImagesIn,imageScale);
+		buildingWorkingImages = resizeImages(buildingWorkingImagesIn,imageScale);
+		buildingIdleImages = resizeImages(buildingIdleImagesIn,imageScale);
 		subBuildings = subBuildingsIn;
-		animationSpeed = animationSpeedIn;
+		animationSpeed = animationSpeedIn;		
 		
 		width = buildingIdleImagesIn.get(0).getWidth();
 		height = buildingIdleImagesIn.get(0).getHeight();
 		
+	}
+	
+	private Vector<Image> resizeImages(Vector<Image> original, double scale) {
+		
+		Vector<Image> images = new Vector<Image>();
+		for(int i=0; i< original.size(); i++) {
+			Image img = original.get(i);
+			images.add(img.getScaledCopy((int)(img.getWidth()*scale), (int)(img.getHeight()*scale)));
+		}
+		return images;
 	}
 	
 
