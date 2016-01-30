@@ -600,6 +600,9 @@ public class Play extends BasicGameState implements GameState,
 			}			
 		}
 		
+		if (input.isMousePressed(1) || input.isMousePressed(2)) {
+			currentDragging = null;
+		}
 
 		if (input.isMousePressed(0)) {
 			mouseX = input.getMouseX();
