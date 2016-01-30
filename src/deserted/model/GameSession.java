@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.joda.time.LocalDateTime;
 import org.newdawn.slick.SlickException;
 
-import cheese.model.BuildingManager;
-import cheese.model.QuestManager;
+import cheese.model.building.BuildingManager;
+import cheese.model.quest.QuestManager;
 import deserted.model.item.ItemType;
 
 public class GameSession {
@@ -33,8 +33,10 @@ public class GameSession {
 		this.setCompleted(false);
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
-		inventory.addItem(ItemType.FOOD, 10);
-		inventory.addItem(ItemType.WOOD, 5);
+		inventory.addItem(ItemType.FOOD, GameConfig.STARTING_FOOD);
+		inventory.addItem(ItemType.WOOD, GameConfig.STARTING_WOOD);
+		inventory.addItem(ItemType.METAL, GameConfig.STARTING_METAL);
+		inventory.addItem(ItemType.STONE, GameConfig.STARTING_STONE);
 		
 		this.gameTimer = 0;
 		this.timeSurvived = 0;
@@ -69,6 +71,9 @@ public class GameSession {
 	public void update(float delta) {
 		this.gameTimer += delta;
 		this.timeSurvived = gameTimer * GameConfig.MINS_PER_SEC;
+		
+		
+		
 		// Update agent stats
 		for (Agent agent : agents) {
 			agent.update(delta);

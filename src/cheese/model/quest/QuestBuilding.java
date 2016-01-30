@@ -1,6 +1,10 @@
-package cheese.model;
+package cheese.model.quest;
 
 import java.util.ArrayList;
+
+import cheese.model.building.Building;
+import cheese.model.building.BuildingManager;
+import cheese.model.god.GodType;
 
 import deserted.model.GameSession;
 

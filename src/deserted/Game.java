@@ -51,7 +51,7 @@ public class Game extends StateBasedGame {
 			GraphicsDevice gd = GraphicsEnvironment
 					.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-			appgc = new AppGameContainer(new Game("Cheese Fortress"));
+			appgc = new AppGameContainer(new Game("Vikings vs Gods: Cheese Fortress"));
 			appgc.setVSync(true);
 			appgc.setDisplayMode(1280, 1024, false);
 			appgc.setTargetFrameRate(gd.getDisplayMode().getRefreshRate());

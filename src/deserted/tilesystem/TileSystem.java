@@ -13,8 +13,8 @@ import org.newdawn.slick.geom.Point;
 import cheese.graphics.WedgeCamera;
 import cheese.graphics.WedgeGFX;
 import cheese.graphics.WedgeTileSystem;
-import cheese.model.BaseBuilding;
-import cheese.model.Building;
+import cheese.model.building.BaseBuilding;
+import cheese.model.building.Building;
 import deserted.map.LocalMapLoader;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -147,23 +147,23 @@ public class TileSystem {
 	}
 	
 	public void renderTiles(Graphics g){		
-//		float finalX, finalY;
-////		
-//////		tileMap.startUse();
-//////		Vector2f offsets = camera.getOffsets();
-//////		for(int x = 0; x < size; x++){
-//////            for(int y = 0; y < size; y++){
-//////        		finalX = (x*resTimesScale)-offsets.x;
-//////        		finalY = (y*resTimesScale)-offsets.y;
-//////        		if(isOnScreen(x, y)){
-//////            		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
-//////            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);          		
-//////            	}
-//////            }
-//////        }
-//////		tileMap.endUse();
+		float finalX, finalY;
 		
-		gfx.drawTileSystem(ts);
+		tileMap.startUse();
+		Vector2f offsets = camera.getOffsets();
+		for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+        		finalX = (x*resTimesScale)-offsets.x;
+        		finalY = (y*resTimesScale)-offsets.y;
+        		if(isOnScreen(x, y)){
+            		Point src = TileImage.getTexCoord(tiles[x][y].id, tiles[x][y].touching, tiles[x][y].variant);
+            		tileMap.drawEmbedded(finalX, finalY, finalX+resTimesScale, finalY+resTimesScale, src.getX(), src.getY(), src.getX()+tileRes, src.getY()+tileRes);          		
+            	}
+            }
+        }
+		tileMap.endUse();
+		
+//		gfx.drawTileSystem(ts);
 	}
 	
 	public void renderGroundSprites(Graphics g, int row){

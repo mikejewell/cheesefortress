@@ -1,4 +1,4 @@
-package cheese.model;
+package cheese.model.building;
 
 
 
