@@ -1,4 +1,4 @@
-package cheese.graphics;
+package cheese.graphics.tileSystem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,8 @@ import java.util.Random;
 
 import org.newdawn.slick.geom.Point;
 
-import cheese.graphics.WedgeTile.Type;
+import cheese.graphics.WedgeCamera;
+import cheese.graphics.tileSystem.WedgeTile.Type;
 
 public class WedgeTileSystem {
 	

@@ -9,6 +9,9 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Polygon;
 
+import cheese.graphics.tileSystem.WedgeTile;
+import cheese.graphics.tileSystem.WedgeTileMap;
+import cheese.graphics.tileSystem.WedgeTileSystem;
 import cheese.model.building.BaseBuilding;
 import cheese.model.building.Building;
 import deserted.sprite.Sprite;

@@ -1,4 +1,4 @@
-package cheese.graphics;
+package cheese.graphics.tileSystem;
 
 import deserted.tilesystem.Tile;
 

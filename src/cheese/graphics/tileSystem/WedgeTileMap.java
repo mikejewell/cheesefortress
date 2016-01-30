@@ -1,4 +1,4 @@
-package cheese.graphics;
+package cheese.graphics.tileSystem;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
