@@ -7,6 +7,7 @@ import org.joda.time.LocalDateTime;
 
 import cheese.model.GodType;
 import cheese.model.Quest;
+import deserted.model.item.ItemType;
 
 public class GameSession {
 	private static GameSession instance;
@@ -30,7 +31,9 @@ public class GameSession {
 	private GameSession() {
 		this.setCompleted(false);
 		this.setCompletionType(0);
-		this.setInventory(new Inventory());
+		this.inventory = new Inventory();
+		inventory.addItem(ItemType.FOOD, 10);
+		inventory.addItem(ItemType.WOOD, 5);
 		
 		this.gameTimer = 0;
 		this.timeSurvived = 0;

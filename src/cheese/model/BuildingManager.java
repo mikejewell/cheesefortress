@@ -15,19 +15,11 @@ public class BuildingManager {
 	}
 
 	public BaseBuilding rootBuilding = null; 
+
 	
 	public BuildingManager() throws SlickException {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
 
-	/*	addBuilding(new ResourceBuilding("Farm", "A lovely farm", new Cost(5,
-				0, 0), 2));
-		
-		addBuilding(new DecorBuilding("Thor Statue","An amazing statue of Thor", new Cost(0, 0, 5)) {
-			@Override
-			public void onBuildComplete() {
-				// Do something here.
-			}
-		});*/
 
 		BaseBuilding herbary = null;
 		{
@@ -35,7 +27,7 @@ public class BuildingManager {
 			idleImage.add(new Image("images/buildings/herbary/renders/idle_empty/45/000.png"));
 			Vector<Image> workingImage = new Vector<Image>();
 			for(int i=0; i<4; i++)
-				idleImage.add(new Image("images/buildings/herbary/renders/work/45/"+getNumber(i)+".png"));
+				workingImage.add(new Image("images/buildings/herbary/renders/work/45/"+getNumber(i)+".png"));
 			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage, workingImage, null,5000);
 			addBuilding(herbary);
 		}
@@ -131,7 +123,7 @@ public class BuildingManager {
 			subBuildings.add(signalFire);
 			subBuildings.add(weaponSmith);
 			
-			barracks = new ResourceBuilding("Barracks", "",bkProgressImage, bkWorkingImage, bkWorkingImage, null, 100);
+			barracks = new ResourceBuilding("Barracks", "",bkProgressImage, bkWorkingImage, bkWorkingImage, subBuildings, 100);
 			addBuilding(barracks);
 		}
 		
@@ -169,7 +161,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(megaMine);
 			
-			goldMine = new ResourceBuilding("Gold Mine", "",gmProgressImage, gmIdleImage, gmWorkingImage, null, 100);
+			goldMine = new ResourceBuilding("Gold Mine", "",gmProgressImage, gmIdleImage, gmWorkingImage, subBuildings, 100);
 			addBuilding(goldMine);
 		}
 		
@@ -181,7 +173,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(goldMine);
 			
-			clayPit = new ResourceBuilding("Clay Pit", "",idleImage, idleImage, idleImage, null, 100);
+			clayPit = new ResourceBuilding("Clay Pit", "",idleImage, idleImage, idleImage, subBuildings, 100);
 			addBuilding(clayPit);
 		}
 		
@@ -255,6 +247,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(hunterTent);
 			subBuildings.add(fireStation);
+			subBuildings.add(barracks);
 			subBuildings.add(lumberJack);
 			subBuildings.add(clayPit);
 			subBuildings.add(religionTent);
@@ -284,12 +277,16 @@ public class BuildingManager {
 		return "0" + val;
 	}
 	
-	public Vector<BaseBuilding>currentBuildingOptions(BaseBuilding currentBuilding)
+	public Vector<BaseBuilding>currentBuildingOptions(Building currentBuilding)
 	{
 		if (currentBuilding == null)
-			return rootBuilding.subBuildings;
+		{
+			Vector<BaseBuilding> rootBuildings = new Vector<BaseBuilding> ();
+			rootBuildings.add(rootBuilding);
+			return rootBuildings;
+		}
 		
-		return currentBuilding.subBuildings;
+		return currentBuilding.base.subBuildings;
 	}
 	
 }
