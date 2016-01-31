@@ -447,6 +447,19 @@ public class BuildingManager {
 			addBuilding(demon);
 		}
 
+		BaseBuilding tombStone = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/cursed_grave.png").getSubImage(0, 256, 128, 128));
+
+			tombStone = new ResourceBuilding("Retreat for the dead", "", idleImage,
+					idleImage, idleImage, null, 100, 60);
+			tombStone.setCost(new Cost(0, 2, 2, 2));
+			addBuilding(tombStone);
+		}
+
+		
 		BaseBuilding church = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
@@ -456,6 +469,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(gargoyl);
 			subBuildings.add(demon);
+			
 
 			church = new ResourceBuilding("Advanced Religion", "", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60);
@@ -463,22 +477,7 @@ public class BuildingManager {
 			addBuilding(church);
 		}
 
-		BaseBuilding tombStone = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/cursed_grave.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(gargoyl);
-			subBuildings.add(demon);
-
-			tombStone = new ResourceBuilding("Retreat for the dead", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 40);
-			tombStone.setCost(new Cost(0, 2, 2, 2));
-			addBuilding(church);
-		}
-
+	
 		
 		BaseBuilding blacksmith = null;
 		{
@@ -516,6 +515,7 @@ public class BuildingManager {
 
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(church);
+			subBuildings.add(tombStone);
 
 			religionTent = new ResourceBuilding("Religion", "", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60);
@@ -531,7 +531,7 @@ public class BuildingManager {
 			idleImage.add(new Image(
 					"images/buildings/fisherman/as_fisherman0/idle/45/0.png"));
 
-			fisherTent = new ResourceBuilding("Fisher Hobble", "", idleImage,
+			fisherTent = new ResourceBuilding("Fisher Hovel", "", idleImage,
 					idleImage, idleImage, null, 100, 60) {
 				@Override
 				public void onBuildingTick(Building building) {
