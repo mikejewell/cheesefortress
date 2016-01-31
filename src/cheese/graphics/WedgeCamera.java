@@ -47,7 +47,7 @@ public class WedgeCamera {
 		float wy = (vx-2*vy)/64;
 		float wx = ((2*vy)+(32*wy))/32;
 		
-		return new Vector2f(wx+(x),wy+(y));
+		return new Vector2f(wx+(x)+0.5f,wy+(y)+0.5f);
 	}
 	
 	
