@@ -25,7 +25,7 @@ public class QuestManager {
 		this.questList = new ArrayList<Quest>();
 
 		// Tribe Quests
-		questList.add(new QuestBuilding("Big Farma", "We need food to keep our villagers alive - please build a farm!", 5, GodType.TRIBE, "Farm") {
+		questList.add(new QuestBuilding("Big Farma", "We need food to keep our villagers alive - please build a farm!", 50, GodType.TRIBE, "Farm") {
 			@Override
 			public double getHoursToFinish() {
 				return 48;
@@ -41,11 +41,11 @@ public class QuestManager {
 				System.out.println("Failure");
 			}
 		});
-		questList.add(new QuestBuilding("Hall Effect", "If we want to build anything, we'll need a Town Hall.", 5, GodType.TRIBE, "Town Hall"));
-		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there that we could be eating!", 5, GodType.TRIBE, "Hunter Abode"));
-		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get resources from other villages.", 5, GodType.TRIBE, "Stable"));
+		questList.add(new QuestBuilding("Hall Effect", "If we want to build anything, we'll need a Town Hall.", 50, GodType.TRIBE, "Town Hall"));
+		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there that we could be eating!", 50, GodType.TRIBE, "Hunter Abode"));
+		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get resources from other villages.", 50, GodType.TRIBE, "Stable"));
 		
-		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 5, GodType.NEUTRAL, new Cost(20,0,0,0)));
+		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
 		
 		// Shuffle
 		Collections.shuffle(questList);
@@ -76,15 +76,16 @@ public class QuestManager {
 	
 	public void assignQuest() {
 		// How many slots are currently taken?
-		// TODO: Only allow 1 quest for now
-		if(takenSlots() > 1) {
-			return;
-		}
+//		 TODO: Only allow 1 quest for now
+//		if(takenSlots() > 1) {
+//			return;
+//		}
 		
 		GodType god = pickGod();
 		Quest quest = pickQuest(god);
 		if(quest != null) {
 			quest.setValidFrom(GameSession.getInstance().getTimeSurvived());
+			quest.setActualGod(god);
 			questSlots.put(god, quest);
 			questList.remove(quest);
 			quest.startTiming();

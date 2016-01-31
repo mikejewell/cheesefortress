@@ -130,7 +130,7 @@ public class PlayerUI extends TimedItem{
 	public void render(Graphics g, float scale){
 		if(agent.getState() ==  AgentState.DEAD) return;
 		
-		Vector2f screenLocation = ts.worldToScreenPos(location.x+1, location.y-1);
+		Vector2f screenLocation = ts.worldToScreenPos(location.x+0.5f, location.y+0.5f);
 		
 		
 		g.setColor(new Color(255,0,0));
@@ -162,16 +162,16 @@ public class PlayerUI extends TimedItem{
 				screenLocation.x+15*scale,screenLocation.y+15*scale,0,0,imageWidth, imageHeight);
 
 		
-
-	
+		
+		
 		if (playerControlled) {
 			g.setColor(new Color(0,0,255));
-			Vector2f lastPoint = ts.worldToScreenPos(location.x, location.y);
+			Vector2f lastPoint = ts.worldToScreenPos(location.x+0.5f, location.y+0.5f);
 			for(int i =destinations.size()-1; i>=0 ; i--)
 			{
 				Tile dest = destinations.get(i);
-				Vector2f pos = new Vector2f(dest.x+0.5f, dest.y+0.5f);
-	            Vector2f destPos = ts.worldToScreenPos(pos.x, pos.y);
+				Vector2f pos = new Vector2f(dest.x, dest.y);
+	            Vector2f destPos = ts.worldToScreenPos(pos.x+0.5f, pos.y+0.5f);
 	            g.drawLine(destPos.x, destPos.y, lastPoint.x, lastPoint.y);
 	            lastPoint = destPos;
 			}
@@ -184,6 +184,8 @@ public class PlayerUI extends TimedItem{
 		if (agent.getState()==AgentState.DEAD) return;
 		
 		Vector2f screenLocation = ts.worldToScreenPos(location.x+0.5f, location.y+0.5f);
+		
+	
 		
 		if (agent.hasAction())
 		{
@@ -232,11 +234,9 @@ public class PlayerUI extends TimedItem{
 	
 	@Override
 	public void onTick() {
-		System.out.println("Feed? "+agent.getFood());
 		if(GameSession.getInstance().getInventory().getItemCount(ItemType.FOOD) > 1) {
 			if(agent.getFood() < 80) {
 				if((Math.random()*10) < 0.5) {
-					System.out.println("Feed");
 					agent.incFood(20);
 					GameSession.getInstance().getInventory().removeItem(ItemType.FOOD, 1);
 				}
@@ -277,17 +277,19 @@ public class PlayerUI extends TimedItem{
 			currentDestination = new Vector2f(destTile.x+0.5f, destTile.y+0.5f);
 		}
 		
+	
+		
 		//average walk speed 1.4m per second
 		float playerWalkSpeedMS = 1.4f;
-		if (ts.getTileFromWorld(location.x, location.y).id == TileId.WATER)
+		if (ts.getTileFromWorld(location.x+0.5f, location.y+0.5f).id == TileId.WATER)
 		{
 			playerWalkSpeedMS = 0.3f;
 		}
-		if (ts.getTileFromWorld(location.x, location.y).id == TileId.ROCK)
+		if (ts.getTileFromWorld(location.x+0.5f, location.y+0.5f).id == TileId.ROCK)
 		{
 			playerWalkSpeedMS = 1f;
 		}
-		if (ts.getTileFromWorld(location.x, location.y).id == TileId.SNOW)
+		if (ts.getTileFromWorld(location.x+0.5f, location.y+0.5f).id == TileId.SNOW)
 		{
 			playerWalkSpeedMS = 0.6f;
 		}
@@ -325,7 +327,7 @@ public class PlayerUI extends TimedItem{
 		}
 		
 
-		Tile tile = ts.getTileFromWorld(location.x, location.y);
+		Tile tile = ts.getTileFromWorld(location.x+0.5f, location.y+0.5f);
 		agent.setTile(tile);
 		
 	}

@@ -20,6 +20,7 @@ import deserted.sprite.Sprite;
 import deserted.sprite.SpriteManager;
 import deserted.sprite.SpriteType;
 import deserted.tilesystem.Tile;
+import deserted.tilesystem.TileSystem.TileId;
 
 public class WedgeGFX {
 	
@@ -38,29 +39,62 @@ public class WedgeGFX {
     	
     	
     	float finalX, finalY;
-    	float x = camera.x;
-    	float y = camera.y;
     	
     	tex.startUse();
-    	for(int i = 0; i < tiles.length; i++){
-    		for(int j = tiles.length-1; j >= 0; j--){
-    			int[] uv = tileMap.getUV(tiles[i][j].getId());
-    			
-    			finalX = offsets.x;
-    			finalY = offsets.y;
+
+    	for(int x = 0; x < tiles.length; x++){
+    		for(int y = tiles.length-1; y >= 0; y--){
+    			int[] uv = tileMap.getUV(tiles[x][y].getId());
+    			int[] uvOver = tileMap.getUV(tiles[x][y].getOverlay());
    			
-        		tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uv[0], uv[1], uv[0]+64, uv[1]+64);
-        		if(tiles[i][j].getOverlay() != OverlayType.EMPTY){
-	        		if(tiles[i][j].getOverlay().ordinal() < OverlayType.OVERLAYS3D.ordinal()){
-	        			int[] uvOver = WedgeTileOverlay.getOverlay(tiles[i][j].getOverlay()).getUVs();
-	        			tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uvOver[0], uvOver[1], uvOver[0]+64, uvOver[1]+64);
-	        		}
+    			finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y;
+    			
+	    		float xa = finalX-32*camera.zoom;
+	    		float ya = finalY-32*camera.zoom;
+	    		float xb = finalX+32*camera.zoom;
+	    		float yb = finalY+32*camera.zoom;
+        		    		
+          		tex.drawEmbedded(xa, ya, xb, yb, uv[0], uv[1], uv[0]+64, uv[1]+64);
+        		if(tiles[x][y].getOverlay() >= 100){
+        			tex.drawEmbedded(xa,ya,xb,yb, uvOver[0], uvOver[1], uvOver[0]+64, uvOver[1]+64);
+
         		}
     		}
     	}
     	tex.endUse();
     }
     
+    public void renderFog(WedgeTileSystem ts,Graphics g){
+		float finalX, finalY;
+		WedgeTile[][] tiles = ts.getTiles();
+		
+		Vector2f offsets = camera.getOffsets();
+		for(int x = 0; x < tiles[0].length; x++){
+            for(int y = 0; y < tiles[0].length; y++){           	
+    		
+	        	finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y;
+	    			    		
+	    		Polygon p = new Polygon();
+        		p.addPoint((int)(finalX-32*camera.zoom), (int)finalY);
+        		p.addPoint((int)finalX, (int)(finalY-16*camera.zoom));
+        		p.addPoint((int)(finalX+32*camera.zoom), (int)finalY);
+        		p.addPoint((int)finalX, (int)(finalY+16*camera.zoom));
+        		        		
+            	if (tiles[x][y].tile.vis ==0)
+            	{         
+            		g.setColor(Color.black);   
+            		g.fill(p);
+            	}
+            	else if (tiles[x][y].tile.vis <100)
+            	{
+            		g.setColor(new Color(0, 0, 0,1.0f-((float)tiles[x][y].tile.vis)/100));
+            		g.fill(p);   
+            	}
+            }
+		}
+	}
     
 	public void renderGroundSprites(WedgeTileSystem ts, Graphics g, Image spriteMap, int row){
 		WedgeTile[][] tiles = ts.getTiles();
@@ -84,7 +118,7 @@ public class WedgeGFX {
 	    		if(camera.isOnScreen(x, row)){
             		Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
             		if(src != null)
-            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
+            			g.drawImage(spriteMap, finalX-resTimesScale+scaleOffset, finalY-resTimesScale+scaleOffset, finalX+resTimesScale+scaleOffset, finalY+resTimesScale+scaleOffset, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
 	        	}
         	}
         }
@@ -111,7 +145,7 @@ public class WedgeGFX {
 	    		if(camera.isOnScreen(x, row)){
 	    			Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
             		if(src != null)
-            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
+            			g.drawImage(spriteMap, finalX-resTimesScale+scaleOffset, finalY-resTimesScale+scaleOffset, finalX+resTimesScale+scaleOffset, finalY+resTimesScale+scaleOffset, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
 	        	}
         	}
         }
@@ -171,35 +205,6 @@ public class WedgeGFX {
 	}
 	
 	
-	public void renderFog(WedgeTileSystem ts,Graphics g){
-		float finalX, finalY;
-		WedgeTile[][] tiles = ts.getTiles();
-		
-		Vector2f offsets = camera.getOffsets();
-		for(int x = 0; x < tiles[0].length; x++){
-            for(int y = 0; y < tiles[0].length; y++){           	
-    		
-	        	finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
-	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y;
-	    			    		
-	    		Polygon p = new Polygon();
-        		p.addPoint((int)(finalX-32*camera.zoom), (int)finalY);
-        		p.addPoint((int)finalX, (int)(finalY+16*camera.zoom));
-        		p.addPoint((int)(finalX+32*camera.zoom), (int)finalY);
-        		p.addPoint((int)finalX, (int)(finalY-16*camera.zoom));
-        		        		
-            	if (tiles[x][y].tile.vis ==0)
-            	{         
-            		g.setColor(Color.black);   
-            		g.fill(p);
-            	}
-            	else if (tiles[x][y].tile.vis <100)
-            	{
-            		g.setColor(new Color(0, 0, 0,1.0f-((float)tiles[x][y].tile.vis)/100));
-            		g.fill(p);   
-            	}
-            }
-		}
-	}
+	
 	
 }
