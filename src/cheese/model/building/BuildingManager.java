@@ -31,6 +31,72 @@ public class BuildingManager {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
 		this.buildingsInPlay = new ArrayList<Building>();
 
+		BaseBuilding vineyard = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/vineyard/work/45/000.png"));
+			Vector<Image> workingImage = new Vector<Image>();
+			for (int i = 0; i < 120; i++)
+				workingImage.add(new Image(
+						"images/buildings/vineyard/work/45/"
+								+ getNumber(i) + ".png"));
+			
+			FootPrint fp = new FootPrint(0,1,1,0);
+			
+			vineyard = new ResourceBuilding("Vineyard", "", idleImage, idleImage,
+					workingImage, null, 100, 120,fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()*2) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
+			vineyard.setCost(new Cost(0, 1, 3, 3));
+			addBuilding(vineyard);
+		}
+		
+		BaseBuilding alvearies = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/alvearies/work/45/000.png"));
+			Vector<Image> workingImage = new Vector<Image>();
+			for (int i = 0; i < 20; i++)
+				workingImage.add(new Image(
+						"images/buildings/alvearies/work/45/"
+								+ getNumber(i) + ".png"));
+			
+			FootPrint fp = new FootPrint(0,1,1,0);
+			
+			alvearies = new ResourceBuilding("Bees", "", idleImage, idleImage,
+					workingImage, null, 50, 120,fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()*2) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
+			alvearies.setCost(new Cost(0, 1, 3, 3));
+			addBuilding(alvearies);
+		}
+		
 		BaseBuilding herbary = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
@@ -74,11 +140,13 @@ public class BuildingManager {
 
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(herbary);
+			subBuildings.add(vineyard);
+			subBuildings.add(alvearies);
 
-			FootPrint fp = new FootPrint(1,0,0,1);
+			FootPrint fp = new FootPrint(1,1,1,1);
 			
 			farm = new ResourceBuilding("Farm", "", fmWorkingImage,
-					fmWorkingImage, fmWorkingImage, subBuildings, 100, 120, fp);
+					fmWorkingImage, fmWorkingImage, subBuildings, 100, 100, fp);
 			farm.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(farm);
 		}
