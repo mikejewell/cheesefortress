@@ -2,13 +2,21 @@ package cheese.model.god;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 
 import deserted.model.GameSession;
+import deserted.model.item.ItemType;
 
 public class GodManager {
 	
 	private HashMap<GodType, God> gods;
 	private Map<God, Integer> relationshipMap = new HashMap<God, Integer>();
+	
+	Random rand = new Random();
 	
 	public GodManager() {
 		this.gods = new HashMap<GodType, God>();
@@ -26,7 +34,10 @@ public class GodManager {
 			}
 		};
 		
-		Catastrophe lightningCatastrophe = new Catastrophe() {
+Catastrophe lightningCatastrophe = new Catastrophe() {
+			
+			int time = 0;
+			int flash = 0;
 			
 			@Override
 			public void activate() {
@@ -46,7 +57,33 @@ public class GodManager {
 			}
 			
 			@Override
+			public void render(Graphics g){
+				if(flash++ < 5)
+					g.setColor(new Color(1, 1, 1, flash/4));
+				else
+					g.setColor(new Color(1, 1, 1, (1-flash)/4));
+				g.fillRect(0, 0, Display.getWidth(), Display.getHeight());
+				if(flash < 10){
+					GameSession.getInstance().queueCatastrophe(this);
+				}else{
+					for(int i = 0; i < 10 + (rand.nextInt(5)-2); i++){
+						if(GameSession.getInstance().getInventory().getItemCount(ItemType.values()[i]) > 0){
+							GameSession.getInstance().getInventory().removeItem(ItemType.values()[i], 1);
+						}						
+					}
+				}
+			}
+			
+			@Override
 			public void onTick() {
+				time++;
+				if(time % 60 < 10){
+					if(rand.nextFloat() < 0.7f){
+						GameSession.getInstance().queueCatastrophe(this);
+					}else{
+						flash = 0;
+					}
+				}
 				System.out.println("Lightning!");
 			}
 		};
