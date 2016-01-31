@@ -29,8 +29,8 @@ public class WedgeCamera {
 	
 	public void zoom(float zoomDelta){
 		zoom = zoom + zoomDelta;
-		if (zoom >= 2.6f)
-			zoom = 2.6f;
+		if (zoom >= 8f)
+			zoom = 8f;
 		if (zoom <= 0.5f)
 			zoom = 0.5f;
 	}
