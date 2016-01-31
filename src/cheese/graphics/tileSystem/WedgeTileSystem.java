@@ -132,6 +132,20 @@ public class WedgeTileSystem {
 		}
 	}
 	
+	public void addPuddles(float density){
+		Random r = new Random();
+		int rocks = (int)(tiles.length*tiles.length*density);
+		int x, y;
+		for(int i = 0; i < rocks; i++){
+			x = r.nextInt(tiles.length);
+			y = r.nextInt(tiles.length);
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == OverlayType.EMPTY && tiles[x][y].getId() != 3)
+			{
+				tiles[x][y].setOverlay(OverlayType.PUDDLE);
+			}
+		}
+	}
+	
 	public WedgeTile[][] getTiles() {
 		return tiles;
 	}
