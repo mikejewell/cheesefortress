@@ -244,6 +244,8 @@ public class Play extends BasicGameState implements GameState,
 		agentRect = new Rectangle(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		questRect = new Rectangle(0, quest_bar_y, container.getWidth(),
 				quest_bar_height);
+		
+		
 	}
 
 //	private void RandomTileObject(TileId tileType, SpriteType spriteType,
@@ -523,6 +525,9 @@ public class Play extends BasicGameState implements GameState,
 					g.fillRect(x + f_h - w, f_y + f_h - h, w, h);
 					g.setColor(Color.black);
 					g.drawString("" + count, x + f_h - w, f_y + f_h - h);
+					
+					g.setColor(Color.black);
+					g.drawString(items.get(i).name(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M"))/2);
 				}
 				
 			} else {
@@ -532,9 +537,6 @@ public class Play extends BasicGameState implements GameState,
 			
 			g.setColor(Color.darkGray);
 			g.drawRect(x - 1, f_y - 1, f_h + 2, f_h + 2);
-			
-			g.setColor(Color.black);
-			g.drawString(ItemType.values()[i].toString(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M"))/2);
 		}
 		// Draw toolTips
 		int mouseX = input.getMouseX();
