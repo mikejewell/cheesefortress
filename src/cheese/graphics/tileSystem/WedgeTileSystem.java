@@ -1,4 +1,4 @@
-package cheese.graphics;
+package cheese.graphics.tileSystem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,9 @@ import java.util.Random;
 
 import org.newdawn.slick.geom.Point;
 
-import cheese.graphics.WedgeTile.Type;
+import cheese.graphics.WedgeCamera;
+import cheese.graphics.tileSystem.WedgeTile.Type;
+import cheese.graphics.tileSystem.WedgeTileOverlay.OverlayType;
 
 public class WedgeTileSystem {
 	
@@ -38,9 +40,9 @@ public class WedgeTileSystem {
 		for(int i = 0; i < grass; i++){
 			x = r.nextInt(tiles.length);
 			y = r.nextInt(tiles.length);
-			if(tiles[x][y].getId() == 2 && tiles[x][y].getOverlay() == 0 && tiles[x][y].getId() != 3 )
+			if(tiles[x][y].getId() == 2 && tiles[x][y].getOverlay() == OverlayType.EMPTY && tiles[x][y].getId() != 3 )
 			{
-				tiles[x][y].setOverlay(100);
+				tiles[x][y].setOverlay(OverlayType.GRASS);
 			}
 		}
 	}
@@ -52,9 +54,12 @@ public class WedgeTileSystem {
 		for(int i = 0; i < grass; i++){
 			x = r.nextInt(tiles.length);
 			y = r.nextInt(tiles.length);
-			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == 0 && tiles[x][y].getId() != 3)
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == OverlayType.EMPTY && tiles[x][y].getId() != 3)
 			{
-				tiles[x][y].setOverlay(101 + r.nextInt(2));
+				if(r.nextInt(2) == 0)
+					tiles[x][y].setOverlay(OverlayType.STICK1);
+				else
+					tiles[x][y].setOverlay(OverlayType.STICK2);
 			}
 		}
 	}
@@ -66,9 +71,9 @@ public class WedgeTileSystem {
 		for(int i = 0; i < grass; i++){
 			x = r.nextInt(tiles.length);
 			y = r.nextInt(tiles.length);
-			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == 0 && tiles[x][y].getId() != 3)
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == OverlayType.EMPTY && tiles[x][y].getId() != 3)
 			{
-				tiles[x][y].setOverlay(103);
+				tiles[x][y].setOverlay(OverlayType.BUSH);
 			}
 		}
 	}
