@@ -78,6 +78,20 @@ public class WedgeTileSystem {
 		}
 	}
 	
+	public void addTrees(float density){
+		Random r = new Random();
+		int grass = (int)(tiles.length*tiles.length*density);
+		int x, y;
+		for(int i = 0; i < grass; i++){
+			x = r.nextInt(tiles.length);
+			y = r.nextInt(tiles.length);
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == OverlayType.EMPTY && tiles[x][y].getId() != 3)
+			{
+				tiles[x][y].setOverlay(OverlayType.TREE1);
+			}
+		}
+	}
+	
 	public WedgeTile[][] getTiles() {
 		return tiles;
 	}

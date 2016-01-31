@@ -105,21 +105,47 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
-        for(int x = 0; x < tiles[0].length; x++){
-        	type = tiles[x][row].tile.getSpriteToDraw();
-        	sprite = SpriteManager.getSprite(type);
-        	if(sprite != null && !sprite.isOnGround()){
-	        	scale = sprite.getScale();
-	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
-	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y; 
-	    		if(camera.isOnScreen(x, row)){
-	    			Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
-            		if(src != null)
-            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
-	        	}
-        	}
-        }
+//        for(int x = 0; x < tiles[0].length; x++){
+//        	type = tiles[x][row].tile.getSpriteToDraw();
+//        	sprite = SpriteManager.getSprite(type);
+//        	if(sprite != null && !sprite.isOnGround()){
+//	        	scale = sprite.getScale();
+//	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
+//	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
+//	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y; 
+//	    		if(camera.isOnScreen(x, row)){
+//	    			Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
+//            		if(src != null)
+//            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
+//	        	}
+//        	}
+//        }
+        
+        WedgeTileMap tileMap = ts.getTileMap();
+        Image tex = tileMap.getTexture();
+        tex.startUse();
+    	for(int x = 0; x < tiles.length; x++){				
+			Tile tile = tiles[x][row].tile;
+    		
+    		if(tiles[x][row].getOverlay() != OverlayType.EMPTY){
+        		if(tiles[x][row].getOverlay().ordinal() > OverlayType.OVERLAYS3D.ordinal()){
+        			finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
+            		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
+        			
+            		int[] uvOver = WedgeTileOverlay.getOverlay(tiles[x][row].getOverlay()).getUVs();
+            		int width = uvOver[2] - uvOver[0];
+            		int height = uvOver[2] - uvOver[0];
+            		
+            		float xa = finalX-(width/2)*camera.zoom;
+            		float ya = finalY-height*camera.zoom;
+            		float xb = finalX+(width/2)*camera.zoom;
+            		float yb = finalY+height*camera.zoom;
+            		
+        			tex.drawEmbedded(xa,ya,xb,yb, uvOver[0], uvOver[1], uvOver[2], uvOver[3]);
+        		}
+    		}
+    	}
+    	tex.endUse();
 	}
 	
 	public void render3DBuildings(WedgeTileSystem ts,Graphics g, int row){
