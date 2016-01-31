@@ -35,17 +35,17 @@ public class BuildingManager {
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image(
-					"images/buildings/herbary/renders/idle_empty/45/000.png"));
+					"images/buildings/herbary/renders/idel_empty/45/000.png"));
 			Vector<Image> workingImage = new Vector<Image>();
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 5; i++)
 				workingImage.add(new Image(
-						"images/buildings/herbary/renders/work/45/"
+						"images/buildings/herbary/renders/idel_empty/45/"
 								+ getNumber(i) + ".png"));
 			
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
 			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage,
-					workingImage, null, 5000, 0.6,fp) {
+					workingImage, null, 5000, 0.26,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					if (Math.random() < GameSession.getInstance()
@@ -460,6 +460,23 @@ public class BuildingManager {
 			addBuilding(church);
 		}
 
+		BaseBuilding tombStone = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/cursed_grave.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(gargoyl);
+			subBuildings.add(demon);
+
+			tombStone = new ResourceBuilding("Retreat for the dead", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 0.6);
+			tombStone.setCost(new Cost(0, 2, 2, 2));
+			addBuilding(church);
+		}
+
+		
 		BaseBuilding blacksmith = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
@@ -664,8 +681,7 @@ public class BuildingManager {
 	}
 
 	public boolean canBuyBuilding(BaseBuilding b) {
-		return true;
-		/*Cost c = b.getCost();
+		Cost c = b.getCost();
 		Inventory i = GameSession.getInstance().getInventory();
 
 		if (i.getItemCount(ItemType.FOOD) < c.getFood()) {
@@ -684,7 +700,7 @@ public class BuildingManager {
 			return false;
 		}
 
-		return true;*/
+		return true;
 	}
 
 	public void buyBuilding(BaseBuilding b) {
