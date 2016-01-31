@@ -434,7 +434,6 @@ public class Play extends BasicGameState implements GameState,
 				g.draw(rect);			
 				g.drawString(building.getName(), ag_x + pad + 70, y);
 				String s[] = building.getCost().toString().split(",");
-				System.out.println(s.length);
 				switch(s.length){
 				case 1:
 					g.drawString(s[0], ag_x + pad + 70, y+14);
