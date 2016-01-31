@@ -26,6 +26,8 @@ public abstract class BaseBuilding implements IBuilding {
 	public double buildSpeed = 0.5;
 	public int fowArea = 1;
 	
+	public double scale = 1;
+	
 	public int yOffset = 0;
 	
 	public FootPrint footprint;
@@ -71,9 +73,10 @@ public abstract class BaseBuilding implements IBuilding {
 	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn, double imageScale, FootPrint footprintIn)throws SlickException
 	{
 		name = nameIn;
-		buildingInProgressImages = resizeImages(buildingInProgressImagesIn,imageScale);
-		buildingWorkingImages = resizeImages(buildingWorkingImagesIn,imageScale);
-		buildingIdleImages = resizeImages(buildingIdleImagesIn,imageScale);
+		buildingInProgressImages = new Vector<Image>(buildingInProgressImagesIn); //resizeImages(buildingInProgressImagesIn,imageScale);
+		buildingWorkingImages = new Vector<Image>(buildingWorkingImagesIn);//resizeImages(buildingWorkingImagesIn,imageScale);
+		buildingIdleImages = new Vector<Image>(buildingIdleImagesIn);//resizeImages(buildingIdleImagesIn,imageScale);
+		scale = imageScale;
 		subBuildings = subBuildingsIn;
 		animationSpeed = animationSpeedIn;		
 	
@@ -103,9 +106,7 @@ public abstract class BaseBuilding implements IBuilding {
 		{
 			if (buildingIdleImages.size() > 0)
 			{
-				int imageIndex =(int)(( System.currentTimeMillis()/ animationSpeed) % buildingIdleImages.size());
-				
-				Image image = buildingIdleImages.get(imageIndex);
+				Image image = buildingIdleImages.get(0);
 				image.draw(x,y,x+width,y+height,0,0, image.getWidth(), image.getHeight());
 			}
 		}

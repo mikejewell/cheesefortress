@@ -147,7 +147,7 @@ public class Play extends BasicGameState implements GameState,
 		gs.setPlay(this);
 
 		questManager.assignQuest();
-		Vector2f wreckageCenter = WreckageLocationDecider();
+//		Vector2f wreckageCenter = WreckageLocationDecider();
 
 		selectedItems = new ArrayList<Item>();
 		messenger = new Messenger();
@@ -171,7 +171,7 @@ public class Play extends BasicGameState implements GameState,
 
 		for (int i = 0; i < GameConfig.NUMBER_AGENTS; i++) {
 			PlayerUI player = playerManager.addPlayer(this);
-			player.setRandomLocation(wreckageCenter);
+			player.setRandomLocation(new Vector2f(ts.size/2,ts.size/2));
 		}
 
 		selectedAgent = playerManager.getAgents().get(0);
@@ -180,18 +180,18 @@ public class Play extends BasicGameState implements GameState,
 
 		miniMap = new MiniMap(ts, playerManager.getPlayers());
 
-		RandomTileObject(TileId.GRASS, SpriteType.TREE, 700, true);
-		RandomTileObject(TileId.DIRT, SpriteType.PALM_TREE, 200, true);
-		RandomTileObject(TileId.ROCK, SpriteType.PINE_TREE, 100, true);
-		RandomTileObject(TileId.SNOW, SpriteType.ALIEN_ARTIFACT, 1, false);
-		RandomTileObject(TileId.DIRT, SpriteType.ALTAR, 3, false);
-		RandomTileObject(TileId.WATER, SpriteType.BOAT, 2, false);
-		RandomTileObject(TileId.ROCK, SpriteType.CAVE, 2, false);
-		RandomTileObject(TileId.DIRT, TileId.POND, 100, false);
-		RandomTileObject(TileId.DIRT, TileId.TARPIT, 30, false);
-		RandomTileObject(TileId.GRASS, SpriteType.SHRUB, 30, false);
-		RandomTileObject(TileId.ROCK, SpriteType.CAVE, 10, false);
-		RandomTileObject(TileId.DIRT, SpriteType.WRECKAGE, 20, false);
+//		RandomTileObject(TileId.GRASS, SpriteType.TREE, 700, true);
+//		RandomTileObject(TileId.DIRT, SpriteType.PALM_TREE, 200, true);
+//		RandomTileObject(TileId.ROCK, SpriteType.PINE_TREE, 100, true);
+//		RandomTileObject(TileId.SNOW, SpriteType.ALIEN_ARTIFACT, 1, false);
+//		RandomTileObject(TileId.DIRT, SpriteType.ALTAR, 3, false);
+//		RandomTileObject(TileId.WATER, SpriteType.BOAT, 2, false);
+//		RandomTileObject(TileId.ROCK, SpriteType.CAVE, 2, false);
+//		RandomTileObject(TileId.DIRT, TileId.POND, 100, false);
+//		RandomTileObject(TileId.DIRT, TileId.TARPIT, 30, false);
+//		RandomTileObject(TileId.GRASS, SpriteType.SHRUB, 30, false);
+//		RandomTileObject(TileId.ROCK, SpriteType.CAVE, 10, false);
+//		RandomTileObject(TileId.DIRT, SpriteType.WRECKAGE, 20, false);
 
 		container.setShowFPS(false);
 
@@ -252,93 +252,79 @@ public class Play extends BasicGameState implements GameState,
 				quest_bar_height);
 	}
 
-	private void RandomTileObject(TileId tileType, SpriteType spriteType,
-			int treeCount, boolean preferGroupings) {
-		Random randomGenerator = new Random();
-		while (true) {
-			int x = randomGenerator.nextInt(ts.getSize() - 2) + 1;
-			int y = randomGenerator.nextInt(ts.getSize() - 2) + 1;
-			Tile tile = ts.getTile(x, y);
-			if (tile.id == tileType && tile.numSprites() == 0
-					&& tile.variant == 0) {
-				float surroundTree = 1;
-				if (ts.getTile(x + 1, y).hasSprite(spriteType))
-					surroundTree++;
-				if (ts.getTile(x - 1, y).hasSprite(spriteType))
-					surroundTree++;
-				if (ts.getTile(x, y + 1).hasSprite(spriteType))
-					surroundTree++;
-				if (ts.getTile(x, y - 1).hasSprite(spriteType))
-					surroundTree++;
-				float num = (float) randomGenerator.nextInt(100);
-				if (preferGroupings)
-					num /= surroundTree;
-				else
-					num /= 1.25;
-				num *= surroundTree;
+//	private void RandomTileObject(TileId tileType, SpriteType spriteType,
+//			int treeCount, boolean preferGroupings) {
+//		Random randomGenerator = new Random();
+//		while (true) {
+//			int x = randomGenerator.nextInt(ts.getSize() - 2) + 1;
+//			int y = randomGenerator.nextInt(ts.getSize() - 2) + 1;
+//			Tile tile = ts.getTile(x, y);
+//			if (tile.id == tileType && tile.numSprites() == 0
+//					&& tile.variant == 0) {
+//				float surroundTree = 1;
+//				if (ts.getTile(x + 1, y).hasSprite(spriteType))
+//					surroundTree++;
+//				if (ts.getTile(x - 1, y).hasSprite(spriteType))
+//					surroundTree++;
+//				if (ts.getTile(x, y + 1).hasSprite(spriteType))
+//					surroundTree++;
+//				if (ts.getTile(x, y - 1).hasSprite(spriteType))
+//					surroundTree++;
+//				float num = (float) randomGenerator.nextInt(100);
+//				if (preferGroupings)
+//					num /= surroundTree;
+//				else
+//					num /= 1.25;
+//				num *= surroundTree;
+//
+//				if (num > 50) {
+//					treeCount -= 1;
+//					tile.addSprite(spriteType);
+//				}
+//			}
+//
+//			if (treeCount == 0)
+//				return;
+//		}
+//
+//	}
 
-				if (num > 50) {
-					treeCount -= 1;
-					tile.addSprite(spriteType);
-				}
-			}
-
-			if (treeCount == 0)
-				return;
-		}
-
-	}
-
-	private Vector2f WreckageLocationDecider() {
-		int centerX = 0;
-		int centerY = 0;
-		while (true) {
-			Random randomGenerator = new Random();
-			centerX = randomGenerator.nextInt(ts.getSize() - 40) + 1;
-			centerY = randomGenerator.nextInt(ts.getSize() - 40) + 1;
-			Tile tile = ts.getTileFromWorld(centerX, centerY);
-			if (tile.id == TileId.GRASS) {
-				return new Vector2f(centerX, centerY);
-			}
-		}
-	}
-
-	private void RandomTileObject(TileId tileType, TileId tileDestType,
-			int treeCount, boolean preferGroupings) {
-		Random randomGenerator = new Random();
-		while (true) {
-			int x = randomGenerator.nextInt(ts.getSize() - 2) + 1;
-			int y = randomGenerator.nextInt(ts.getSize() - 2) + 1;
-			Tile tile = ts.getTile(x, y);
-			if (tile.id == tileType && tile.numSprites() == 0
-					&& tile.variant == 0) {
-				float surroundTree = 1;
-				if (ts.getTile(x + 1, y).id == tileDestType)
-					surroundTree++;
-				if (ts.getTile(x - 1, y).id == tileDestType)
-					surroundTree++;
-				if (ts.getTile(x, y + 1).id == tileDestType)
-					surroundTree++;
-				if (ts.getTile(x, y - 1).id == tileDestType)
-					surroundTree++;
-				float num = (float) randomGenerator.nextInt(100);
-				if (preferGroupings)
-					num /= surroundTree;
-				else
-					num /= 1.25;
-				num *= surroundTree;
-
-				if (num > 50) {
-					treeCount -= 1;
-					ts.setTileID(x, y, tileDestType);
-				}
-			}
-
-			if (treeCount == 0)
-				return;
-		}
-
-	}
+//	private void RandomTileObject(TileId tileType, TileId tileDestType,
+//			int treeCount, boolean preferGroupings) {
+//		Random randomGenerator = new Random();
+//		while (true) {
+//			int x = randomGenerator.nextInt(ts.getSize() - 2) + 1;
+//			int y = randomGenerator.nextInt(ts.getSize() - 2) + 1;
+//			Tile tile = ts.getTile(x, y);
+//			if (tile.id == tileType && tile.numSprites() == 0
+//					&& tile.variant == 0) {
+//				float surroundTree = 1;
+//				if (ts.getTile(x + 1, y).id == tileDestType)
+//					surroundTree++;
+//				if (ts.getTile(x - 1, y).id == tileDestType)
+//					surroundTree++;
+//				if (ts.getTile(x, y + 1).id == tileDestType)
+//					surroundTree++;
+//				if (ts.getTile(x, y - 1).id == tileDestType)
+//					surroundTree++;
+//				float num = (float) randomGenerator.nextInt(100);
+//				if (preferGroupings)
+//					num /= surroundTree;
+//				else
+//					num /= 1.25;
+//				num *= surroundTree;
+//
+//				if (num > 50) {
+//					treeCount -= 1;
+//					ts.setTileID(x, y, tileDestType);
+//				}
+//			}
+//
+//			if (treeCount == 0)
+//				return;
+//		}
+//
+//	}
 
 	public void renderWorld(Graphics g) {
 		ts.renderTiles(g);
@@ -422,16 +408,25 @@ public class Play extends BasicGameState implements GameState,
 		ArrayList<Rectangle> buildingZones = new ArrayList<Rectangle>();
 		ArrayList<BaseBuilding> validBuildings = new ArrayList<BaseBuilding>();
 
+		boolean currentBuildingReady = true;
+		if (currentBuilding != null && currentBuilding.buildProcess< 1)
+			currentBuildingReady = false;
+		
 		if (currentBuildingOptions != null) {
 			for (int i = 0; i < currentBuildingOptions.size(); i++) {
 				BaseBuilding building = currentBuildingOptions.get(i);
 
 				int y = ag_y + i * 60;
 				int pad = 7;
-				if (buildingManager.canBuyBuilding(building)) {
-					g.setColor(Color.black);
-				} else {
-					g.setColor(Color.red);
+				if (!currentBuildingReady) {
+					g.setColor(Color.gray);
+				}
+				else {
+					if (buildingManager.canBuyBuilding(building)) {
+						g.setColor(Color.black);
+					} else {
+						g.setColor(Color.red);
+					}
 				}
 				g.drawString(building.getName(), ag_x + pad + 70, y + pad);
 
@@ -439,10 +434,12 @@ public class Play extends BasicGameState implements GameState,
 
 				Rectangle rect = new Rectangle(ag_x, y, 50, 50);
 
-				if (buildingManager.canBuyBuilding(building)) {
-
-					buildingZones.add(rect);
-					validBuildings.add(building);
+				if (currentBuildingReady) {
+					if (buildingManager.canBuyBuilding(building)) {
+	
+						buildingZones.add(rect);
+						validBuildings.add(building);
+					}
 				}
 			}
 		}
@@ -550,7 +547,7 @@ public class Play extends BasicGameState implements GameState,
 		g.setColor(Color.black);
 		for (int i = 0; i < ItemType.values().length; i++) {
 
-			int x = inventory_zone_x + (i * f_h) + (i * 6);
+			int x = inventory_zone_x + (int)(i * f_h * 2.5f) + (i * 6);
 			if (i < items.size()) {
 				itemImages.get(items.get(i)).draw(x, f_y, f_h, f_h);
 
@@ -565,12 +562,17 @@ public class Play extends BasicGameState implements GameState,
 					g.setColor(Color.black);
 					g.drawString("" + count, x + f_h - w, f_y + f_h - h);
 				}
+				
 			} else {
 				g.setColor(Color.black);
 				g.fillRect(x, f_y, f_h, f_h);
 			}
+			
 			g.setColor(Color.darkGray);
 			g.drawRect(x - 1, f_y - 1, f_h + 2, f_h + 2);
+			
+			g.setColor(Color.black);
+			g.drawString(ItemType.values()[i].toString(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M"))/2);
 		}
 		// Draw toolTips
 		int mouseX = input.getMouseX();
@@ -839,8 +841,8 @@ public class Play extends BasicGameState implements GameState,
 			return "Cheese is everyone's favourite food.";
 		case STONE:
 			return "Breaks bones.";
-		case GOLD:
-			return "Keep away from dragons.";
+		case CHEESE:
+			return "Cheese. Yes, the stuff the moon's made of.";
 		case METAL:
 			return "Harder than rock.";
 		case WOOD:
