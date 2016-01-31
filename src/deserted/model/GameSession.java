@@ -1,12 +1,17 @@
 package deserted.model;
 
+import java.util.LinkedList;
+
 import org.joda.time.LocalDateTime;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import cheese.model.PlayerManager;
 import cheese.model.building.BuildingManager;
+import cheese.model.god.Catastrophe;
 import cheese.model.god.GodManager;
 import cheese.model.quest.QuestManager;
+import deserted.Messenger;
 import deserted.model.item.ItemType;
 import deserted.player.PlayerReachedDestinationEvent;
 
@@ -31,13 +36,18 @@ public class GameSession {
 	private PlayerManager playerManager;
 	private GodManager godManager;
 	
+	private Messenger messenger;
+	
 	private double probabilitySettler = 1.0;
 	private double probabilityFood = 1.0;
 
+	private LinkedList<Catastrophe> catastrophes;
+	
 	private GameSession() {
 		this.setCompleted(false);
 		this.setCompletionType(0);
 		this.inventory = new Inventory();
+		this.catastrophes = new LinkedList<Catastrophe>();
 
 		this.setPlayerManager(new PlayerManager());
 
@@ -172,5 +182,24 @@ public class GameSession {
 
 	public void setGodManager(GodManager godManager) {
 		this.godManager = godManager;
+	}
+	
+	public void queueCatastrophe(Catastrophe c){
+		catastrophes.add(c);
+	}
+	
+	public void renderCatastrophes(Graphics g){
+		for(Catastrophe c : catastrophes){
+			c.render(g);
+		}
+		catastrophes.clear();
+	}
+	
+	public void setMessenger(Messenger messenger){
+		this.messenger = messenger;
+	}
+	
+	public Messenger getMessenger(){
+		return messenger;
 	}
 }

@@ -104,8 +104,6 @@ public class QuestManager {
 				else if(s2.size() > 0) {
 					s2.get(0).setOffered(true);
 				}
-				
-				super.onComplete();
 			}
 			
 			@Override
@@ -213,9 +211,13 @@ public class QuestManager {
 
 			@Override
 			public boolean canComplete() {
-				int population = GameSession.getInstance().getPlayerManager()
-						.getAgents().size();
-				if (population >= getNumber()) {
+				int pop = 0;
+				for(Agent agent: GameSession.getInstance().getPlayerManager().getAgents()) {
+					if(agent.getState() != AgentState.DEAD) {
+						pop++;
+					}
+				}
+				if (pop >= getNumber()) {
 					return true;
 				}
 				return false;
@@ -233,12 +235,12 @@ public class QuestManager {
 		};
 
 		armyQuest.addRequirement(barracks);
-
-		sacQuest.addRequirement(hall);
-		feedQuest.addRequirement(hunter);
-		hoardeQuest.addRequirement(hall);
-		armyQuest.addRequirement(hall);
-		statue.addRequirement(hall);
+//
+//		sacQuest.addRequirement(hall);
+//		feedQuest.addRequirement(hunter);
+//		hoardeQuest.addRequirement(hall);
+//		armyQuest.addRequirement(hall);
+//		statue.addRequirement(hall);
 		
 		questList.add(sacQuest);
 		questList.add(feedQuest);

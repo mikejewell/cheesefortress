@@ -1,5 +1,7 @@
 package cheese.model.god;
 
+import org.newdawn.slick.Graphics;
+
 import cheese.model.TimedItem;
 
 public class Catastrophe extends TimedItem {
@@ -13,6 +15,10 @@ public class Catastrophe extends TimedItem {
 	public void deactivate() {
 		this.setActive(false);
 		System.out.println("Catastrophe inactive");
+	}
+	
+	public void render(Graphics g){
+		
 	}
 
 	public boolean isActive() {
