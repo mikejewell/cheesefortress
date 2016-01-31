@@ -41,8 +41,11 @@ public class BuildingManager {
 				workingImage.add(new Image(
 						"images/buildings/herbary/renders/work/45/"
 								+ getNumber(i) + ".png"));
+			
+			FootPrint fp = new FootPrint(0,1,1,0);
+			
 			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage,
-					workingImage, null, 5000, 0.6) {
+					workingImage, null, 5000, 0.6,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					if (Math.random() < GameSession.getInstance()
@@ -155,25 +158,7 @@ public class BuildingManager {
 			addBuilding(castle);
 		}
 
-		BaseBuilding barracksAdvanced = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/barracks/renders/idle/45/000.png"));
 
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(barracksTraining);
-			subBuildings.add(barracksStable);
-			subBuildings.add(barracksTower);
-			subBuildings.add(castle);
-
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			barracksAdvanced = new ResourceBuilding("Barracks", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 0.7,fp);
-			barracksAdvanced.setCost(new Cost(0, 1, 3, 3));
-			addBuilding(barracksAdvanced);
-		}
 
 		BaseBuilding signalFireWooden = null;
 		{
@@ -187,11 +172,15 @@ public class BuildingManager {
 						"images/buildings/signalfire_wooden/as_signalfire_wooden0/idle/45/0"
 								+ getNumber(i) + ".png"));
 			signalFireWooden = new ResourceBuilding("Signal Fire", "",
-					sfIdleImage, sfIdleImage, sfWorkingImage, null, 100, 1.5);
+					sfIdleImage, sfIdleImage, sfWorkingImage, null, 100, 1);
 			signalFireWooden.setCost(new Cost(0, 1, 3, 3));
+			
+			signalFireWooden.yOffset = -30;
+			
 			addBuilding(signalFireWooden);
 		}
 
+	
 		BaseBuilding signalFire = null;
 		{
 			Vector<Image> sfIdleImage = new Vector<Image>();
@@ -203,9 +192,45 @@ public class BuildingManager {
 						"images/buildings/signal_fire/renders/work/45/"
 								+ getNumber(i) + ".png"));
 			signalFire = new ResourceBuilding("Signal Fire", "", sfIdleImage,
-					sfIdleImage, sfWorkingImage, null, 100, 1.5);
+					sfIdleImage, sfWorkingImage, null, 100, 1);
 			signalFire.setCost(new Cost(0, 1, 3, 3));
+			
+			signalFire.yOffset = -30;
 			addBuilding(signalFire);
+		}
+		
+		BaseBuilding outpost = null;
+		{
+			Vector<Image> sfIdleImage = new Vector<Image>();
+			sfIdleImage.add(new Image(
+					"images/buildings/Outpost/old_outpost_iso_00000.png"));
+			
+			outpost = new ResourceBuilding("Signal Fire", "", sfIdleImage,
+					sfIdleImage, sfIdleImage, null, 100, 0.15);
+			outpost.setCost(new Cost(0, 1, 3, 3));
+			addBuilding(outpost);
+		}
+		
+		
+		BaseBuilding barracksAdvanced = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/barracks/renders/idle/45/000.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(barracksTraining);
+			subBuildings.add(barracksStable);
+			subBuildings.add(castle);
+			subBuildings.add(signalFireWooden);
+			subBuildings.add(signalFire);
+
+			FootPrint fp = new FootPrint(1,1,1,1);
+			
+			barracksAdvanced = new ResourceBuilding("Barracks", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 0.7,fp);
+			barracksAdvanced.setCost(new Cost(0, 1, 3, 3));
+			addBuilding(barracksAdvanced);
 		}
 
 		BaseBuilding weaponSmith = null;
@@ -227,7 +252,7 @@ public class BuildingManager {
 			addBuilding(weaponSmith);
 		}
 
-		BaseBuilding barracks = null;
+		/*BaseBuilding barracks = null;
 		{
 			Vector<Image> bkProgressImage = new Vector<Image>();
 			Image bkImage = new Image("images/buildings/barracks.png");
@@ -246,7 +271,7 @@ public class BuildingManager {
 					bkWorkingImage, bkWorkingImage, subBuildings, 100,fp);
 			barracks.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracks);
-		}
+		}*/
 
 		BaseBuilding fireStation = null;
 		{
@@ -569,14 +594,16 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(hunterTent);
 			subBuildings.add(fireStation);
-			subBuildings.add(barracks);
+			subBuildings.add(barracksAdvanced);
 			subBuildings.add(lumberJack);
 			subBuildings.add(clayPit);
 			subBuildings.add(religionTent);
 			subBuildings.add(well);
 			subBuildings.add(blacksmith);
 			subBuildings.add(residentTent);
-
+			subBuildings.add(outpost);
+			subBuildings.add(signalFireWooden);
+			subBuildings.add(signalFire);
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
 			townHall = new ResourceBuilding("Town Hall", "", images,

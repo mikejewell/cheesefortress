@@ -26,6 +26,8 @@ public abstract class BaseBuilding implements IBuilding {
 	public double buildSpeed = 0.5;
 	public int fowArea = 1;
 	
+	public int yOffset = 0;
+	
 	public FootPrint footprint;
 	
 	public BaseBuilding(String name, String desc) {

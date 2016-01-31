@@ -148,14 +148,12 @@ public class WedgeGFX {
         	//sprite = SpriteManager.getSprite(type);
         	if(type != null){
         		Image buildingImage = type.getCurrentImage();
-	    		scaleX = buildingImage.getWidth()/35;
-	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
-	        	scaleY = buildingImage.getHeight()/35;
-	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
+        		scaleXOffset = (buildingImage.getWidth()/2) * camera.zoom;
+	        	scaleYOffset = (buildingImage.getHeight()/2) * camera.zoom;
 	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
 	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
 	    		if(camera.isOnScreen(x, row)){
-            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleXOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleYOffset+ (type.base.yOffset* camera.zoom), finalX+scaleXOffset, finalY+scaleYOffset+ (type.base.yOffset* camera.zoom), 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
         	}
         }
@@ -172,16 +170,13 @@ public class WedgeGFX {
      //   for(int x = 0; x < size; x++){
         	if (tile.cornerY == row)
         	{
-        		System.out.println("Hi");
         		Image buildingImage = building.getCurrentImage();
-	    		scaleX = buildingImage.getWidth()/35;
-	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
-	        	scaleY = buildingImage.getHeight()/35;
-	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
-	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
+	        	scaleXOffset = (buildingImage.getWidth()/2) * camera.zoom;
+	        	scaleYOffset = (buildingImage.getHeight()/2) * camera.zoom;
+	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom);
 	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
 	    		if(camera.isOnScreen(tile.cornerX, row)){
-            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleXOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleYOffset+ (building.yOffset* camera.zoom), finalX+scaleXOffset, finalY+scaleYOffset+ (building.yOffset* camera.zoom), 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
         	}
        // }
