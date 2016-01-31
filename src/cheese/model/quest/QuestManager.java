@@ -45,6 +45,7 @@ public class QuestManager {
 		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there that we could be eating!", 50, GodType.TRIBE, "Hunter Abode"));
 		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get resources from other villages.", 50, GodType.TRIBE, "Stable"));
 		
+		questList.add(new QuestTribute("Dragons Hoard", "My precious... Give me 20 metal!", 50, GodType.NEUTRAL, new Cost(0,0,0,20)));
 		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
 		
 		// Shuffle

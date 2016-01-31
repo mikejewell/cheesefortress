@@ -94,6 +94,9 @@ public class WedgeTileSystem {
 					case 1:
 						tiles[x][y].setOverlay(OverlayType.TREE2);	
 						break;
+					case 2:
+						tiles[x][y].setOverlay(OverlayType.TREE2);	
+						break;
 					default:
 						tiles[x][y].setOverlay(OverlayType.TREE1);	
 						break;
