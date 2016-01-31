@@ -19,7 +19,7 @@ public class MiniMap {
 	
 	public void render(Graphics g){
 		g.setColor(Color.gray.darker());
-		g.fillRect(5, 55, ts.size, ts.size);
+		g.fillRect(5, 125, ts.size, ts.size);
 		for(int x = 0; x < ts.size; x += 2){
 			for(int y = 0; y < ts.size; y += 2){
 				if(ts.getTile(x, y).vis > 0){
@@ -43,27 +43,27 @@ public class MiniMap {
 							g.setColor(Color.orange);
 							break;
 					}
-					g.fillRect(x+5, y+55, 2, 2);
+					g.fillRect(x+5, y+125, 2, 2);
 				}
 			}
 		}
 		g.setColor(Color.red);
 		for(PlayerUI p : players){
-			g.fillRect(p.location.x+4, p.location.y+54, 3, 3);
+			g.fillRect(p.location.x+4, p.location.y+124, 3, 3);
 		}
 		int x = (int)(ts.camera.x - (ts.camera.windowSize.getX()/ts.resTimesScale)/2);
 		int y = (int)(ts.camera.y - (ts.camera.windowSize.getY()/ts.resTimesScale)/2);
-		g.drawRect(x+5, y+55, ts.camera.windowSize.getX()/ts.resTimesScale, ts.camera.windowSize.getY()/ts.resTimesScale);
+		g.drawRect(x+5, y+125, ts.camera.windowSize.getX()/ts.resTimesScale, ts.camera.windowSize.getY()/ts.resTimesScale);
 	}
 	
 	public void goTo(int mouseX, int mouseY){
 		ts.camera.x = (mouseX - 5);
-		ts.camera.y = (mouseY - 55);
+		ts.camera.y = (mouseY - 125);
 		ts.camera.isFollowing = false;
 	}
 	
 	public boolean isWithin(int mouseX, int mouseY){
-		if(mouseX > 5 && mouseX < ts.size+5 && mouseY > 55 && mouseY < ts.size+55)
+		if(mouseX > 5 && mouseX < ts.size+5 && mouseY > 125 && mouseY < ts.size+125)
 			return true;
 		return false;
 	}

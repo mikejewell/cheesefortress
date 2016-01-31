@@ -105,21 +105,6 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
-//        for(int x = 0; x < tiles[0].length; x++){
-//        	type = tiles[x][row].tile.getSpriteToDraw();
-//        	sprite = SpriteManager.getSprite(type);
-//        	if(sprite != null && !sprite.isOnGround()){
-//	        	scale = sprite.getScale();
-//	        	scaleOffset = (scale - 1)*resTimesScale*0.5f;
-//	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
-//	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y; 
-//	    		if(camera.isOnScreen(x, row)){
-//	    			Point src = sprite.getTexCoord(tiles[x][row].tile.getSpriteData(type).timeOffset);
-//            		if(src != null)
-//            			g.drawImage(spriteMap, finalX, finalY, finalX+resTimesScale+scaleOffset*2, finalY+resTimesScale+scaleOffset*2, src.getX(), src.getY(), src.getX()+32, src.getY()+32);
-//	        	}
-//        	}
-//        }
         
         WedgeTileMap tileMap = ts.getTileMap();
         Image tex = tileMap.getTexture();

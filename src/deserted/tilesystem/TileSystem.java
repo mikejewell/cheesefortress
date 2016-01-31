@@ -70,10 +70,10 @@ public class TileSystem {
 		//PerlinMapGenerator loader = new PerlinMapGenerator();
 
 		ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64, "assets/maps/2.map", windowSize);
-		ts.addGrass(0.07f);
-		ts.addSticks(0.01f);
-		ts.addBushes(0.05f);
-		ts.addTrees(0.1f);
+		ts.addGrass(0.05f);
+		ts.addSticks(0.005f);
+		ts.addBushes(0.03f);
+		ts.addTrees(0.07f);
 		
 		
 		setTileMap("dg_edging132.gif");
