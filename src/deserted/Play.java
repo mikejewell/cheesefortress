@@ -150,8 +150,6 @@ public class Play extends BasicGameState implements GameState,
 		selectedItems = new ArrayList<Item>();
 		messenger = new Messenger();
 
-		stickFigure = new Image("images/icons/stickperson.png");
-
 		itemImages = new HashMap<ItemType, Image>();
 		for (ItemType type : ItemType.values()) {
 			Item item = ItemFactory.createItem(type);
