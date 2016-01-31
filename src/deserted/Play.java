@@ -404,16 +404,25 @@ public class Play extends BasicGameState implements GameState,
 		ArrayList<Rectangle> buildingZones = new ArrayList<Rectangle>();
 		ArrayList<BaseBuilding> validBuildings = new ArrayList<BaseBuilding>();
 
+		boolean currentBuildingReady = true;
+		if (currentBuilding != null && currentBuilding.buildProcess< 1)
+			currentBuildingReady = false;
+		
 		if (currentBuildingOptions != null) {
 			for (int i = 0; i < currentBuildingOptions.size(); i++) {
 				BaseBuilding building = currentBuildingOptions.get(i);
 
 				int y = ag_y + i * 60;
 				int pad = 7;
-				if (buildingManager.canBuyBuilding(building)) {
-					g.setColor(Color.black);
-				} else {
-					g.setColor(Color.red);
+				if (!currentBuildingReady) {
+					g.setColor(Color.gray);
+				}
+				else {
+					if (buildingManager.canBuyBuilding(building)) {
+						g.setColor(Color.black);
+					} else {
+						g.setColor(Color.red);
+					}
 				}
 				g.drawString(building.getName(), ag_x + pad + 70, y + pad);
 
@@ -421,10 +430,12 @@ public class Play extends BasicGameState implements GameState,
 
 				Rectangle rect = new Rectangle(ag_x, y, 50, 50);
 
-				if (buildingManager.canBuyBuilding(building)) {
-
-					buildingZones.add(rect);
-					validBuildings.add(building);
+				if (currentBuildingReady) {
+					if (buildingManager.canBuyBuilding(building)) {
+	
+						buildingZones.add(rect);
+						validBuildings.add(building);
+					}
 				}
 			}
 		}
