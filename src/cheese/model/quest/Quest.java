@@ -30,7 +30,7 @@ abstract public class Quest extends TimedItem {
 		this.setQuestName(questName);
 		this.setQuestDescription(questDescription);
 		this.setGod(god);
-		this.hours = 0;
+		this.setHours(0);
 		this.setValue(value);
 		this.setCompleted(false);
 		this.requirements = new ArrayList<Quest>();
@@ -61,18 +61,18 @@ abstract public class Quest extends TimedItem {
 	}
 	
 	public int getHoursElapsed() {
-		return this.hours;
+		return this.getHours();
 	}
 	
 	@Override
 	public void onTick() {
 		
-		hours++;
-		if(getHoursToFinish() > 0 && hours >= getHoursToFinish()) {
+		setHours(getHours() + 1);
+		if(getHoursToFinish() > 0 && getHours() >= getHoursToFinish()) {
 			stopTiming();
 			GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(-this.getValue());
 			this.setCompleted(true);
-			this.hours = 0;
+			this.setHours(0);
 			onFailure();
 		}
 	}
@@ -166,5 +166,13 @@ abstract public class Quest extends TimedItem {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public int getHours() {
+		return hours;
+	}
+
+	public void setHours(int hours) {
+		this.hours = hours;
 	}
 }

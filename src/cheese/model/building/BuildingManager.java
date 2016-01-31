@@ -16,7 +16,7 @@ public class BuildingManager {
 	ArrayList<Building> buildingsInPlay;
 	ArrayList<BaseBuilding> availableBuildings;
 
-	//Adds a building
+	// Adds a building
 	private void addBuilding(BaseBuilding building) {
 		availableBuildings.add(building);
 	}
@@ -31,135 +31,14 @@ public class BuildingManager {
 		this.availableBuildings = new ArrayList<BaseBuilding>();
 		this.buildingsInPlay = new ArrayList<Building>();
 
-		BaseBuilding vineyard = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/vineyard/work/45/000.png"));
-			Vector<Image> workingImage = new Vector<Image>();
-			for (int i = 0; i < 120; i++)
-				workingImage.add(new Image(
-						"images/buildings/vineyard/work/45/"
-								+ getNumber(i) + ".png"));
-			
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			vineyard = new ResourceBuilding("Vineyard", "", idleImage, idleImage,
-					workingImage, null, 100, 120,fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()*2) {
-						GameSession.getInstance().getInventory()
-								.addItem(ItemType.FOOD);
-					}
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			vineyard.setCost(new Cost(0,20,0,0));
-			addBuilding(vineyard);
-		}
-		
-		BaseBuilding alvearies = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/alvearies/work/45/000.png"));
-			Vector<Image> workingImage = new Vector<Image>();
-			for (int i = 0; i < 20; i++)
-				workingImage.add(new Image(
-						"images/buildings/alvearies/work/45/"
-								+ getNumber(i) + ".png"));
-			
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			alvearies = new ResourceBuilding("Bees", "", idleImage, idleImage,
-					workingImage, null, 50, 120,fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()*2) {
-						GameSession.getInstance().getInventory()
-								.addItem(ItemType.FOOD);
-					}
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			alvearies.setCost(new Cost(0, 10, 0, 5));
-			addBuilding(alvearies);
-		}
-		
-		BaseBuilding herbary = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/herbary/renders/idel_empty/45/000.png"));
-			Vector<Image> workingImage = new Vector<Image>();
-			for (int i = 0; i < 140; i++)
-				workingImage.add(new Image(
-						"images/buildings/herbary/renders/idel_empty/45/"
-								+ getNumber(i) + ".png"));
-			
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage,
-					workingImage, null, 100, 120,fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()*2) {
-						GameSession.getInstance().getInventory()
-								.addItem(ItemType.FOOD);
-					}
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			herbary.setCost(new Cost(0, 0, 7, 0));
-			addBuilding(herbary);
-		}
-
-		BaseBuilding farm = null;
-		{
-			Vector<Image> fmProgressImage = new Vector<Image>();
-			Image fmImage = (new Image("images/buildings/rem_000.png")).getScaledCopy(0.6f);
-			//fmProgressImage.add(fmImage.getSubImage(0, 64, 64, 64));
-			Vector<Image> fmWorkingImage = new Vector<Image>();
-			fmWorkingImage.add(fmImage);//fmImage.getSubImage(0, 0, 64, 64));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(herbary);
-			subBuildings.add(vineyard);
-			subBuildings.add(alvearies);
-
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			farm = new ResourceBuilding("Farm", "", fmWorkingImage,
-					fmWorkingImage, fmWorkingImage, subBuildings, 100, 100, fp);
-			farm.setCost(new Cost(0, 10, 5, 0));
-			addBuilding(farm);
-		}
-
-	/*	BaseBuilding barracksTower = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/tower.png"));
-			barracksTower = new ResourceBuilding("Watch Tower", "", idleImage,
-					idleImage, idleImage, null, 100);
-			barracksTower.setCost(new Cost(0, 1, 3, 3));
-			addBuilding(barracksTower);
-		}*/
+		/*
+		 * BaseBuilding barracksTower = null; { Vector<Image> idleImage = new
+		 * Vector<Image>(); idleImage.add(new
+		 * Image("images/buildings/tower.png")); barracksTower = new
+		 * ResourceBuilding("Watch Tower", "", idleImage, idleImage, idleImage,
+		 * null, 100); barracksTower.setCost(new Cost(0, 1, 3, 3));
+		 * addBuilding(barracksTower); }
+		 */
 
 		BaseBuilding barracksWatchTowerWood = null;
 		{
@@ -170,7 +49,7 @@ public class BuildingManager {
 					idleImage, idleImage, idleImage, null, 100, 60);
 			barracksWatchTowerWood.setCost(new Cost(0, 20, 2, 5));
 			addBuilding(barracksWatchTowerWood);
-			barracksWatchTowerWood.yOffset =-22;
+			barracksWatchTowerWood.yOffset = -22;
 			barracksWatchTowerWood.fowArea = 5;
 		}
 
@@ -183,54 +62,9 @@ public class BuildingManager {
 					idleImage, idleImage, idleImage, null, 100, 60);
 			barracksWatchTowerStone.setCost(new Cost(0, 2, 20, 5));
 			addBuilding(barracksWatchTowerStone);
-			barracksWatchTowerStone.yOffset =-22;
+			barracksWatchTowerStone.yOffset = -22;
 			barracksWatchTowerStone.fowArea = 6;
 		}
-
-		BaseBuilding barracksStable = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/stable (1).png"));
-			
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			barracksStable = new ResourceBuilding("Stable", "", idleImage,
-					idleImage, idleImage, null, 100, 160,fp);
-			barracksStable.setCost(new Cost(0, 1, 3, 3));
-			addBuilding(barracksStable);
-		}
-
-		BaseBuilding barracksTraining = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/archery_range.png"));
-		
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			barracksTraining = new ResourceBuilding("Training", "", idleImage,
-					idleImage, idleImage, null, 100, 160,fp);
-			barracksTraining.setCost(new Cost(0, 1, 3, 3));
-			addBuilding(barracksTraining);
-		}
-
-		BaseBuilding castle = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/castle.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(barracksWatchTowerWood);
-			subBuildings.add(barracksWatchTowerStone);
-
-			FootPrint fp = new FootPrint(1,2,2,1);
-			
-			castle = new ResourceBuilding("Mega Barracks", "", idleImage, idleImage,
-					idleImage, subBuildings, 100, 200,fp);
-			castle.setCost(new Cost(0, 8, 40, 43));
-			addBuilding(castle);
-		}
-
-
 
 		BaseBuilding signalFireWooden = null;
 		{
@@ -246,13 +80,12 @@ public class BuildingManager {
 			signalFireWooden = new ResourceBuilding("Signal Fire Cheap", "",
 					sfIdleImage, sfIdleImage, sfWorkingImage, null, 100, 60);
 			signalFireWooden.setCost(new Cost(0, 5, 1, 1));
-			
+
 			signalFireWooden.yOffset = -30;
 			signalFireWooden.fowArea = 3;
 			addBuilding(signalFireWooden);
 		}
 
-	
 		BaseBuilding signalFire = null;
 		{
 			Vector<Image> sfIdleImage = new Vector<Image>();
@@ -263,225 +96,38 @@ public class BuildingManager {
 				sfWorkingImage.add(new Image(
 						"images/buildings/signal_fire/renders/work/45/"
 								+ getNumber(i) + ".png"));
-			signalFire = new ResourceBuilding("Signal Fire Pricey", "", sfIdleImage,
-					sfIdleImage, sfWorkingImage, null, 100, 60);
+			signalFire = new ResourceBuilding("Signal Fire Pricey", "",
+					sfIdleImage, sfIdleImage, sfWorkingImage, null, 100, 60);
 			signalFire.setCost(new Cost(0, 3, 2, 1));
-			
+
 			signalFire.yOffset = -30;
 			signalFire.fowArea = 4;
 			addBuilding(signalFire);
 		}
-		
+
 		BaseBuilding outpost = null;
 		{
 			Vector<Image> sfIdleImage = new Vector<Image>();
 			sfIdleImage.add(new Image(
 					"images/buildings/Outpost/old_outpost_iso_00000.png"));
-			
+
 			outpost = new ResourceBuilding("Outpost", "", sfIdleImage,
 					sfIdleImage, sfIdleImage, null, 100, 60);
 			outpost.setCost(new Cost(0, 1, 0, 1));
 			addBuilding(outpost);
-			
-			outpost.yOffset =-5;
+
+			outpost.yOffset = -5;
 			outpost.fowArea = 2;
 		}
 		
-		
-		BaseBuilding barracksAdvanced = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/barracks/renders/idle/45/000.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(barracksTraining);
-			subBuildings.add(barracksStable);
-			subBuildings.add(castle);
-			subBuildings.add(signalFireWooden);
-			subBuildings.add(signalFire);
-
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			barracksAdvanced = new ResourceBuilding("Barracks", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 120,fp);
-			barracksAdvanced.setCost(new Cost(0, 1, 3, 3));
-			addBuilding(barracksAdvanced);
-		}
-
-		BaseBuilding weaponSmith = null;
-		{
-			Vector<Image> wsIdleImage = new Vector<Image>();
-			wsIdleImage.add(new Image(
-					"images/buildings/weaponsmith/renders/idle/45/000.png"));
-			Vector<Image> wsWorkingImage = new Vector<Image>();
-			for (int i = 0; i < 8; i++)
-				wsWorkingImage.add(new Image(
-						"images/buildings/weaponsmith/renders/work/45/"
-								+ getNumber(i) + ".png"));
-			
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			weaponSmith = new ResourceBuilding("Weaponsmith", "", wsIdleImage,
-					wsIdleImage, wsWorkingImage, null, 100,120,fp);
-			weaponSmith.setCost(new Cost(0, 0, 10, 0));
-			addBuilding(weaponSmith);
-		}
-
-	
-
-		BaseBuilding megaMine = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/UH/as_mine5x5/idle/45/0.png"));
-			Vector<Image> workingImage = new Vector<Image>();
-			for (int i = 1; i < 24; i++)
-				workingImage.add(new Image(
-						"images/buildings/UH/as_mine5x5/work/45/"
-								+ getNumber2(i) + ".png"));
-			
-			FootPrint fp = new FootPrint(1,4,4,0);
-			
-			megaMine = new ResourceBuilding("Mega Mine", "", idleImage,
-					idleImage, workingImage, null, 100,200,fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.STONE);
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.METAL);
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			megaMine.setCost(new Cost(0, 6, 26, 6));
-			addBuilding(megaMine);
-		}
-
-		BaseBuilding goldMine = null;
-		{
-			Vector<Image> gmProgressImage = new Vector<Image>();
-			Image gmImage = new Image("images/buildings/gold_mine.png");
-			gmProgressImage.add(gmImage.getSubImage(0, 192, 96, 96));
-			Vector<Image> gmIdleImage = new Vector<Image>();
-			gmIdleImage.add(gmImage.getSubImage(0, 0, 96, 96));
-			Vector<Image> gmWorkingImage = new Vector<Image>();
-			gmWorkingImage.add(gmImage.getSubImage(0, 96, 96, 96));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(megaMine);
-
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			goldMine = new ResourceBuilding("Gold Mine", "", gmProgressImage,
-					gmIdleImage, gmWorkingImage, subBuildings, 100,80, fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.METAL);
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			goldMine.setCost(new Cost(0, 7, 0, 0));
-			addBuilding(goldMine);
-		}
-
-		BaseBuilding clayPit = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/UH/as_clay_pit0/idle/45/0.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(goldMine);
-
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			clayPit = new ResourceBuilding("Clay Pit", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 120, fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.STONE);
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			clayPit.setCost(new Cost(0, 4, 0, 0));
-			addBuilding(clayPit);
-		}
-
-		BaseBuilding lumberMill = null;
-		{
-			Vector<Image> lmProgressImage = new Vector<Image>();
-			Image lmImage = new Image("images/buildings/lumber_mill.png");
-			//lmProgressImage.add(lmImage);//.getSubImage(0, 96, 96, 96));
-			Vector<Image> lmWorkingImage = new Vector<Image>();
-			lmWorkingImage.add(lmImage);//.getSubImage(0, 0, 96, 96));
-			
-			FootPrint fp = new FootPrint(0,0,0,0);
-			
-			lumberMill = new ResourceBuilding("Lumber Mill", "",
-					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100,70, fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.WOOD);
-				}
-
-				@Override
-				public double getDuration() {
-					return 6 * 60;
-				}
-			};
-			lumberMill.setCost(new Cost(0, 13, 0, 2));
-			addBuilding(lumberMill);
-		}
-
-		BaseBuilding lumberJack = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage
-					.add(new Image(
-							"images/buildings/tent/lumberjack/as_lumberjack0/idle/45/0.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(lumberMill);
-
-			lumberJack = new ResourceBuilding("Lumber Jack", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 60) {
-				@Override
-				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.WOOD);
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			lumberJack.setCost(new Cost(0, 5, 0, 0));
-			addBuilding(lumberJack);
-		}
+		/** Statues **/
 
 		BaseBuilding gargoyl = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/gargyle.png"));
 			gargoyl = new ResourceBuilding("Gargoyl", "", idleImage, idleImage,
-					idleImage, null, 100,120);
+					idleImage, null, 100, 120);
 			gargoyl.setCost(new Cost(0, 0, 25, 0));
 			addBuilding(gargoyl);
 		}
@@ -491,7 +137,7 @@ public class BuildingManager {
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/demon01.png"));
 			demon = new ResourceBuilding("Demon", "", idleImage, idleImage,
-					idleImage, null, 100,120);
+					idleImage, null, 100, 120);
 			demon.setCost(new Cost(0, 0, 30, 0));
 			addBuilding(demon);
 		}
@@ -499,16 +145,17 @@ public class BuildingManager {
 		BaseBuilding tombStone = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/cursed_grave.png").getSubImage(0, 256, 128, 128));
+			idleImage.add(new Image("images/buildings/cursed_grave.png")
+					.getSubImage(0, 256, 128, 128));
 
-			tombStone = new ResourceBuilding("Retreat for the dead", "", idleImage,
-					idleImage, idleImage, null, 100, 60);
+			tombStone = new ResourceBuilding("Retreat for the dead", "",
+					idleImage, idleImage, idleImage, null, 100, 60);
 			tombStone.setCost(new Cost(0, 0, 1, 0));
 			addBuilding(tombStone);
 		}
-
 		
+		/** Religion **/
+
 		BaseBuilding church = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
@@ -518,41 +165,11 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(gargoyl);
 			subBuildings.add(demon);
-			
 
 			church = new ResourceBuilding("Advanced Religion", "", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60);
 			church.setCost(new Cost(0, 2, 2, 2));
 			addBuilding(church);
-		}
-
-	
-		
-		BaseBuilding blacksmith = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/blacksmith.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(weaponSmith);
-
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			blacksmith = new ResourceBuilding("Blacksmith", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 150,fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.METAL);
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			blacksmith.setCost(new Cost(0, 0, 4, 0));
-			addBuilding(blacksmith);
 		}
 
 		BaseBuilding religionTent = null;
@@ -573,102 +190,6 @@ public class BuildingManager {
 		}
 
 		//
-		
-		BaseBuilding fisherTent = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/fisherman/as_fisherman0/idle/45/0.png"));
-
-			fisherTent = new ResourceBuilding("Fisher Hovel", "", idleImage,
-					idleImage, idleImage, null, 100, 60) {
-				@Override
-				public void onBuildingTick(Building building) {
-					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()*1.5) {
-						GameSession.getInstance().getInventory()
-								.addItem(ItemType.FOOD);
-					}
-					else {
-						System.out.println("No food for you");
-					}
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			fisherTent.setCost(new Cost(0, 5, 0, 0));
-			addBuilding(fisherTent);
-		}
-
-		BaseBuilding smallFarmTent = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/smallFarm.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(farm);
-
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			smallFarmTent = new ResourceBuilding("Small Farm", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 120,fp) {
-				@Override
-				public void onBuildingTick(Building building) {
-					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()) {
-						GameSession.getInstance().getInventory()
-								.addItem(ItemType.FOOD);
-					}
-					else {
-						System.out.println("No food for you");
-					}
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			smallFarmTent.setCost(new Cost(0, 3, 2, 0));
-			addBuilding(smallFarmTent);
-		}
-		
-		BaseBuilding hunterTent = null;
-		{
-			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/tent/hunter/as_hunter0/idle/45/0.png"));
-
-			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(smallFarmTent);
-			subBuildings.add(fisherTent);
-
-			hunterTent = new ResourceBuilding("Hunter Abode", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 60) {
-				@Override
-				public void onBuildingTick(Building building) {
-					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()) {
-						GameSession.getInstance().getInventory()
-								.addItem(ItemType.FOOD);
-					}
-					else {
-						System.out.println("No food for you");
-					}
-				}
-
-				@Override
-				public double getDuration() {
-					return 8 * 60;
-				}
-			};
-			hunterTent.setCost(new Cost(0, 3, 0, 0));
-			addBuilding(hunterTent);
-		}
 
 		BaseBuilding well = null;
 		{
@@ -680,18 +201,17 @@ public class BuildingManager {
 			addBuilding(well);
 		}
 
-
 		BaseBuilding residentPosh = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/house1.png"));
-					idleImage.add(new Image("images/buildings/house1b.png"));
-							idleImage.add(new Image("images/buildings/house1c.png"));
-			
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
-			residentPosh = new ResourceBuilding("Overload Houses", "", idleImage,
-					idleImage, idleImage, null, 0, 120,fp) {
+			idleImage.add(new Image("images/buildings/house1b.png"));
+			idleImage.add(new Image("images/buildings/house1c.png"));
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			residentPosh = new ResourceBuilding("Overload Houses", "",
+					idleImage, idleImage, idleImage, null, 0, 120, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					Inventory inv = GameSession.getInstance().getInventory();
@@ -720,21 +240,20 @@ public class BuildingManager {
 			residentPosh.setCost(new Cost(0, 15, 10, 3));
 			addBuilding(residentPosh);
 		}
-		
-		
+
 		BaseBuilding residentMed = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/Medieval_Building_06.png"));
-			
-			FootPrint fp = new FootPrint(1,1,1,1);
-			
+			idleImage
+					.add(new Image("images/buildings/Medieval_Building_06.png"));
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(residentPosh);
-			
-			
-			residentMed = new ResourceBuilding("Better Settlement", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 120,fp) {
+
+			residentMed = new ResourceBuilding("Better Settlement", "",
+					idleImage, idleImage, idleImage, subBuildings, 100, 120, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					Inventory inv = GameSession.getInstance().getInventory();
@@ -763,16 +282,16 @@ public class BuildingManager {
 			residentMed.setCost(new Cost(0, 10, 4, 1));
 			addBuilding(residentMed);
 		}
-		
+
 		BaseBuilding residentTent = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image(
 					"images/buildings/residential/as_tent0/idle/45/0.png"));
-			
+
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(residentMed);
-			
+
 			residentTent = new ResourceBuilding("Settlement", "", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60) {
 				@Override
@@ -804,18 +323,574 @@ public class BuildingManager {
 			addBuilding(residentTent);
 		}
 
+		/** Begin Food **/
+
+		BaseBuilding vineyard = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage
+					.add(new Image("images/buildings/vineyard/work/45/000.png"));
+			Vector<Image> workingImage = new Vector<Image>();
+			for (int i = 0; i < 120; i++)
+				workingImage.add(new Image("images/buildings/vineyard/work/45/"
+						+ getNumber(i) + ".png"));
+
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			vineyard = new ResourceBuilding("Vineyard", "", idleImage,
+					idleImage, workingImage, null, 100, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD, 9);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			vineyard.setCost(new Cost(0, 20, 0, 0));
+			addBuilding(vineyard);
+		}
+
+		BaseBuilding alvearies = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/alvearies/work/45/000.png"));
+			Vector<Image> workingImage = new Vector<Image>();
+			for (int i = 0; i < 20; i++)
+				workingImage.add(new Image(
+						"images/buildings/alvearies/work/45/" + getNumber(i)
+								+ ".png"));
+
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			alvearies = new ResourceBuilding("Bees", "", idleImage, idleImage,
+					workingImage, null, 50, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD, 5);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			alvearies.setCost(new Cost(0, 10, 0, 5));
+			addBuilding(alvearies);
+		}
+
+		BaseBuilding herbary = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/herbary/renders/idel_empty/45/000.png"));
+			Vector<Image> workingImage = new Vector<Image>();
+			for (int i = 0; i < 140; i++)
+				workingImage.add(new Image(
+						"images/buildings/herbary/renders/idel_empty/45/"
+								+ getNumber(i) + ".png"));
+
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage,
+					workingImage, null, 100, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD, 3);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			herbary.setCost(new Cost(0, 0, 7, 0));
+			addBuilding(herbary);
+		}
+
+		BaseBuilding farm = null;
+		{
+			Vector<Image> fmProgressImage = new Vector<Image>();
+			Image fmImage = (new Image("images/buildings/rem_000.png"))
+					.getScaledCopy(0.6f);
+			// fmProgressImage.add(fmImage.getSubImage(0, 64, 64, 64));
+			Vector<Image> fmWorkingImage = new Vector<Image>();
+			fmWorkingImage.add(fmImage);// fmImage.getSubImage(0, 0, 64, 64));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(herbary);
+			subBuildings.add(vineyard);
+			subBuildings.add(alvearies);
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			farm = new ResourceBuilding("Farm", "", fmWorkingImage,
+					fmWorkingImage, fmWorkingImage, subBuildings, 100, 100, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			farm.setCost(new Cost(0, 10, 5, 0));
+			addBuilding(farm);
+		}
+
+		BaseBuilding fisherTent = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/fisherman/as_fisherman0/idle/45/0.png"));
+
+			fisherTent = new ResourceBuilding("Fisher Hovel", "", idleImage,
+					idleImage, idleImage, null, 100, 60) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD, 2);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			fisherTent.setCost(new Cost(0, 5, 0, 0));
+			addBuilding(fisherTent);
+		}
+
+		BaseBuilding smallFarmTent = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/smallFarm.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(farm);
+
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			smallFarmTent = new ResourceBuilding("Small Farm", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD, 2);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			smallFarmTent.setCost(new Cost(0, 3, 2, 0));
+			addBuilding(smallFarmTent);
+		}
+
+		BaseBuilding hunterTent = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/tent/hunter/as_hunter0/idle/45/0.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(smallFarmTent);
+			subBuildings.add(fisherTent);
+
+			hunterTent = new ResourceBuilding("Hunter Abode", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 60) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			hunterTent.setCost(new Cost(0, 3, 0, 0));
+			addBuilding(hunterTent);
+		}
+
+		/** End of food buildings **/
+
+
+
+		BaseBuilding weaponSmith = null;
+		{
+			Vector<Image> wsIdleImage = new Vector<Image>();
+			wsIdleImage.add(new Image(
+					"images/buildings/weaponsmith/renders/idle/45/000.png"));
+			Vector<Image> wsWorkingImage = new Vector<Image>();
+			for (int i = 0; i < 8; i++)
+				wsWorkingImage.add(new Image(
+						"images/buildings/weaponsmith/renders/work/45/"
+								+ getNumber(i) + ".png"));
+
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			weaponSmith = new ResourceBuilding("Weaponsmith", "", wsIdleImage,
+					wsIdleImage, wsWorkingImage, null, 100, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.EQUIPMENT, 2);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			weaponSmith.setCost(new Cost(0, 0, 15, 0));
+			addBuilding(weaponSmith);
+		}
+		
+		/** Start of Metal **/
+
+		BaseBuilding megaMine = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/UH/as_mine5x5/idle/45/0.png"));
+			Vector<Image> workingImage = new Vector<Image>();
+			for (int i = 1; i < 24; i++)
+				workingImage.add(new Image(
+						"images/buildings/UH/as_mine5x5/work/45/"
+								+ getNumber2(i) + ".png"));
+
+			FootPrint fp = new FootPrint(1, 4, 4, 0);
+
+			megaMine = new ResourceBuilding("Mega Mine", "", idleImage,
+					idleImage, workingImage, null, 100, 200, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.METAL, 5);
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.STONE, 5);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			megaMine.setCost(new Cost(0, 6, 26, 6));
+			addBuilding(megaMine);
+		}
+
+		BaseBuilding blacksmith = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/blacksmith.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(weaponSmith);
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			blacksmith = new ResourceBuilding("Blacksmith", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 150, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.METAL, 1);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			blacksmith.setCost(new Cost(0, 0, 4, 0));
+			addBuilding(blacksmith);
+		}
+
+		/** End of Metal **/
+
+		/** Start of Stone **/
+
+		BaseBuilding goldMine = null;
+		{
+			Vector<Image> gmProgressImage = new Vector<Image>();
+			Image gmImage = new Image("images/buildings/gold_mine.png");
+			gmProgressImage.add(gmImage.getSubImage(0, 192, 96, 96));
+			Vector<Image> gmIdleImage = new Vector<Image>();
+			gmIdleImage.add(gmImage.getSubImage(0, 0, 96, 96));
+			Vector<Image> gmWorkingImage = new Vector<Image>();
+			gmWorkingImage.add(gmImage.getSubImage(0, 96, 96, 96));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(megaMine);
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			goldMine = new ResourceBuilding("Rock Mine", "", gmProgressImage,
+					gmIdleImage, gmWorkingImage, subBuildings, 100, 80, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.STONE, 2);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			goldMine.setCost(new Cost(0, 7, 0, 0));
+			addBuilding(goldMine);
+		}
+
+		BaseBuilding clayPit = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/UH/as_clay_pit0/idle/45/0.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(goldMine);
+
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			clayPit = new ResourceBuilding("Clay Pit", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.STONE);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			clayPit.setCost(new Cost(0, 4, 0, 0));
+			addBuilding(clayPit);
+		}
+
+		/** End of Stone **/
+
+		/** Start of Wood **/
+
+
+		BaseBuilding lumberMill = null;
+		{
+			Vector<Image> lmProgressImage = new Vector<Image>();
+			Image lmImage = new Image("images/buildings/lumber_mill.png");
+			// lmProgressImage.add(lmImage);//.getSubImage(0, 96, 96, 96));
+			Vector<Image> lmWorkingImage = new Vector<Image>();
+			lmWorkingImage.add(lmImage);// .getSubImage(0, 0, 96, 96));
+
+			FootPrint fp = new FootPrint(0, 0, 0, 0);
+
+			lumberMill = new ResourceBuilding("Lumber Mill", "",
+					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100,
+					70, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.WOOD, 3);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			lumberMill.setCost(new Cost(0, 13, 0, 2));
+			addBuilding(lumberMill);
+		}
+
+		BaseBuilding lumberJack = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage
+					.add(new Image(
+							"images/buildings/tent/lumberjack/as_lumberjack0/idle/45/0.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(lumberMill);
+
+			lumberJack = new ResourceBuilding("Lumber Jack", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 60) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.WOOD);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			lumberJack.setCost(new Cost(0, 5, 0, 0));
+			addBuilding(lumberJack);
+		}
+		/** End of Wood **/
+		
+		/** Start of Army **/
+
+
+		BaseBuilding barracksStable = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/stable (1).png"));
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			barracksStable = new ResourceBuilding("Stable", "", idleImage,
+					idleImage, idleImage, null, 100, 160, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.ARMY);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			barracksStable.setCost(new Cost(0, 3, 10, 1));
+			addBuilding(barracksStable);
+		}
+
+		BaseBuilding barracksTraining = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/archery_range.png"));
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			barracksTraining = new ResourceBuilding("Training", "", idleImage,
+					idleImage, idleImage, null, 100, 160, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.ARMY);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			barracksTraining.setCost(new Cost(0, 3, 10, 1));
+			addBuilding(barracksTraining);
+		}
+		
+		BaseBuilding castle = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/castle.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(barracksWatchTowerWood);
+			subBuildings.add(barracksWatchTowerStone);
+
+			FootPrint fp = new FootPrint(1, 2, 2, 1);
+
+			castle = new ResourceBuilding("Mega Barracks", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 200, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.ARMY, 5);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			castle.setCost(new Cost(0, 8, 40, 4));
+			addBuilding(castle);
+		}
+		
+		BaseBuilding barracksAdvanced = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/barracks/renders/idle/45/000.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(barracksTraining);
+			subBuildings.add(barracksStable);
+			subBuildings.add(castle);
+			subBuildings.add(signalFireWooden);
+			subBuildings.add(signalFire);
+
+			FootPrint fp = new FootPrint(1, 1, 1, 1);
+
+			barracksAdvanced = new ResourceBuilding("Barracks", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 120, fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.ARMY);
+				}
+
+				@Override
+				public double getDuration() {
+					return 2 * 60;
+				}
+			};
+			barracksAdvanced.setCost(new Cost(0, 0, 10, 0));
+			addBuilding(barracksAdvanced);
+		}
+		/** End of Army **/
+
+
 		BaseBuilding townHall = null;
 		{
-			//Vector<Image> thProgressImage = new Vector<Image>();
-			//Image thImage = new Image("images/buildings/town_hall.png");
-				//thProgressImage.add(thImage.getSubImage(0, 128, 128, 128));
-			//Vector<Image> thWorkingImage = new Vector<Image>();
-			//thWorkingImage.add(thImage.getSubImage(0, 0, 128, 128));
-			
+			// Vector<Image> thProgressImage = new Vector<Image>();
+			// Image thImage = new Image("images/buildings/town_hall.png");
+			// thProgressImage.add(thImage.getSubImage(0, 128, 128, 128));
+			// Vector<Image> thWorkingImage = new Vector<Image>();
+			// thWorkingImage.add(thImage.getSubImage(0, 0, 128, 128));
+
 			Vector<Image> images = new Vector<Image>();
-			Image image = new Image("images/buildings/firestation/renders/idle/45/000.png");
+			Image image = new Image(
+					"images/buildings/firestation/renders/idle/45/000.png");
 			images.add(image);
-			
+
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(hunterTent);
 
@@ -827,19 +902,18 @@ public class BuildingManager {
 			subBuildings.add(blacksmith);
 			subBuildings.add(residentTent);
 			subBuildings.add(outpost);
-			
 
-			FootPrint fp = new FootPrint(0,1,1,0);
-			
-			townHall = new ResourceBuilding("Town Hall", "", images,
-					images, images, subBuildings, 100,120,fp);
+			FootPrint fp = new FootPrint(0, 1, 1, 0);
+
+			townHall = new ResourceBuilding("Town Hall", "", images, images,
+					images, subBuildings, 100, 120, fp);
 			townHall.setCost(new Cost(0, 10, 1, 0));
 			addBuilding(townHall);
 
 			rootBuilding = townHall;
 		}
-		
-		//Descriptions
+
+		// Descriptions
 		herbary.setDescription("Vikings don't like plants but will eat them when needed.");
 		farm.setDescription("Its almost harvesting season!");
 

@@ -8,6 +8,8 @@ import java.util.Random;
 
 import cheese.model.Cost;
 import cheese.model.PlayerManager;
+import cheese.model.building.Building;
+import cheese.model.building.BuildingManager;
 import cheese.model.god.GodType;
 import deserted.model.Agent;
 import deserted.model.AgentState;
@@ -28,53 +30,33 @@ public class QuestManager {
 		this.questList = new ArrayList<Quest>();
 		this.completedQuests = new ArrayList<Quest>();
 
-		// Tribe Quests
-		// QuestBuilding farm = new QuestBuilding("Big Farma",
-		// "We need food to keep our villagers\nalive - please build a farm!",
-		// 50, GodType.TRIBE, "Farm") {
-		// @Override
-		// public double getHoursToFinish() {
-		// return 48;
-		// }
-		//
-		// @Override
-		// public void onComplete() {
-		// GameSession.getInstance().getInventory().addItem(ItemType.FOOD, 5);
-		// }
-		//
-		// @Override
-		// public void onFailure() {
-		// System.out.println("Failure");
-		// }
-		// };
-
 		QuestBuilding farm = new QuestBuilding(
 				"Big Farma",
 				"We need food to keep our villagers\nalive - please build a farm!",
-				50, GodType.TRIBE, "Farm");
+				5, GodType.TRIBE, "Farm");
 		QuestBuilding hall = new QuestBuilding("Hall Effect",
-				"If we want to build anything, we'll\nneed a Town Hall.", 50,
+				"If we want to build anything, we'll\nneed a Town Hall.", 5,
 				GodType.TRIBE, "Town Hall");
 		QuestBuilding hunter = new QuestBuilding(
 				"Hunter Gatherer",
 				"There's a load of wildlife out there\nthat we could be eating!",
-				50, GodType.TRIBE, "Hunter Abode");
+				5, GodType.TRIBE, "Hunter Abode");
 		QuestBuilding stable = new QuestBuilding(
 				"Unstable Situation",
 				"If we had some horses, we could get\nresources from other villages.",
-				50, GodType.TRIBE, "Stable");
+				505, GodType.TRIBE, "Stable");
 		QuestBuilding lumberjack = new QuestBuilding("Got Wood?",
 				"A lumberjack would be fantastic for\nour wood production.",
-				50, GodType.TRIBE, "Lumber Jack");
+				5, GodType.TRIBE, "Lumber Jack");
 		QuestBuilding blacksmith = new QuestBuilding("Heavy Metal",
-				"With a blacksmith, we could turn\nproduction up to 11!", 50,
+				"With a blacksmith, we could turn\nproduction up to 11!", 5,
 				GodType.TRIBE, "Blacksmith");
 		QuestBuilding settlement = new QuestBuilding("Settlers Too",
 				"We could always do with more volunteers\nfor sacrifices...",
-				50, GodType.TRIBE, "Settlement");
+				5, GodType.TRIBE, "Settlement");
 		QuestBuilding barracks = new QuestBuilding("Barracks",
-				"Build a barracks", 50, GodType.TRIBE, "Barracks");
-
+				"Build a barracks", 5, GodType.TRIBE, "Barracks");
+		
 		questList.add(hall);
 
 		questList.add(hunter);
@@ -98,6 +80,40 @@ public class QuestManager {
 		questList.add(settlement);
 		settlement.addRequirement(hall);
 
+
+		QuestBuilding statue = new QuestBuilding("Make Me A Statue",
+				"Make me a statue to show your devotion.", 25, GodType.NEUTRAL, "")  {
+			@Override
+			public boolean canComplete() {
+				BuildingManager buildingManager = GameSession.getInstance().getBuildingManager();
+				ArrayList<Building> s1 = buildingManager.getNonOfferedBuildingsOfType("Gargoyl");
+				ArrayList<Building> s2 = buildingManager.getNonOfferedBuildingsOfType("Demon");
+				return s1.size() > 0 || s2.size() > 0;
+			}
+			
+			@Override
+			public void onComplete() {
+
+				BuildingManager buildingManager = GameSession.getInstance().getBuildingManager();
+				ArrayList<Building> s1 = buildingManager.getNonOfferedBuildingsOfType("Gargoyl");
+				ArrayList<Building> s2 = buildingManager.getNonOfferedBuildingsOfType("Demon");
+				
+				if(s1.size() > 0) {
+					s1.get(0).setOffered(true);
+				}
+				else if(s2.size() > 0) {
+					s2.get(0).setOffered(true);
+				}
+				
+				super.onComplete();
+			}
+			
+			@Override
+			public double getHoursToFinish() {
+				return 48*5;
+			}
+		};
+		
 		Quest armyQuest = new QuestNumbered("Building Forces", 5, 2, 40,
 				GodType.NEUTRAL) {
 			@Override
@@ -117,6 +133,11 @@ public class QuestManager {
 			public String getQuestDescription() {
 				return "I must attack my foes - bring me " + this.getNumber()
 						+ " men!";
+			}
+			
+			@Override
+			public double getHoursToFinish() {
+				return 48*(getNumber()/5);
 			}
 		};
 
@@ -139,6 +160,11 @@ public class QuestManager {
 			public String getQuestDescription() {
 				return "My precious... Give me " + getNumber() + " metal!";
 			}
+			
+			@Override
+			public double getHoursToFinish() {
+				return 48*(getNumber()/5);
+			}
 		};
 
 		Quest feedQuest = new QuestNumbered("Feast In My Honour", 5, 2, 40,
@@ -159,6 +185,11 @@ public class QuestManager {
 			@Override
 			public String getQuestDescription() {
 				return "I'm very hungry - give me " + getNumber() + " food!";
+			}
+			
+			@Override
+			public double getHoursToFinish() {
+				return 48*(getNumber()/5);
 			}
 		};
 
@@ -194,6 +225,11 @@ public class QuestManager {
 			public String getQuestDescription() {
 				return "I demand a sacrifice of " + getNumber() + " villagers!";
 			}
+			
+			@Override
+			public double getHoursToFinish() {
+				return 48*(getNumber()/5);
+			}
 		};
 
 		armyQuest.addRequirement(barracks);
@@ -202,11 +238,14 @@ public class QuestManager {
 		feedQuest.addRequirement(hunter);
 		hoardeQuest.addRequirement(hall);
 		armyQuest.addRequirement(hall);
+		statue.addRequirement(hall);
 		
 		questList.add(sacQuest);
 		questList.add(feedQuest);
 		questList.add(hoardeQuest);
 		questList.add(armyQuest);
+		questList.add(statue);
+		
 	};
 
 	public List<Quest> getQuestList() {
@@ -227,6 +266,7 @@ public class QuestManager {
 				if (!quest.isRepeatable()) {
 					questList.remove(quest);
 				} else {
+					quest.setHours(0);
 					quest.setCompleted(false);
 					questList.add(quest);
 				}
