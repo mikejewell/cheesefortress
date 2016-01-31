@@ -53,8 +53,7 @@ import deserted.tilesystem.Tile;
 import deserted.tilesystem.TileSystem;
 import deserted.tilesystem.TileSystem.TileId;
 
-public class Play extends BasicGameState implements GameState,
-		PlayerReachedDestinationEvent {
+public class Play extends BasicGameState implements GameState, PlayerReachedDestinationEvent {
 
 	public static final int STATE_PLAY = 1;
 
@@ -130,8 +129,7 @@ public class Play extends BasicGameState implements GameState,
 	private Image questBackground;
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 
 		name = game.getTitle();
 		// TODO: Tile system needs modifying when the screen resolution / window
@@ -158,8 +156,7 @@ public class Play extends BasicGameState implements GameState,
 		for (ItemType type : ItemType.values()) {
 			Item item = ItemFactory.createItem(type);
 			if (item.hasImage()) {
-				Image image = new Image("images/icons/" + item.getImageName()
-						+ ".png");
+				Image image = new Image("images/icons/" + item.getImageName() + ".png");
 				itemImages.put(type, image);
 			}
 		}
@@ -194,15 +191,10 @@ public class Play extends BasicGameState implements GameState,
 
 		container.setShowFPS(false);
 
-		messenger.addMessage("Use WASD or ARROW keys to move the camera.",
-				Color.green, 20);
-		messenger.addMessage(
-				"Build a town hall first and do other quests for your tribe.",
-				Color.green, 20);
-		messenger.addMessage("You must do tasks for your Gods to survive.",
-				Color.green, 20);
-		messenger
-				.addMessage("Your Vikings are far from home.", Color.green, 20);
+		messenger.addMessage("Use WASD or ARROW keys to move the camera.", Color.green, 20);
+		messenger.addMessage("Build a town hall first and do other quests for your tribe.", Color.green, 20);
+		messenger.addMessage("You must do tasks for your Gods to survive.", Color.green, 20);
+		messenger.addMessage("Your Vikings are far from home.", Color.green, 20);
 
 		// Initialise UI Variables---------------------------------------
 
@@ -242,10 +234,8 @@ public class Play extends BasicGameState implements GameState,
 		ag_x = container.getWidth() - agent_bar_width - 2;
 
 		headerRect = new Rectangle(0, 0, container.getWidth(), header_height);
-		footerRect = new Rectangle(0, footer_y, container.getWidth(),
-				footer_height);
-		actionRect = new Rectangle(0, action_bar_y, container.getWidth(),
-				action_bar_height);
+		footerRect = new Rectangle(0, footer_y, container.getWidth(), footer_height);
+		actionRect = new Rectangle(0, action_bar_y, container.getWidth(), action_bar_height);
 		agentRect = new Rectangle(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		questRect = new Rectangle(0, quest_bar_y, container.getWidth(),
 				quest_bar_height);
@@ -332,8 +322,7 @@ public class Play extends BasicGameState implements GameState,
 			ts.renderGroundSprites(g, y);
 			for (PlayerUI player : playerManager.getPlayers()) {
 				float playerRealY = player.location.x + player.location.y;
-				if (player.location.x >= y + 0.5f
-						&& player.location.x < y + 1.5f)
+				if (player.location.x >= y + 0.5f && player.location.x < y + 1.5f)
 					player.render(g, ts.camera.zoom);
 			}
 
@@ -361,8 +350,7 @@ public class Play extends BasicGameState implements GameState,
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
 		Input input = container.getInput();
 
@@ -380,10 +368,8 @@ public class Play extends BasicGameState implements GameState,
 		g.setColor(Color.gray);
 		g.drawRect(0, 0, container.getWidth(), header_height);
 		g.setColor(Color.black);
-		g.drawString(name + " - " + gs.getDate().toString("dd/MM/yyyy HH:mm"),
-				5, h_y + header_pad);
-		g.drawString("" + Math.round(gs.getTimeSurvived() / 60)
-				+ " hour(s) since incident", 5, h_y + header_pad + 18);
+		g.drawString(name + " - " + gs.getDate().toString("dd/MM/yyyy HH:mm"), 5, h_y + header_pad);
+		g.drawString("" + Math.round(gs.getTimeSurvived() / 60) + " hour(s) since incident", 5, h_y + header_pad + 18);
 
 		// Footer
 		g.setColor(Color.gray);
@@ -402,8 +388,7 @@ public class Play extends BasicGameState implements GameState,
 		g.fillRect(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		// int agent_zone_x = 500;
 
-		Vector<BaseBuilding> currentBuildingOptions = buildingManager
-				.currentBuildingOptions(currentBuilding);
+		Vector<BaseBuilding> currentBuildingOptions = buildingManager.currentBuildingOptions(currentBuilding);
 
 		ArrayList<Rectangle> buildingZones = new ArrayList<Rectangle>();
 		ArrayList<BaseBuilding> validBuildings = new ArrayList<BaseBuilding>();
@@ -475,8 +460,7 @@ public class Play extends BasicGameState implements GameState,
 
 		ArrayList<Rectangle> questZones = new ArrayList<Rectangle>();
 		ArrayList<Quest> validQuests = new ArrayList<Quest>();
-		GodType[] order = { GodType.THOR, GodType.FREYA, GodType.HEL,
-				GodType.LOKI, GodType.TRIBE };
+		GodType[] order = { GodType.THOR, GodType.FREYA, GodType.HEL, GodType.LOKI, GodType.TRIBE };
 		for (int i = 0; i < order.length; i++) {
 			God god = godManager.getGod(order[i]);
 			int x = quest_zone_x + (i * quest_width) + (i * quest_bar_pad);
@@ -485,8 +469,7 @@ public class Play extends BasicGameState implements GameState,
 		}
 
 		int quest_button_height = 20;
-		int quest_button_y = quest_bar_y + quest_bar_height
-				- quest_button_height - 5;
+		int quest_button_y = quest_bar_y + quest_bar_height - quest_button_height - 5;
 		for (int i = 0; i < order.length; i++) {
 			int x = quest_zone_x + (i * quest_width) + (i * quest_bar_pad);
 			int y = quest_bar_y + quest_y_pad;
@@ -505,8 +488,7 @@ public class Play extends BasicGameState implements GameState,
 
 				int src_x = (int) (quest.getCardX() * (src_width - w));
 				int src_y = (int) (quest.getCardY() * (src_height - h));
-				g.drawImage(questBackground, x, y, x + w, y + h, src_x, src_y,
-						src_x + w, src_y + h);
+				g.drawImage(questBackground, x, y, x + w, y + h, src_x, src_y, src_x + w, src_y + h);
 
 				g.setColor(Color.black);
 				g.drawRect(x, y, w, h);
@@ -554,8 +536,7 @@ public class Play extends BasicGameState implements GameState,
 					g.setColor(Color.black);
 					g.drawString(name, b_x + t_x, quest_button_y + t_y);
 
-					Rectangle zone = new Rectangle(b_x, quest_button_y, b_w,
-							b_h);
+					Rectangle zone = new Rectangle(b_x, quest_button_y, b_w, b_h);
 					questZones.add(zone);
 					validQuests.add(quest);
 				}
@@ -586,6 +567,7 @@ public class Play extends BasicGameState implements GameState,
 					g.drawString("" + count, x + f_h - w, f_y + f_h - h);
 
 					g.setColor(Color.black);
+
 					g.drawString(items.get(i).name(), x + f_h + 6, f_y
 							+ (f_h - g.getFont().getHeight("M")) / 2);
 				}
@@ -605,21 +587,32 @@ public class Play extends BasicGameState implements GameState,
 			if (r.contains(mouseX, mouseY)) {
 				g.setColor(Color.black);
 				g.drawString(
-						items.get(inventoryZones.indexOf(r)).name()
-								+ " : "
-								+ getDescription(items.get(inventoryZones
-										.indexOf(r))),
+						items.get(inventoryZones.indexOf(r)).name() + " : "
+								+ getDescription(items.get(inventoryZones.indexOf(r))),
 						container.getWidth() - 400, container.getHeight() - 40);
+			}
+		}
+		
+		
+		//Getting descriptions for buildings
+		for (Rectangle r : buildingZones) {
+			if (r.contains(mouseX, mouseY)) {
+				g.setColor(Color.black);
+				System.out.println("Getting descriptions for building");
+				g.drawString(
+						validBuildings.get(validBuildings.indexOf(r) + 1).getName().toUpperCase() + " : "
+						+ validBuildings.get(validBuildings.indexOf(r) + 1).getDescription(),
+							container.getWidth() - 400, container.getHeight() - 40);
+				System.out.println(validBuildings.get(validBuildings.indexOf(r) + 1).getName() + " : "
+						+ validBuildings.get(validBuildings.indexOf(r) + 1).getDescription());
 			}
 		}
 
 		ArrayList<Rectangle> actionZones = new ArrayList<Rectangle>();
 		List<BaseAction> validActions = new ArrayList<BaseAction>();
 
-		if (headerRect.contains(mouseX, mouseY)
-				|| footerRect.contains(mouseX, mouseY)
-				|| actionRect.contains(mouseX, mouseY)
-				|| agentRect.contains(mouseX, mouseY)
+		if (headerRect.contains(mouseX, mouseY) || footerRect.contains(mouseX, mouseY)
+				|| actionRect.contains(mouseX, mouseY) || agentRect.contains(mouseX, mouseY)
 				|| questRect.contains(mouseX, mouseY)) {
 		} else if (miniMap.isWithin(mouseX, mouseY)) {
 		} else {
@@ -627,8 +620,7 @@ public class Play extends BasicGameState implements GameState,
 
 				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
 
-				for (Tile tile : currentDragging.getOverlappingTiles(ts,
-						currentDraggingTile)) {
+				for (Tile tile : currentDragging.getOverlappingTiles(ts, currentDraggingTile)) {
 					if (!currentDragging.isTileValidForBuilding(tile))
 						ts.renderTile(g, tile, Color.red);
 					else
@@ -663,10 +655,8 @@ public class Play extends BasicGameState implements GameState,
 			mouseX = input.getMouseX();
 			mouseY = input.getMouseY();
 
-			if (headerRect.contains(mouseX, mouseY)
-					|| footerRect.contains(mouseX, mouseY)
-					|| actionRect.contains(mouseX, mouseY)
-					|| agentRect.contains(mouseX, mouseY)
+			if (headerRect.contains(mouseX, mouseY) || footerRect.contains(mouseX, mouseY)
+					|| actionRect.contains(mouseX, mouseY) || agentRect.contains(mouseX, mouseY)
 					|| questRect.contains(mouseX, mouseY)) {
 
 				// Check the UI elements
@@ -676,9 +666,14 @@ public class Play extends BasicGameState implements GameState,
 				mouseY = input.getMouseY();
 				for (Rectangle r : buildingZones) {
 					if (r.contains(mouseX, mouseY)) {
-						currentDragging = validBuildings.get(buildingZones
-								.indexOf(r));
+						currentDragging = validBuildings.get(buildingZones.indexOf(r));
 					}
+					// g.drawString(
+					// items.get(buildingZones.indexOf(r)).name()
+					// + " : "
+					// + getDescription(building.get(buildingZones
+					// .indexOf(r))),
+					// container.getWidth() - 400, container.getHeight() - 40);
 				}
 
 				for (int i = 0; i < actionZones.size(); i++) {
@@ -689,14 +684,13 @@ public class Play extends BasicGameState implements GameState,
 					}
 				}
 
-				for (int i = 0; i < questZones.size(); i++) {
-					System.out.println("Quest zone: " + i);
-					Rectangle questZone = questZones.get(i);
-					if (questZone.contains(mouseX, mouseY)) {
-						Quest quest = validQuests.get(i);
-						System.out.println("Try to complete quest: "
-								+ quest.getQuestName());
-						quest.complete();
+					for (int i = 0; i < questZones.size(); i++) {
+						Rectangle questZone = questZones.get(i);
+						if (questZone.contains(mouseX, mouseY)) {
+							Quest quest = validQuests.get(i);
+							System.out.println("Try to complete quest: " + quest.getQuestName());
+							quest.complete();
+						}
 					}
 				}
 
@@ -706,28 +700,25 @@ public class Play extends BasicGameState implements GameState,
 
 				if (currentDragging != null) {
 
-					Tile t = ts.getTileFromScreen(mouseX, mouseY);
+					currentDraggingTile= ts.getTileFromScreen(mouseX, mouseY);
 
 					boolean fail = false;
 
-					for (Tile tile : currentDragging.getOverlappingTiles(ts,
-							currentDraggingTile)) {
+					for (Tile tile : currentDragging.getOverlappingTiles(ts, currentDraggingTile)) {
 						if (!currentDragging.isTileValidForBuilding(tile)) {
 							fail = true;
 						}
 					}
 
 					if (!fail) {
-						Building b = new Building(ts, currentDragging,
-								new Vector2f(t.x, t.y));
+						Building b = new Building(ts, currentDragging, new Vector2f(currentDraggingTile.x, currentDraggingTile.y));
 
-						for (Tile tile : b.base.getOverlappingTiles(ts, t)) {
-							ts.getNewTileFromWorld(tile.x, tile.y).setOverlay(
-									OverlayType.EMPTY);
+						for (Tile tile : b.base.getOverlappingTiles(ts, currentDraggingTile)) {
+							ts.getNewTileFromWorld(tile.x, tile.y).setOverlay(OverlayType.EMPTY);
 							;
 							tile.addBuilding(b, false);
 						}
-						t.addBuilding(b, true);
+						currentDraggingTile.addBuilding(b, true);
 
 						buildingManager.addBuildingInPlay(b);
 						buildingManager.buyBuilding(b.base);
@@ -813,15 +804,12 @@ public class Play extends BasicGameState implements GameState,
 				}
 			}
 		}
-	}
 
 	private void performAction(BaseAction action) {
 		int player_index = playerManager.getAgents().indexOf(selectedAgent);
 		PlayerUI player = playerManager.getPlayers().get(player_index);
 		selectedAgent.startAction(action);
-		messenger.addMessage(
-				selectedAgent.getName() + " is " + action.getDescription(),
-				Color.green, 6);
+		messenger.addMessage(selectedAgent.getName() + " is " + action.getDescription(), Color.green, 6);
 
 		ts.getTileFromWorld(player.location.x, player.location.y);
 		action.onStart(selectedAgent);
@@ -867,8 +855,7 @@ public class Play extends BasicGameState implements GameState,
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		boolean alive = false;
 
 		List<Agent> agents = playerManager.getAgents();
@@ -910,10 +897,8 @@ public class Play extends BasicGameState implements GameState,
 			if (player.bored) {
 				if (buildingManager.getBuildingsInPlay().size() > 0) {
 					Random r = new Random();
-					int index = (int) (r.nextDouble() * buildingManager
-							.getBuildingsInPlay().size());
-					Building b = buildingManager.getBuildingsInPlay()
-							.get(index);
+					int index = (int) (r.nextDouble() * buildingManager.getBuildingsInPlay().size());
+					Building b = buildingManager.getBuildingsInPlay().get(index);
 					player.moveto(b.location.x, b.location.y, false);
 				}
 			}
@@ -952,12 +937,10 @@ public class Play extends BasicGameState implements GameState,
 				agents.get(i).setState(AgentState.WALKING);
 			}
 			if (state == AgentState.DEAD) {
-				Tile tile = ts.getTileFromWorld(player.location.x,
-						player.location.y);
+				Tile tile = ts.getTileFromWorld(player.location.x, player.location.y);
 				if (!agent.hasPlacedCorpse()) {
 					tile.addSprite(SpriteType.CORPSE);
-					messenger.addMessage(agent.getName() + getDeathMessage(),
-							Color.red, 8);
+					messenger.addMessage(agent.getName() + getDeathMessage(), Color.red, 8);
 					agent.setPlacedCorpse(true);
 				}
 			}
@@ -979,26 +962,22 @@ public class Play extends BasicGameState implements GameState,
 		}
 
 		if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
-			ts.getCamera().move(-20 / ts.camera.zoom * delta,
-					-20 / ts.camera.zoom * delta);
+			ts.getCamera().move(-20 / ts.camera.zoom * delta, -20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
-			ts.getCamera().move(-20 / ts.camera.zoom * delta,
-					20 / ts.camera.zoom * delta);
+			ts.getCamera().move(-20 / ts.camera.zoom * delta, 20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
-			ts.getCamera().move(20 / ts.camera.zoom * delta,
-					20 / ts.camera.zoom * delta);
+			ts.getCamera().move(20 / ts.camera.zoom * delta, 20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
-			ts.getCamera().move(20 / ts.camera.zoom * delta,
-					-20 / ts.camera.zoom * delta);
+			ts.getCamera().move(20 / ts.camera.zoom * delta, -20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 

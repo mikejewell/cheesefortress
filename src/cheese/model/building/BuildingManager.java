@@ -48,7 +48,7 @@ public class BuildingManager {
 			
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
-			herbary = new ResourceBuilding("Herbary", "", idleImage, idleImage,
+			herbary = new ResourceBuilding("Herbary", "A large field to get more food", idleImage, idleImage,
 					workingImage, null, 100, 120,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -81,7 +81,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(1,0,0,1);
 			
-			farm = new ResourceBuilding("Farm", "", fmWorkingImage,
+			farm = new ResourceBuilding("Farm", "A farm for us", fmWorkingImage,
 					fmWorkingImage, fmWorkingImage, subBuildings, 100, 120, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -107,7 +107,7 @@ public class BuildingManager {
 			idleImage.add(new Image(
 					"images/buildings/fisherman/as_fisherman0/idle/45/0.png"));
 
-			fisherTent = new ResourceBuilding("Fisher Hobble", "", idleImage,
+			fisherTent = new ResourceBuilding("Fisher Hobble", "Fishing is fun", idleImage,
 					idleImage, idleImage, null, 100, 60) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -141,7 +141,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
-			smallFarmTent = new ResourceBuilding("Small Farm", "", idleImage,
+			smallFarmTent = new ResourceBuilding("Small Farm", "A little farm for our village", idleImage,
 					idleImage, idleImage, subBuildings, 100, 120,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -174,7 +174,7 @@ public class BuildingManager {
 			subBuildings.add(smallFarmTent);
 			subBuildings.add(fisherTent);
 
-			hunterTent = new ResourceBuilding("Hunter Abode", "", idleImage,
+			hunterTent = new ResourceBuilding("Hunter Abode", "Hunting was good until fox hunting was banned", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -201,7 +201,7 @@ public class BuildingManager {
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/tower.png"));
-			barracksTower = new ResourceBuilding("Watch Tower", "", idleImage,
+			barracksTower = new ResourceBuilding("Watch Tower", "A place to watch", idleImage,
 					idleImage, idleImage, null, 100);
 			barracksTower.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksTower);
@@ -212,7 +212,7 @@ public class BuildingManager {
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image(
 					"images/buildings/watchtower_wooden_full_size.png"));
-			barracksWatchTowerWood = new ResourceBuilding("Watch Tower", "",
+			barracksWatchTowerWood = new ResourceBuilding("Watch Tower", "A place to watch far",
 					idleImage, idleImage, idleImage, null, 100, 60);
 			barracksWatchTowerWood.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksWatchTowerWood);
@@ -225,7 +225,7 @@ public class BuildingManager {
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image(
 					"images/buildings/watchtower_lvl2-exp_full_size.png"));
-			barracksWatchTowerStone = new ResourceBuilding("Watch Tower", "",
+			barracksWatchTowerStone = new ResourceBuilding("Watch Tower", "A place to watch far around",
 					idleImage, idleImage, idleImage, null, 100, 60);
 			barracksWatchTowerStone.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksWatchTowerStone);
@@ -240,7 +240,7 @@ public class BuildingManager {
 			
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			barracksStable = new ResourceBuilding("Stable", "", idleImage,
+			barracksStable = new ResourceBuilding("Stable", "Horses are kept here", idleImage,
 					idleImage, idleImage, null, 100, 160,fp);
 			barracksStable.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksStable);
@@ -253,7 +253,7 @@ public class BuildingManager {
 		
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			barracksTraining = new ResourceBuilding("Training", "", idleImage,
+			barracksTraining = new ResourceBuilding("Training", "A place for warriors to train", idleImage,
 					idleImage, idleImage, null, 100, 160,fp);
 			barracksTraining.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksTraining);
@@ -270,7 +270,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(1,2,2,1);
 			
-			castle = new ResourceBuilding("Mega Barracks", "", idleImage, idleImage,
+			castle = new ResourceBuilding("Mega Barracks", "Where the mega general keeps his mega armies", idleImage, idleImage,
 					idleImage, subBuildings, 100, 200,fp);
 			castle.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(castle);
@@ -289,7 +289,7 @@ public class BuildingManager {
 				sfWorkingImage.add(new Image(
 						"images/buildings/signalfire_wooden/as_signalfire_wooden0/idle/45/0"
 								+ getNumber(i) + ".png"));
-			signalFireWooden = new ResourceBuilding("Signal Fire Cheap", "",
+			signalFireWooden = new ResourceBuilding("Signal Fire Cheap", "Sort of fiery",
 					sfIdleImage, sfIdleImage, sfWorkingImage, null, 100, 60);
 			signalFireWooden.setCost(new Cost(0, 1, 3, 3));
 			
@@ -309,7 +309,7 @@ public class BuildingManager {
 				sfWorkingImage.add(new Image(
 						"images/buildings/signal_fire/renders/work/45/"
 								+ getNumber(i) + ".png"));
-			signalFire = new ResourceBuilding("Signal Fire Pricey", "", sfIdleImage,
+			signalFire = new ResourceBuilding("Signal Fire Pricey", "Firery", sfIdleImage,
 					sfIdleImage, sfWorkingImage, null, 100, 60);
 			signalFire.setCost(new Cost(0, 1, 3, 3));
 			
@@ -324,7 +324,7 @@ public class BuildingManager {
 			sfIdleImage.add(new Image(
 					"images/buildings/Outpost/old_outpost_iso_00000.png"));
 			
-			outpost = new ResourceBuilding("Outpost", "", sfIdleImage,
+			outpost = new ResourceBuilding("Outpost", "A place to see far", sfIdleImage,
 					sfIdleImage, sfIdleImage, null, 100, 60);
 			outpost.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(outpost);
@@ -349,7 +349,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			barracksAdvanced = new ResourceBuilding("Barracks", "", idleImage,
+			barracksAdvanced = new ResourceBuilding("Barracks", "Where the better general keeps his better armies", idleImage,
 					idleImage, idleImage, subBuildings, 100, 120,fp);
 			barracksAdvanced.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksAdvanced);
@@ -368,7 +368,7 @@ public class BuildingManager {
 			
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
-			weaponSmith = new ResourceBuilding("Weaponsmith", "", wsIdleImage,
+			weaponSmith = new ResourceBuilding("Weaponsmith", "All good warriors need good weapons", wsIdleImage,
 					wsIdleImage, wsWorkingImage, null, 100,120,fp);
 			weaponSmith.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(weaponSmith);
@@ -389,7 +389,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			barracks = new ResourceBuilding("Barracks", "", bkProgressImage,
+			barracks = new ResourceBuilding("Barracks", "Where the general keeps his armies", bkProgressImage,
 					bkWorkingImage, bkWorkingImage, subBuildings, 120,fp);
 			barracks.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracks);
@@ -408,7 +408,7 @@ public class BuildingManager {
 			
 			FootPrint fp = new FootPrint(1,4,4,0);
 			
-			megaMine = new ResourceBuilding("Mega Mine", "", idleImage,
+			megaMine = new ResourceBuilding("Mega Mine", "You can find both stone and metal in this mine", idleImage,
 					idleImage, workingImage, null, 100,200,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -442,7 +442,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			goldMine = new ResourceBuilding("Gold Mine", "", gmProgressImage,
+			goldMine = new ResourceBuilding("Gold Mine", "Gold is technically a metal", gmProgressImage,
 					gmIdleImage, gmWorkingImage, subBuildings, 100,80, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -470,7 +470,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
-			clayPit = new ResourceBuilding("Clay Pit", "", idleImage,
+			clayPit = new ResourceBuilding("Clay Pit", "Despite the name, this gets stone", idleImage,
 					idleImage, idleImage, subBuildings, 100, 120, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -497,7 +497,7 @@ public class BuildingManager {
 			
 			FootPrint fp = new FootPrint(1,0,0,1);
 			
-			lumberMill = new ResourceBuilding("Lumber Mill", "",
+			lumberMill = new ResourceBuilding("Lumber Mill", "Cuts down a lot of wood",
 					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100,50, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -524,7 +524,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(lumberMill);
 
-			lumberJack = new ResourceBuilding("Lumber Jack", "", idleImage,
+			lumberJack = new ResourceBuilding("Lumber Jack", "Cuts down wood", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -545,7 +545,7 @@ public class BuildingManager {
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/gargyle.png"));
-			gargoyl = new ResourceBuilding("Gargoyl", "", idleImage, idleImage,
+			gargoyl = new ResourceBuilding("Gargoyl", "Scary", idleImage, idleImage,
 					idleImage, null, 100,120);
 			gargoyl.setCost(new Cost(0, 0, 5, 0));
 			addBuilding(gargoyl);
@@ -555,7 +555,7 @@ public class BuildingManager {
 		{
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/demon01.png"));
-			demon = new ResourceBuilding("Demon", "", idleImage, idleImage,
+			demon = new ResourceBuilding("Demon", "Spooky", idleImage, idleImage,
 					idleImage, null, 100,120);
 			demon.setCost(new Cost(0, 0, 5, 0));
 			addBuilding(demon);
@@ -571,7 +571,7 @@ public class BuildingManager {
 			subBuildings.add(gargoyl);
 			subBuildings.add(demon);
 
-			church = new ResourceBuilding("Advanced Religion", "", idleImage,
+			church = new ResourceBuilding("Advanced Religion", "A monument to your favourite god", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60);
 			church.setCost(new Cost(0, 2, 2, 2));
 			addBuilding(church);
@@ -587,7 +587,7 @@ public class BuildingManager {
 			subBuildings.add(gargoyl);
 			subBuildings.add(demon);
 
-			tombStone = new ResourceBuilding("Retreat for the dead", "", idleImage,
+			tombStone = new ResourceBuilding("Retreat for the dead", "Where we're buried when we die", idleImage,
 					idleImage, idleImage, subBuildings, 100, 40);
 			tombStone.setCost(new Cost(0, 2, 2, 2));
 			addBuilding(church);
@@ -604,7 +604,7 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			blacksmith = new ResourceBuilding("Blacksmith", "", idleImage,
+			blacksmith = new ResourceBuilding("Blacksmith", "Makes metal", idleImage,
 					idleImage, idleImage, subBuildings, 100, 150,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -657,7 +657,7 @@ public class BuildingManager {
 			
 			FootPrint fp = new FootPrint(1,1,1,1);
 			
-			residentPosh = new ResourceBuilding("Overload Houses", "", idleImage,
+			residentPosh = new ResourceBuilding("Overload Houses", "Nice homes", idleImage,
 					idleImage, idleImage, null, 0, 120,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -700,7 +700,7 @@ public class BuildingManager {
 			subBuildings.add(residentPosh);
 			
 			
-			residentMed = new ResourceBuilding("Better Settlement", "", idleImage,
+			residentMed = new ResourceBuilding("Better Settlement", "Get down tonight", idleImage,
 					idleImage, idleImage, subBuildings, 100, 120,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -740,7 +740,7 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(residentMed);
 			
-			residentTent = new ResourceBuilding("Settlement", "", idleImage,
+			residentTent = new ResourceBuilding("Settlement", "A place for a man viking and woman viking to come together. Its complicated.", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60) {
 				@Override
 				public void onBuildingTick(Building building) {
@@ -798,17 +798,13 @@ public class BuildingManager {
 
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
-			townHall = new ResourceBuilding("Town Hall", "", images,
+			townHall = new ResourceBuilding("Town Hall", "The heart of every new town or village", images,
 					images, images, subBuildings, 100,120,fp);
 			townHall.setCost(new Cost(0, 2, 2, 2));
 			addBuilding(townHall);
 
 			rootBuilding = townHall;
 		}
-		
-		//Descriptions
-		herbary.setDescription("Vikings don't like plants but will eat them when needed.");
-		farm.setDescription("Its almost harvesting season!");
 
 	}
 
