@@ -380,8 +380,11 @@ public class BuildingManager {
 			lmProgressImage.add(lmImage.getSubImage(0, 96, 96, 96));
 			Vector<Image> lmWorkingImage = new Vector<Image>();
 			lmWorkingImage.add(lmImage.getSubImage(0, 0, 96, 96));
+			
+			FootPrint fp = new FootPrint(1,0,0,1);
+			
 			lumberMill = new ResourceBuilding("Lumber Mill", "",
-					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100,120) {
+					lmProgressImage, lmWorkingImage, lmWorkingImage, null, 100,50, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					GameSession.getInstance().getInventory()
@@ -562,13 +565,61 @@ public class BuildingManager {
 			addBuilding(well);
 		}
 
-		BaseBuilding residentTent = null;
+
+		BaseBuilding residentPosh = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image(
-					"images/buildings/residential/as_tent0/idle/135/0.png"));
-			residentTent = new ResourceBuilding("Settlement", "", idleImage,
-					idleImage, idleImage, null, 100, 60) {
+			idleImage.add(new Image("images/buildings/house1.png"));
+					idleImage.add(new Image("images/buildings/house1b.png"));
+							idleImage.add(new Image("images/buildings/house1c.png"));
+			
+			FootPrint fp = new FootPrint(1,1,1,1);
+			
+			residentPosh = new ResourceBuilding("Overload Houses", "", idleImage,
+					idleImage, idleImage, null, 0, 120,fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					Inventory inv = GameSession.getInstance().getInventory();
+					if (inv.getItemCount(ItemType.FOOD) > 1) {
+						GameSession gs = GameSession.getInstance();
+						if (gs.getPlayerManager().getAgents().size() >= 2) {
+							if (Math.random() < GameSession.getInstance()
+									.getProbabilitySettler()) {
+								inv.removeItem(ItemType.FOOD, 1);
+								try {
+									PlayerUI player = gs.getPlayerManager()
+											.addPlayer(gs.getPlay());
+									player.location = building.location;
+								} catch (SlickException se) {
+								}
+							}
+						}
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 24 * 60;
+				}
+			};
+			residentPosh.setCost(new Cost(0, 2, 2, 2));
+			addBuilding(residentPosh);
+		}
+		
+		
+		BaseBuilding residentMed = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image("images/buildings/Medieval_Building_06.png"));
+			
+			FootPrint fp = new FootPrint(1,1,1,1);
+			
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(residentPosh);
+			
+			
+			residentMed = new ResourceBuilding("Better Settlement", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 120,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					Inventory inv = GameSession.getInstance().getInventory();
@@ -578,6 +629,46 @@ public class BuildingManager {
 							if (Math.random() < GameSession.getInstance()
 									.getProbabilitySettler()) {
 								inv.removeItem(ItemType.FOOD, 2);
+								try {
+									PlayerUI player = gs.getPlayerManager()
+											.addPlayer(gs.getPlay());
+									player.location = building.location;
+								} catch (SlickException se) {
+								}
+							}
+						}
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 24 * 60;
+				}
+			};
+			residentMed.setCost(new Cost(0, 2, 2, 2));
+			addBuilding(residentMed);
+		}
+		
+		BaseBuilding residentTent = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/residential/as_tent0/idle/135/0.png"));
+			
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(residentMed);
+			
+			residentTent = new ResourceBuilding("Settlement", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 60) {
+				@Override
+				public void onBuildingTick(Building building) {
+					Inventory inv = GameSession.getInstance().getInventory();
+					if (inv.getItemCount(ItemType.FOOD) > 4) {
+						GameSession gs = GameSession.getInstance();
+						if (gs.getPlayerManager().getAgents().size() >= 2) {
+							if (Math.random() < GameSession.getInstance()
+									.getProbabilitySettler()) {
+								inv.removeItem(ItemType.FOOD, 4);
 								try {
 									PlayerUI player = gs.getPlayerManager()
 											.addPlayer(gs.getPlay());
