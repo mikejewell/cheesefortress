@@ -106,9 +106,7 @@ public abstract class BaseBuilding implements IBuilding {
 		{
 			if (buildingIdleImages.size() > 0)
 			{
-				int imageIndex =(int)(( System.currentTimeMillis()/ animationSpeed) % buildingIdleImages.size());
-				
-				Image image = buildingIdleImages.get(imageIndex);
+				Image image = buildingIdleImages.get(0);
 				image.draw(x,y,x+width,y+height,0,0, image.getWidth(), image.getHeight());
 			}
 		}
