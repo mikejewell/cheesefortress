@@ -2,16 +2,16 @@ package cheese.model.quest;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import cheese.model.Cost;
+import cheese.model.PlayerManager;
 import cheese.model.god.GodType;
+import deserted.model.Agent;
+import deserted.model.AgentState;
 import deserted.model.GameSession;
-import deserted.model.item.ItemType;
 
 public class QuestManager {
 
@@ -76,8 +76,33 @@ public class QuestManager {
 		questList.add(settlement);
 		settlement.addRequirement(hall);
 		
-		questList.add(new QuestTribute("Dragons Hoard", "My precious... Give me 20 metal!", 50, GodType.NEUTRAL, new Cost(0,0,0,20)));
-		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
+//		questList.add(new QuestTribute("Dragons Hoard", "My precious... Give me 20 metal!", 50, GodType.NEUTRAL, new Cost(0,0,0,20)));
+//		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
+		questList.add(new QuestTribute("Sacrifice", "I demand a sacrifice of 20 villagers!", 50, GodType.NEUTRAL) {
+			@Override
+			public void onComplete() {
+				int count = 0;
+				int i = 0;
+				PlayerManager pm = GameSession.getInstance().getPlayerManager();
+				while(count < 3) {
+					Agent agent = pm.getAgents().get(i);
+					if(agent.getState() != AgentState.DEAD) {
+						agent.setState(AgentState.DEAD);
+						count++;
+					}
+					i++;
+				}
+			}
+			
+			@Override
+			public boolean canComplete() {
+				int population = GameSession.getInstance().getPlayerManager().getAgents().size();
+				if(population >= 3) {
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 
 	public List<Quest> getQuestList() {

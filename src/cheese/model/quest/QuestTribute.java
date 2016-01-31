@@ -22,6 +22,9 @@ public class QuestTribute extends Quest {
 		this.cost = cost;
 	}
 
+	public QuestTribute(String questName, String questDescription, int value, GodType god) {
+		super(questName,questDescription, value, god);
+	}
 	
 	@Override
 	public void onComplete() {
