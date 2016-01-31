@@ -41,7 +41,7 @@ public class Building extends TimedItem {
 
 			image = base.buildingInProgressImages.get(imageIndex);
 		} else {
-			int imageIndex = (int) ((System.currentTimeMillis() / base.animationSpeed) % base.buildingWorkingImages
+			int imageIndex = (int) (((System.currentTimeMillis()-animationOffset) / base.animationSpeed) % base.buildingWorkingImages
 					.size());
 			image = base.buildingWorkingImages.get(imageIndex);
 		}

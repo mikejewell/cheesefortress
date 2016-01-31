@@ -102,6 +102,8 @@ public class BuildingManager {
 					idleImage, idleImage, idleImage, null, 100, 0.1);
 			barracksWatchTowerWood.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksWatchTowerWood);
+			barracksWatchTowerWood.yOffset =-22;
+			barracksWatchTowerWood.fowArea = 5;
 		}
 
 		BaseBuilding barracksWatchTowerStone = null;
@@ -113,6 +115,8 @@ public class BuildingManager {
 					idleImage, idleImage, idleImage, null, 100, 0.1);
 			barracksWatchTowerStone.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracksWatchTowerStone);
+			barracksWatchTowerStone.yOffset =-22;
+			barracksWatchTowerStone.fowArea = 6;
 		}
 
 		BaseBuilding barracksStable = null;
@@ -150,7 +154,7 @@ public class BuildingManager {
 			subBuildings.add(barracksWatchTowerWood);
 			subBuildings.add(barracksWatchTowerStone);
 
-			FootPrint fp = new FootPrint(1,1,1,1);
+			FootPrint fp = new FootPrint(1,2,2,1);
 			
 			castle = new ResourceBuilding("Barracks", "", idleImage, idleImage,
 					idleImage, subBuildings, 100, 0.3,fp);
@@ -176,7 +180,7 @@ public class BuildingManager {
 			signalFireWooden.setCost(new Cost(0, 1, 3, 3));
 			
 			signalFireWooden.yOffset = -30;
-			
+			signalFireWooden.fowArea = 3;
 			addBuilding(signalFireWooden);
 		}
 
@@ -196,6 +200,7 @@ public class BuildingManager {
 			signalFire.setCost(new Cost(0, 1, 3, 3));
 			
 			signalFire.yOffset = -30;
+			signalFire.fowArea = 4;
 			addBuilding(signalFire);
 		}
 		
@@ -209,6 +214,9 @@ public class BuildingManager {
 					sfIdleImage, sfIdleImage, null, 100, 0.15);
 			outpost.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(outpost);
+			
+			outpost.yOffset =-20;
+			outpost.fowArea = 2;
 		}
 		
 		
@@ -252,7 +260,7 @@ public class BuildingManager {
 			addBuilding(weaponSmith);
 		}
 
-		/*BaseBuilding barracks = null;
+		BaseBuilding barracks = null;
 		{
 			Vector<Image> bkProgressImage = new Vector<Image>();
 			Image bkImage = new Image("images/buildings/barracks.png");
@@ -271,17 +279,6 @@ public class BuildingManager {
 					bkWorkingImage, bkWorkingImage, subBuildings, 100,fp);
 			barracks.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(barracks);
-		}*/
-
-		BaseBuilding fireStation = null;
-		{
-			Vector<Image> bk2IdleImage = new Vector<Image>();
-			bk2IdleImage.add(new Image(
-					"images/buildings/firestation/renders/idle/45/000.png"));
-			fireStation = new ResourceBuilding("Fire Station", "",
-					bk2IdleImage, bk2IdleImage, bk2IdleImage, null, 100, 0.6);
-			fireStation.setCost(new Cost(0, 1, 3, 3));
-			addBuilding(fireStation);
 		}
 
 		BaseBuilding megaMine = null;
@@ -294,8 +291,11 @@ public class BuildingManager {
 				workingImage.add(new Image(
 						"images/buildings/UH/as_mine5x5/work/45/"
 								+ getNumber2(i) + ".png"));
+			
+			FootPrint fp = new FootPrint(1,4,4,0);
+			
 			megaMine = new ResourceBuilding("Mega Mine", "", idleImage,
-					idleImage, workingImage, null, 100) {
+					idleImage, workingImage, null, 100,fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					GameSession.getInstance().getInventory()
@@ -326,8 +326,10 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(megaMine);
 
+			FootPrint fp = new FootPrint(1,1,1,1);
+			
 			goldMine = new ResourceBuilding("Gold Mine", "", gmProgressImage,
-					gmIdleImage, gmWorkingImage, subBuildings, 100) {
+					gmIdleImage, gmWorkingImage, subBuildings, 100, fp) {
 				@Override
 				public void onBuildingTick(Building building) {
 					GameSession.getInstance().getInventory()
@@ -593,7 +595,7 @@ public class BuildingManager {
 			
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(hunterTent);
-			subBuildings.add(fireStation);
+
 			subBuildings.add(barracksAdvanced);
 			subBuildings.add(lumberJack);
 			subBuildings.add(clayPit);
@@ -602,8 +604,8 @@ public class BuildingManager {
 			subBuildings.add(blacksmith);
 			subBuildings.add(residentTent);
 			subBuildings.add(outpost);
-			subBuildings.add(signalFireWooden);
-			subBuildings.add(signalFire);
+			
+
 			FootPrint fp = new FootPrint(0,1,1,0);
 			
 			townHall = new ResourceBuilding("Town Hall", "", images,
@@ -662,7 +664,8 @@ public class BuildingManager {
 	}
 
 	public boolean canBuyBuilding(BaseBuilding b) {
-		Cost c = b.getCost();
+		return true;
+		/*Cost c = b.getCost();
 		Inventory i = GameSession.getInstance().getInventory();
 
 		if (i.getItemCount(ItemType.FOOD) < c.getFood()) {
@@ -681,7 +684,7 @@ public class BuildingManager {
 			return false;
 		}
 
-		return true;
+		return true;*/
 	}
 
 	public void buyBuilding(BaseBuilding b) {
