@@ -56,5 +56,19 @@ public class Cost {
 	public void setMetal(int metal) {
 		this.metal = metal;
 	}
+	
+	@Override
+	public String toString(){
+		String c = "";
+		if(food > 0)
+			c += food + "x Food,";
+		if(wood > 0)
+			c += wood + "x Wood,";
+		if(stone > 0)
+			c += stone + "x Stone,";
+		if(metal > 0)
+			c += metal + "x Metal,";
+		return c;
+	}
 
 }

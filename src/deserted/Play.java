@@ -152,6 +152,8 @@ public class Play extends BasicGameState implements GameState,
 		selectedItems = new ArrayList<Item>();
 		messenger = new Messenger();
 
+		questBackground = new Image("images/backgrounds/quest_card.jpg");
+		
 		itemImages = new HashMap<ItemType, Image>();
 		for (ItemType type : ItemType.values()) {
 			Item item = ItemFactory.createItem(type);
@@ -415,23 +417,42 @@ public class Play extends BasicGameState implements GameState,
 			for (int i = 0; i < currentBuildingOptions.size(); i++) {
 				BaseBuilding building = currentBuildingOptions.get(i);
 
-				int y = ag_y + i * 60;
-				int pad = 7;
+				int y = ag_y+25 + i * 60;
+				int pad = 3;
 				if (!currentBuildingReady) {
 					g.setColor(Color.gray);
 				}
 				else {
 					if (buildingManager.canBuyBuilding(building)) {
-						g.setColor(Color.black);
+						g.setColor(Color.green);
 					} else {
-						g.setColor(Color.red);
+						g.setColor(Color.green.darker());
 					}
 				}
-				g.drawString(building.getName(), ag_x + pad + 70, y + pad);
 
-				building.renderBuilding(ag_x, y, 50, 50);
-
-				Rectangle rect = new Rectangle(ag_x, y, 50, 50);
+				Rectangle rect = new Rectangle(ag_x+2, y-3, agent_bar_width-2, 50+3);
+				g.draw(rect);			
+				g.drawString(building.getName(), ag_x + pad + 70, y);
+				String s[] = building.getCost().toString().split(",");
+				System.out.println(s.length);
+				switch(s.length){
+				case 1:
+					g.drawString(s[0], ag_x + pad + 70, y+14);
+					break;
+				case 2:
+					g.drawString(s[0] + ", " + s[1], ag_x + pad + 70, y+14);
+					break;
+				case 3:
+					g.drawString(s[0] + ", " + s[1]+ ",", ag_x + pad + 70, y+14);
+					g.drawString(s[2], ag_x + pad + 70, y+25);
+					break;
+				case 4:
+					g.drawString(s[0] + ", " + s[1]+ ",", ag_x + pad + 70, y+14);
+					g.drawString(s[2] + ", " + s[3], ag_x + pad + 70, y+25);
+					break;
+				}
+				
+				building.renderBuilding(ag_x+5, y, 50, 50);
 
 				if (currentBuildingReady) {
 					if (buildingManager.canBuyBuilding(building)) {
