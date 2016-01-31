@@ -41,12 +41,13 @@ public class WedgeGFX {
         	
     	tex.startUse();
     	for(int x = 0; x < tiles.length; x++){
-    		for(int y = tiles.length-1; y >= 0; y--){
+    		for(int y = tiles.length-1; y >= 0; y--){   			
     			int[] uv = tileMap.getUV(tiles[x][y].getId());
     			
-    			
-    			finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
-	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y;
+    			Tile tile = tiles[x][y].tile;
+    			   			   		    		
+    			finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y;
     			
 	    		float xa = finalX-32*camera.zoom;
 	    		float ya = finalY-32*camera.zoom;
@@ -130,7 +131,7 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
-        for(int x = 0; x < tiles[0].length; x++){
+        for(int x = 0; x < tiles[0].length; x++){        	
         	type = tiles[x][row].tile.getBuildingToDraw();
         	//sprite = SpriteManager.getSprite(type);
         	if(type != null){
@@ -183,8 +184,10 @@ public class WedgeGFX {
 		for(int x = 0; x < tiles[0].length; x++){
             for(int y = 0; y < tiles[0].length; y++){           	
     		
-	        	finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
-	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y;
+            	Tile tile = tiles[x][y].tile;
+            	
+	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y;
 	    			    		
 	    		Polygon p = new Polygon();
         		p.addPoint((int)(finalX-32*camera.zoom), (int)finalY);

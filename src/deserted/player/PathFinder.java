@@ -86,80 +86,80 @@ public class PathFinder
   	{
   		int min = 9999;
   		Tile minTile = null;
-  		if (currentTile.x >0)
+  		if (currentTile.cornerX >0)
   		{
-  			Tile tile = ts.getTile(currentTile.x-1, currentTile.y);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX-1, currentTile.cornerY);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.y >0)
+  		if (currentTile.cornerY >0)
   		{
-  			Tile tile = ts.getTile(currentTile.x, currentTile.y-1);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX, currentTile.cornerY-1);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.x >0 && currentTile.y >0)
+  		if (currentTile.cornerX >0 && currentTile.cornerY >0)
   		{
-  			Tile tile = ts.getTile(currentTile.x-1, currentTile.y-1);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX-1, currentTile.cornerY-1);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.x < size-2)
+  		if (currentTile.cornerX < size-2)
   		{
-  			Tile tile = ts.getTile(currentTile.x+1, currentTile.y);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX+1, currentTile.cornerY);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.y < size-2)
+  		if (currentTile.cornerY < size-2)
   		{
-  			Tile tile = ts.getTile(currentTile.x, currentTile.y+1);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX, currentTile.cornerY+1);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.x < size-2 && currentTile.y < size-2)
+  		if (currentTile.cornerX < size-2 && currentTile.y < size-2)
   		{
-  			Tile tile = ts.getTile(currentTile.x+1, currentTile.y+1);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX+1, currentTile.cornerY+1);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.x >0 && currentTile.y < size-2)
+  		if (currentTile.cornerX >0 && currentTile.cornerY < size-2)
   		{
-  			Tile tile = ts.getTile(currentTile.x-1, currentTile.y+1);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX-1, currentTile.cornerY+1);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
   				minTile = tile;
   			}
   		}
-  		if (currentTile.x < size-2 && currentTile.y >0)
+  		if (currentTile.cornerX < size-2 && currentTile.cornerY >0)
   		{
-  			Tile tile = ts.getTile(currentTile.x+1, currentTile.y-1);
-  			int dist = distances[tile.x][tile.y];
+  			Tile tile = ts.getTile(currentTile.cornerX+1, currentTile.cornerY-1);
+  			int dist = distances[tile.cornerX][tile.cornerY];
   			if (dist < min)
   			{
   				 min=dist;
@@ -171,71 +171,71 @@ public class PathFinder
   	
   	private void setDistances(Tile startTile, int distance)
   	{
-  		distances[startTile.x][startTile.y] = distance;
-  		if (startTile.x >0)
+  		distances[startTile.cornerX][startTile.cornerY] = distance;
+  		if (startTile.cornerX >0)
   		{
-  			Tile currentDest = ts.getTile(startTile.x-1, startTile.y);
+  			Tile currentDest = ts.getTile(startTile.cornerX-1, startTile.cornerY);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
   		if (startTile.y >0)
   		{
-  			Tile currentDest = ts.getTile(startTile.x, startTile.y-1);
+  			Tile currentDest = ts.getTile(startTile.cornerX, startTile.cornerY-1);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
-  		if (startTile.x >0 && startTile.y >0)
+  		if (startTile.cornerX >0 && startTile.cornerY >0)
   		{
-  			Tile currentDest = ts.getTile(startTile.x-1, startTile.y-1);
+  			Tile currentDest = ts.getTile(startTile.cornerX-1, startTile.cornerY-1);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
-  		if (startTile.x < size-2)
+  		if (startTile.cornerX < size-2)
   		{
-  			Tile currentDest = ts.getTile(startTile.x+1, startTile.y);
+  			Tile currentDest = ts.getTile(startTile.cornerX+1, startTile.cornerY);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
-  		if (startTile.y < size-2)
+  		if (startTile.cornerY < size-2)
   		{
-  			Tile currentDest = ts.getTile(startTile.x, startTile.y+1);
+  			Tile currentDest = ts.getTile(startTile.cornerX, startTile.cornerY+1);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
-  		if (startTile.x < size-2 && startTile.y < size-2)
+  		if (startTile.cornerX < size-2 && startTile.cornerY < size-2)
   		{
-  			Tile currentDest = ts.getTile(startTile.x+1, startTile.y+1);
+  			Tile currentDest = ts.getTile(startTile.cornerX+1, startTile.cornerY+1);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
-  				setDistances(currentDest, currentValue);
-  		}
-  		
-  		if (startTile.x >0  && startTile.y < size-2)
-  		{
-  			Tile currentDest = ts.getTile(startTile.x-1, startTile.y+1);
-  			int moveValue = getTileMoveAbility(currentDest);
-  			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
   		
-  		if (startTile.x < size-2 && startTile.y >0)
+  		if (startTile.cornerX >0  && startTile.cornerY < size-2)
   		{
-  			Tile currentDest = ts.getTile(startTile.x+1, startTile.y-1);
+  			Tile currentDest = ts.getTile(startTile.cornerX-1, startTile.cornerY+1);
   			int moveValue = getTileMoveAbility(currentDest);
   			int currentValue = distance + moveValue;
-  			if (currentValue < distances[currentDest.x][currentDest.y])
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
+  				setDistances(currentDest, currentValue);
+  		}
+  		
+  		if (startTile.cornerX < size-2 && startTile.cornerY >0)
+  		{
+  			Tile currentDest = ts.getTile(startTile.cornerX+1, startTile.cornerY-1);
+  			int moveValue = getTileMoveAbility(currentDest);
+  			int currentValue = distance + moveValue;
+  			if (currentValue < distances[currentDest.cornerX][currentDest.cornerY])
   				setDistances(currentDest, currentValue);
   		}
   	}

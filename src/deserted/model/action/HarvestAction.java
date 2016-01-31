@@ -72,7 +72,7 @@ public class HarvestAction extends BaseAction implements IAction {
 			} else if (beforeTileId != null) {
 				tile.attrHealth -= (10 / harvests);
 				if (tile.attrHealth <= 0) {
-					TileSystem.getInstance().setTileID(tile.x, tile.y,
+					TileSystem.getInstance().setTileID(tile.cornerX, tile.cornerY,
 							afterTileId);
 					tile.attrHealth = 10;
 				}

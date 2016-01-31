@@ -667,7 +667,7 @@ public class Play extends BasicGameState implements GameState,
 		{
 			tt.vis = 100;
 			
-			Vector2f pos = ts.camera.worldToScreenPos(tt.x+0.5f, tt.y+0.5f);
+			Vector2f pos = ts.camera.worldToScreenPos(tt.x, tt.y);
 		
 			if (tt.id == TileId.WATER)
 			{
@@ -687,6 +687,7 @@ public class Play extends BasicGameState implements GameState,
 			}
 			
 			g.drawRect(pos.x-2, pos.y-2, 4, 4);
+			System.out.println(tt.x + "," + tt.y);
 			//tt.addSprite(SpriteType.WRECKAGE);
 		}
 		
@@ -767,7 +768,7 @@ public class Play extends BasicGameState implements GameState,
 					
 					for(int x=b.base.getMinusXFootPrint(); x< b.base.getPlusXFootPrint()+1; x++) {
 						for(int y=b.base.getMinusYFootPrint(); y< b.base.getPlusYFootPrint()+1; y++) {
-							Tile baseTile = ts.getTile(t.x +x, t.y-y);
+							Tile baseTile = ts.getTile(t.cornerX + x, t.cornerY - y);
 							baseTile.addBuilding(b, false);
 						}
 					}
