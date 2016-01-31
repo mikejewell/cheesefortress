@@ -110,6 +110,8 @@ public class TileSystem {
 	}
 	
 	public Tile getTile(int x, int y){
+		if (x<0 || y<0 || x >tiles.length-1 || y > tiles[0].length-1)
+			return null;
 		return tiles[x][y];
 	}
 	

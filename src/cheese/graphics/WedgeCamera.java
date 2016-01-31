@@ -47,14 +47,14 @@ public class WedgeCamera {
 		float wy = (vx-2*vy)/64;
 		float wx = ((2*vy)+(32*wy))/32;
 		
-		return new Vector2f(wx+(x+0.5f),wy+(y+0.5f));
+		return new Vector2f(wx+(x),wy+(y));
 	}
 	
 	
 	public Vector2f worldToScreenPos(float worldX, float worldY){
 		Vector2f offsets = getOffsets();
-		float finalX = (((worldX-(x-0.5f))*32)+((worldY-(y-0.5f))*32))*zoom-offsets.x; 
-		float finalY = (((worldX-(x-0.5f))*16)-((worldY-(y-0.5f))*16))*zoom-offsets.y; 
+		float finalX = (((worldX-(x))*32)+((worldY-(y))*32))*zoom-offsets.x; 
+		float finalY = (((worldX-(x))*16)-((worldY-(y))*16))*zoom-offsets.y; 
 		return new Vector2f(finalX, finalY);
 	}
 	

@@ -662,7 +662,36 @@ public class Play extends BasicGameState implements GameState,
 				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
 			}			
 		}
-
+		mouseX = input.getMouseX();		
+		mouseY = input.getMouseY();
+		Tile tt = ts.getTileFromScreen(mouseX, mouseY);
+		if (tt != null)
+		{
+			tt.vis = 100;
+			
+			Vector2f pos = ts.camera.worldToScreenPos(tt.x+0.5f, tt.y+0.5f);
+		
+			if (tt.id == TileId.WATER)
+			{
+				g.setColor(Color.green);
+			}
+			else if (tt.id == TileId.ROCK)
+			{
+				g.setColor(Color.yellow);
+			}
+			else if (tt.id == TileId.SNOW)
+			{
+				g.setColor(Color.green);
+			}
+			else
+			{
+				g.setColor(Color.red);
+			}
+			
+			g.drawRect(pos.x-2, pos.y-2, 4, 4);
+			//tt.addSprite(SpriteType.WRECKAGE);
+		}
+		
 		if (input.isMousePressed(1) || input.isMousePressed(2)) {
 			currentDragging = null;
 		}
@@ -755,7 +784,7 @@ public class Play extends BasicGameState implements GameState,
 				}
 				else {
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
-					if (t.building != null) {
+					if (t !=null && t.building != null) {
 						currentBuilding = t.building;
 					} else {
 						// See if we are attacking a monster
