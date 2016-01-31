@@ -514,7 +514,7 @@ public class Play extends BasicGameState implements GameState,
 		g.setColor(Color.black);
 		for (int i = 0; i < ItemType.values().length; i++) {
 
-			int x = inventory_zone_x + (i * f_h) + (i * 6);
+			int x = inventory_zone_x + (int)(i * f_h * 2.5f) + (i * 6);
 			if (i < items.size()) {
 				itemImages.get(items.get(i)).draw(x, f_y, f_h, f_h);
 
@@ -529,12 +529,16 @@ public class Play extends BasicGameState implements GameState,
 					g.setColor(Color.black);
 					g.drawString("" + count, x + f_h - w, f_y + f_h - h);
 				}
+				
 			} else {
 				g.setColor(Color.black);
 				g.fillRect(x, f_y, f_h, f_h);
 			}
 			g.setColor(Color.darkGray);
 			g.drawRect(x - 1, f_y - 1, f_h + 2, f_h + 2);
+			
+			g.setColor(Color.black);
+			g.drawString(ItemType.values()[i].toString(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M"))/2);
 		}
 		// Draw toolTips
 		int mouseX = input.getMouseX();

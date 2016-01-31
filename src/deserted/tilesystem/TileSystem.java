@@ -72,7 +72,7 @@ public class TileSystem {
 
 		ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64, "assets/maps/2.map", windowSize);
 		ts.addGrass(0.05f);
-		ts.addSticks(0.003f);
+		ts.addSticks(0.002f);
 		ts.addBushes(0.03f);
 		ts.addTrees(0.07f);
 		ts.addRocks(0.002f);

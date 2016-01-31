@@ -46,7 +46,7 @@ public class Messenger {
 	public void render(Graphics g, int windowHeight){
 		for(Message m : messages){
 			g.setColor(m.c);
-			g.drawString(m.m, 8, windowHeight - 120 - messages.indexOf(m) * 25);
+			g.drawString(m.m, 8, windowHeight - 80 - messages.indexOf(m) * 25);
 		}
 	}
 }
