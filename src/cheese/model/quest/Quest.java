@@ -1,5 +1,7 @@
 package cheese.model.quest;
 
+import java.util.ArrayList;
+
 import cheese.model.TimedItem;
 import cheese.model.god.GodType;
 import deserted.model.GameSession;
@@ -15,6 +17,8 @@ abstract public class Quest extends TimedItem {
 	private double cardX;
 	private double cardY;
 	
+	private ArrayList<Quest> requirements;
+	
 	//Relationship value to god
 	private int value;
 	private int hours;
@@ -27,20 +31,31 @@ abstract public class Quest extends TimedItem {
 		this.hours = 0;
 		this.value = value;
 		this.setCompleted(false);
+		this.requirements = new ArrayList<Quest>();
+	}
+	
+	public void addRequirement(Quest quest) {
+		requirements.add(quest);
+	}
+	
+	public ArrayList<Quest> getRequirements() {
+		return requirements;
 	}
 	
 	public abstract boolean canComplete();
 	
 	public void complete() {
 		QuestManager questManager = GameSession.getInstance().getQuestManager();
+		questManager.addCompletedQuest(this);
 		questManager.assignQuest();
 		GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(this.value);
 		onComplete();
 		this.setCompleted(true);
+		
 	}
 	
 	public double getHoursToFinish() {
-		return 24;
+		return 0;
 	}
 	
 	public int getHoursElapsed() {
@@ -49,8 +64,9 @@ abstract public class Quest extends TimedItem {
 	
 	@Override
 	public void onTick() {
+		
 		hours++;
-		if(hours >= getHoursToFinish()) {
+		if(getHoursToFinish() > 0 && hours >= getHoursToFinish()) {
 			stopTiming();
 			GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(-this.value);
 			this.setCompleted(true);

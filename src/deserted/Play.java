@@ -515,23 +515,25 @@ public class Play extends BasicGameState implements GameState,
 
 				g.drawString(quest.getQuestDescription(), x + 5, y + 30);
 
-				// Draw timer
-				int timer_h = 18;
-				int timer_y = (y + h) - timer_h - 45;
-				int timer_x = x + 5;
-				int timer_w = w - 10;
-				g.setColor(Color.green);
-				g.fillRect(timer_x, timer_y, timer_w, timer_h);
-
-				double percentComplete = (quest.getHoursElapsed() / quest
-						.getHoursToFinish());
+				if(quest.getHoursToFinish() > 0) {
+					// Draw timer
+					int timer_h = 18;
+					int timer_y = (y + h) - timer_h - 45;
+					int timer_x = x + 5;
+					int timer_w = w - 10;
+					g.setColor(Color.green.darker());
+					g.fillRect(timer_x, timer_y, timer_w, timer_h);
+	
+					double percentComplete = (quest.getHoursElapsed() / quest
+							.getHoursToFinish());
+					
+					g.setColor(Color.red.darker());
+					g.fillRect(timer_x, timer_y, (int)(timer_w*percentComplete), timer_h);
+	
+					g.setColor(Color.green.darker().darker());
+					g.drawRect(timer_x, timer_y, timer_w, timer_h);
+				}
 				
-				g.setColor(Color.red);
-				g.fillRect(timer_x, timer_y, (int)(timer_w*percentComplete), timer_h);
-
-				g.setColor(Color.green.darker());
-				g.drawRect(timer_x, timer_y, timer_w, timer_h);
-
 				if (quest.canComplete()) {
 					// Draw Complete button
 					String name = "Complete";
@@ -625,7 +627,7 @@ public class Play extends BasicGameState implements GameState,
 
 				for (Tile tile : currentDragging.getOverlappingTiles(ts,
 						currentDraggingTile)) {
-					if (tile.building != null || tile.id == TileId.WATER)
+					if (!currentDragging.isTileValidForBuilding(tile))
 						ts.renderTile(g, tile, Color.red);
 					else
 						ts.renderTile(g, tile, Color.blue);
@@ -720,7 +722,7 @@ public class Play extends BasicGameState implements GameState,
 
 					for (Tile tile : currentDragging.getOverlappingTiles(ts,
 							currentDraggingTile)) {
-						if (tile.building != null || tile.id == TileId.WATER) {
+						if (!currentDragging.isTileValidForBuilding(tile)) {
 							fail = true;
 						}
 					}

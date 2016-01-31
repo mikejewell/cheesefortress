@@ -49,7 +49,7 @@ public class BuildingManager {
 				@Override
 				public void onBuildingTick(Building building) {
 					if (Math.random() < GameSession.getInstance()
-							.getProbabilityFood()) {
+							.getProbabilityFood()*2) {
 						GameSession.getInstance().getInventory()
 								.addItem(ItemType.FOOD);
 					}
@@ -523,6 +523,71 @@ public class BuildingManager {
 			addBuilding(religionTent);
 		}
 
+		//
+		
+		BaseBuilding fisherTent = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/fisherman/as_fisherman0/idle/45/0.png"));
+
+			fisherTent = new ResourceBuilding("Fisher Hobble", "", idleImage,
+					idleImage, idleImage, null, 100, 60) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()*1.5) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+					else {
+						System.out.println("No food for you");
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
+			fisherTent.setCost(new Cost(0, 2, 0, 0));
+			addBuilding(fisherTent);
+		}
+
+		BaseBuilding smallFarmTent = null;
+		{
+			Vector<Image> idleImage = new Vector<Image>();
+			idleImage.add(new Image(
+					"images/buildings/smallFarm.png"));
+
+			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
+			subBuildings.add(farm);
+
+			FootPrint fp = new FootPrint(0,1,1,0);
+			
+			smallFarmTent = new ResourceBuilding("Small Farm", "", idleImage,
+					idleImage, idleImage, subBuildings, 100, 120,fp) {
+				@Override
+				public void onBuildingTick(Building building) {
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+					else {
+						System.out.println("No food for you");
+					}
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
+			smallFarmTent.setCost(new Cost(0, 2, 0, 0));
+			addBuilding(smallFarmTent);
+		}
+		
 		BaseBuilding hunterTent = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
@@ -530,7 +595,8 @@ public class BuildingManager {
 					"images/buildings/tent/hunter/as_hunter0/idle/45/0.png"));
 
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
-			subBuildings.add(farm);
+			subBuildings.add(smallFarmTent);
+			subBuildings.add(fisherTent);
 
 			hunterTent = new ResourceBuilding("Hunter Abode", "", idleImage,
 					idleImage, idleImage, subBuildings, 100, 60) {
