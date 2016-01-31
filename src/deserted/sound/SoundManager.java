@@ -35,41 +35,41 @@ public class SoundManager {
 	 */
 	private SoundManager(boolean playing) {
 	    System.out.format("SoundManager\tInstance Created\n");
-		
-	    try {
-	    	sounds.clear();
-	    	
-	        for (File file : new File(getClass().getResource("/sounds").toURI()).listFiles()) {
-	            if (file.isFile() && file.canRead()) {
-	            	try {
-	                    sounds.put(file.getName().substring(0, file.getName().lastIndexOf(".")).toLowerCase(), new Sound(file.getPath()));
-	                } catch (SlickException e) {
-	            	    System.err.format("SoundManager\tError loading: %s\n", file.getName());
-	                }
-	            }
-	        }
-        } catch (URISyntaxException e) {
-        	System.err.println(e.getMessage());
-        }
-	    System.out.format("SoundManager\t%d sound(s) loaded.\n", sounds.size());
-
-	    try {
-	    	music.clear();
-	    	
-	        for (File file : new File(getClass().getResource("/music").toURI()).listFiles()) {
-	            if (file.isFile() && file.canRead()) {
-	            	try {
-	                    music.add(new Music(file.getPath()));
-	                } catch (SlickException e) {
-	            	    System.err.format("SoundManager\tError loading: %s\n", file.getName());
-	                }
-	            }
-	        }
-        } catch (URISyntaxException e) {
-        	System.err.println(e.getMessage());
-        }
-	    System.out.format("SoundManager\t%d music track(s) loaded.\n", music.size());
-	    
+//		
+//	    try {
+//	    	sounds.clear();
+//	    	
+//	        for (File file : new File(getClass().getResource("/sounds").toURI()).listFiles()) {
+//	            if (file.isFile() && file.canRead()) {
+//	            	try {
+//	                    sounds.put(file.getName().substring(0, file.getName().lastIndexOf(".")).toLowerCase(), new Sound(file.getPath()));
+//	                } catch (SlickException e) {
+//	            	    System.err.format("SoundManager\tError loading: %s\n", file.getName());
+//	                }
+//	            }
+//	        }
+//        } catch (URISyntaxException e) {
+//        	System.err.println(e.getMessage());
+//        }
+//	    System.out.format("SoundManager\t%d sound(s) loaded.\n", sounds.size());
+//
+//	    try {
+//	    	music.clear();
+//	    	
+//	        for (File file : new File(getClass().getResource("/music").toURI()).listFiles()) {
+//	            if (file.isFile() && file.canRead()) {
+//	            	try {
+//	                    music.add(new Music(file.getPath()));
+//	                } catch (SlickException e) {
+//	            	    System.err.format("SoundManager\tError loading: %s\n", file.getName());
+//	                }
+//	            }
+//	        }
+//        } catch (URISyntaxException e) {
+//        	System.err.println(e.getMessage());
+//        }
+//	    System.out.format("SoundManager\t%d music track(s) loaded.\n", music.size());
+//	    
 	    
 	    // If we have music, lets start playing it.
 	    if(music.size() > 0) {

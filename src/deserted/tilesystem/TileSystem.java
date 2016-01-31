@@ -70,7 +70,7 @@ public class TileSystem {
 		LocalMapLoader loader = new LocalMapLoader();
 		//PerlinMapGenerator loader = new PerlinMapGenerator();
 
-		ts = new WedgeTileSystem("assets/images/iso-64x64-outside.png", 64, "assets/maps/2.map", windowSize);
+		ts = new WedgeTileSystem("images/iso-64x64-outside.png", 64, "/maps/2.map", windowSize);
 		ts.addGrass(0.05f);
 		ts.addSticks(0.002f);
 		ts.addBushes(0.03f);

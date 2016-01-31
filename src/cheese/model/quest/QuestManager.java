@@ -235,12 +235,12 @@ public class QuestManager {
 		};
 
 		armyQuest.addRequirement(barracks);
-//
-//		sacQuest.addRequirement(hall);
-//		feedQuest.addRequirement(hunter);
-//		hoardeQuest.addRequirement(hall);
-//		armyQuest.addRequirement(hall);
-//		statue.addRequirement(hall);
+
+		sacQuest.addRequirement(hall);
+		feedQuest.addRequirement(hunter);
+		hoardeQuest.addRequirement(hall);
+		armyQuest.addRequirement(hall);
+		statue.addRequirement(hall);
 		
 		questList.add(sacQuest);
 		questList.add(feedQuest);

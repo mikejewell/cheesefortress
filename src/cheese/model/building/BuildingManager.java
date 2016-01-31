@@ -489,7 +489,7 @@ public class BuildingManager {
 		BaseBuilding smallFarmTent = null;
 		{
 			Vector<Image> idleImage = new Vector<Image>();
-			idleImage.add(new Image("images/buildings/smallFarm.png"));
+			idleImage.add(new Image("images/buildings/SmallFarm.png"));
 
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(farm);
@@ -761,7 +761,7 @@ public class BuildingManager {
 					return 2 * 60;
 				}
 			};
-			lumberJack.setCost(new Cost(0, 5, 0, 0));
+			lumberJack.setCost(new Cost(0, 0, 3, 0));
 			addBuilding(lumberJack);
 		}
 		/** End of Wood **/

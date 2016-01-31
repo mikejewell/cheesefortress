@@ -3,6 +3,7 @@ package cheese.graphics.tileSystem;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 import org.newdawn.slick.geom.Point;
@@ -166,7 +167,7 @@ public class WedgeTileSystem {
 	
 	public WedgeTile[][] load(String mapName) throws IOException {
 		WedgeTile[][] tiles  = null;
-		BufferedReader reader = new BufferedReader(new FileReader(mapName));
+		BufferedReader reader =  new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(String.format("/maps/2.map", mapName))));
 
 		// First line is the size (Assuming it's a square)
 		int size = Integer.parseInt(reader.readLine());
