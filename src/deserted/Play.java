@@ -658,6 +658,13 @@ public class Play extends BasicGameState implements GameState,
 			if (currentDragging != null) {
 
 				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
+				
+				for (Tile tile : currentDragging.getOverlappingTiles(ts,currentDraggingTile)) {
+					if (tile.building != null)
+						ts.renderTile(g, tile, Color.red);
+					else
+						ts.renderTile(g, tile, Color.blue);
+				}
 			}			
 		}
 		mouseX = input.getMouseX();		
@@ -765,22 +772,29 @@ public class Play extends BasicGameState implements GameState,
 				if (currentDragging != null) {
 
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
-					Building b = new Building(ts, currentDragging, new Vector2f(t.x,t.y));
 					
-					for(int x=b.base.getMinusXFootPrint(); x< b.base.getPlusXFootPrint()+1; x++) {
-						for(int y=b.base.getMinusYFootPrint(); y< b.base.getPlusYFootPrint()+1; y++) {
-							Tile baseTile = ts.getTile(t.cornerX + x, t.cornerY - y);
-							baseTile.addBuilding(b, false);
+					boolean fail = false;
+					
+					for (Tile tile : currentDragging.getOverlappingTiles(ts,currentDraggingTile)) {
+						if (tile.building != null){ 
+							fail = true;
 						}
 					}
-
-					t.addBuilding(b, true);
-
-					buildingManager.addBuildingInPlay(b);
-					buildingManager.buyBuilding(b.base);
-
-					currentDragging = null;
-					currentDraggingTile = null;
+					
+					if (!fail) {
+						Building b = new Building(ts, currentDragging, new Vector2f(t.x,t.y));
+						
+						for (Tile tile : b.base.getOverlappingTiles(ts,t)) {
+							tile.addBuilding(b, false);
+						}
+						t.addBuilding(b, true);
+	
+						buildingManager.addBuildingInPlay(b);
+						buildingManager.buyBuilding(b.base);
+	
+						currentDragging = null;
+						currentDraggingTile = null;
+					}
 				}
 				else {
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);

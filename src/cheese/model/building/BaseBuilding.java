@@ -7,6 +7,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import cheese.model.Cost;
+import deserted.tilesystem.Tile;
+import deserted.tilesystem.TileSystem;
 
 public abstract class BaseBuilding implements IBuilding {
 
@@ -108,21 +110,18 @@ public abstract class BaseBuilding implements IBuilding {
 		return buildingIdleImages.get(0);	
 	}
 	
-	public int getMinusXFootPrint()	{ 
-		return -1; }
-	
-	public int getPlusXFootPrint()	{ 
-		return 1; }
-	
-	public int getMinusYFootPrint()	{ 
-		return -0; }
-	
-	public int getPlusYFootPrint()	{ 
-		return 1; }
 
 	public Cost getCost() {
 		return cost;
 	}
+	
+	
+	public Vector<Tile> getOverlappingTiles(TileSystem ts, Tile root) {
+		Vector<Tile> tiles = new Vector<Tile>();
+		tiles.add(root);
+		return tiles;
+	}
+	
 
 	public void setCost(Cost cost) {
 		this.cost = cost;
