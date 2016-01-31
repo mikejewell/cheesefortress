@@ -24,12 +24,23 @@ public class ResourceBuilding extends BaseBuilding {
 	
 	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
 			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn, int animationSpeed)throws SlickException {
-		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed,1);
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed,1, null);
+	}
+
+	
+	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
+			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn, int animationSpeed, FootPrint footprint)throws SlickException {
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed,1, footprint);
 	}
 
 	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
 			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn, int animationSpeed, double scale)throws SlickException {
-		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed, scale);
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed, scale, null);
+	}
+	
+	public ResourceBuilding(String name, String desc, Vector<Image> progressImages, Vector<Image> idleImages,
+			Vector<Image> workingImages, Vector<BaseBuilding> subBuildingsIn, int animationSpeed, double scale, FootPrint footprint)throws SlickException {
+		super(name, desc, progressImages,idleImages,workingImages, subBuildingsIn, animationSpeed, scale, footprint);
 	}
 
 

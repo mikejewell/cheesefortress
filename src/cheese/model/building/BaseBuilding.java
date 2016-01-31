@@ -26,6 +26,8 @@ public abstract class BaseBuilding implements IBuilding {
 	public double buildSpeed = 0.5;
 	public int fowArea = 1;
 	
+	public FootPrint footprint;
+	
 	public BaseBuilding(String name, String desc) {
 		this.setName(name);
 		this.setDescription(desc);
@@ -64,7 +66,7 @@ public abstract class BaseBuilding implements IBuilding {
 		buildingIdleImages.add(new Image(imageNameIn));
 	}
 	
-	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn, double imageScale)throws SlickException
+	public BaseBuilding(String nameIn, String desc, Vector<Image> buildingInProgressImagesIn, Vector<Image> buildingIdleImagesIn, Vector<Image> buildingWorkingImagesIn, Vector<BaseBuilding> subBuildingsIn, int animationSpeedIn, double imageScale, FootPrint footprintIn)throws SlickException
 	{
 		name = nameIn;
 		buildingInProgressImages = resizeImages(buildingInProgressImagesIn,imageScale);
@@ -78,7 +80,8 @@ public abstract class BaseBuilding implements IBuilding {
 		
 		width = buildingIdleImagesIn.get(0).getWidth();
 		height = buildingIdleImagesIn.get(0).getHeight();
-		
+	
+		footprint = footprintIn;
 	}
 	
 	private Vector<Image> resizeImages(Vector<Image> original, double scale) {
@@ -118,7 +121,20 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	public Vector<Tile> getOverlappingTiles(TileSystem ts, Tile root) {
 		Vector<Tile> tiles = new Vector<Tile>();
-		tiles.add(root);
+		
+		
+		if (footprint != null) {
+			for(int x = root.cornerX-footprint.minX; x<= root.cornerX+footprint.maxX; x++) {
+				for(int y = root.cornerY-footprint.minY; y<= root.cornerY+footprint.maxY; y++) {
+					tiles.add(ts.getTile(x, y));
+				}
+			}
+		}
+		else
+		{
+			tiles.add(root);
+		}
+		
 		return tiles;
 	}
 	
@@ -130,3 +146,4 @@ public abstract class BaseBuilding implements IBuilding {
 	
 	
 }
+
