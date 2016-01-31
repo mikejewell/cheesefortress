@@ -237,7 +237,8 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 		footerRect = new Rectangle(0, footer_y, container.getWidth(), footer_height);
 		actionRect = new Rectangle(0, action_bar_y, container.getWidth(), action_bar_height);
 		agentRect = new Rectangle(ag_x, ag_y, agent_bar_width, agent_bar_height);
-		questRect = new Rectangle(0, quest_bar_y, container.getWidth(), quest_bar_height);
+		questRect = new Rectangle(0, quest_bar_y, container.getWidth(),
+				quest_bar_height);
 
 	}
 
@@ -412,7 +413,8 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 					}
 				}
 
-				Rectangle rect = new Rectangle(ag_x + 2, y - 3, agent_bar_width - 2, 50 + 3);
+				Rectangle rect = new Rectangle(ag_x + 2, y - 3,
+						agent_bar_width - 2, 50 + 3);
 				g.draw(rect);
 				g.drawString(building.getName(), ag_x + pad + 70, y);
 				String s[] = building.getCost().toString().split(",");
@@ -424,11 +426,13 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 					g.drawString(s[0] + ", " + s[1], ag_x + pad + 70, y + 14);
 					break;
 				case 3:
-					g.drawString(s[0] + ", " + s[1] + ",", ag_x + pad + 70, y + 14);
+					g.drawString(s[0] + ", " + s[1] + ",", ag_x + pad + 70,
+							y + 14);
 					g.drawString(s[2], ag_x + pad + 70, y + 25);
 					break;
 				case 4:
-					g.drawString(s[0] + ", " + s[1] + ",", ag_x + pad + 70, y + 14);
+					g.drawString(s[0] + ", " + s[1] + ",", ag_x + pad + 70,
+							y + 14);
 					g.drawString(s[2] + ", " + s[3], ag_x + pad + 70, y + 25);
 					break;
 				}
@@ -502,10 +506,12 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 					g.setColor(Color.green.darker());
 					g.fillRect(timer_x, timer_y, timer_w, timer_h);
 
-					double percentComplete = (quest.getHoursElapsed() / quest.getHoursToFinish());
+					double percentComplete = (quest.getHoursElapsed() / quest
+							.getHoursToFinish());
 
 					g.setColor(Color.red.darker());
-					g.fillRect(timer_x, timer_y, (int) (timer_w * percentComplete), timer_h);
+					g.fillRect(timer_x, timer_y,
+							(int) (timer_w * percentComplete), timer_h);
 
 					g.setColor(Color.green.darker().darker());
 					g.drawRect(timer_x, timer_y, timer_w, timer_h);
@@ -561,7 +567,9 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 					g.drawString("" + count, x + f_h - w, f_y + f_h - h);
 
 					g.setColor(Color.black);
-					g.drawString(items.get(i).name(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M")) / 2);
+
+					g.drawString(items.get(i).name(), x + f_h + 6, f_y
+							+ (f_h - g.getFont().getHeight("M")) / 2);
 				}
 
 			} else {
@@ -643,6 +651,7 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 		}
 
 		if (input.isMousePressed(0)) {
+			System.out.println("Button clicked");
 			mouseX = input.getMouseX();
 			mouseY = input.getMouseY();
 
@@ -667,26 +676,13 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 					// container.getWidth() - 400, container.getHeight() - 40);
 				}
 
-				// Dead agents can't interact with inventory etc.
-				if (selectedAgent.getState() != AgentState.DEAD) {
-					// for (int i = 0; i < inventoryZones.size(); i++) {
-					// Rectangle inventoryZone = inventoryZones.get(i);
-					// if (inventoryZone.contains(mouseX, mouseY)) {
-					// if (selectedItems.contains(items.get(i))) {
-					// selectedItems.remove(items.get(i));
-					// } else {
-					// selectedItems.add(items.get(i));
-					// }
-					// }
-					// }
-
-					for (int i = 0; i < actionZones.size(); i++) {
-						Rectangle actionZone = actionZones.get(i);
-						if (actionZone.contains(mouseX, mouseY)) {
-							BaseAction action = validActions.get(i);
-							performAction(action);
-						}
+				for (int i = 0; i < actionZones.size(); i++) {
+					Rectangle actionZone = actionZones.get(i);
+					if (actionZone.contains(mouseX, mouseY)) {
+						BaseAction action = validActions.get(i);
+						performAction(action);
 					}
+				}
 
 					for (int i = 0; i < questZones.size(); i++) {
 						Rectangle questZone = questZones.get(i);
@@ -704,7 +700,7 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 
 				if (currentDragging != null) {
 
-					Tile t = ts.getTileFromScreen(mouseX, mouseY);
+					currentDraggingTile= ts.getTileFromScreen(mouseX, mouseY);
 
 					boolean fail = false;
 
@@ -715,14 +711,14 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 					}
 
 					if (!fail) {
-						Building b = new Building(ts, currentDragging, new Vector2f(t.x, t.y));
+						Building b = new Building(ts, currentDragging, new Vector2f(currentDraggingTile.x, currentDraggingTile.y));
 
-						for (Tile tile : b.base.getOverlappingTiles(ts, t)) {
+						for (Tile tile : b.base.getOverlappingTiles(ts, currentDraggingTile)) {
 							ts.getNewTileFromWorld(tile.x, tile.y).setOverlay(OverlayType.EMPTY);
 							;
 							tile.addBuilding(b, false);
 						}
-						t.addBuilding(b, true);
+						currentDraggingTile.addBuilding(b, true);
 
 						buildingManager.addBuildingInPlay(b);
 						buildingManager.buyBuilding(b.base);
@@ -808,7 +804,6 @@ public class Play extends BasicGameState implements GameState, PlayerReachedDest
 				}
 			}
 		}
-	}
 
 	private void performAction(BaseAction action) {
 		int player_index = playerManager.getAgents().indexOf(selectedAgent);
