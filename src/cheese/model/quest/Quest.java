@@ -17,6 +17,8 @@ abstract public class Quest extends TimedItem {
 	private double cardX;
 	private double cardY;
 	
+	private boolean repeatable;
+	
 	private ArrayList<Quest> requirements;
 	
 	//Relationship value to god
@@ -29,7 +31,7 @@ abstract public class Quest extends TimedItem {
 		this.setQuestDescription(questDescription);
 		this.setGod(god);
 		this.hours = 0;
-		this.value = value;
+		this.setValue(value);
 		this.setCompleted(false);
 		this.requirements = new ArrayList<Quest>();
 	}
@@ -48,7 +50,7 @@ abstract public class Quest extends TimedItem {
 		QuestManager questManager = GameSession.getInstance().getQuestManager();
 		questManager.addCompletedQuest(this);
 		questManager.assignQuest();
-		GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(this.value);
+		GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(this.getValue());
 		onComplete();
 		this.setCompleted(true);
 		
@@ -68,7 +70,7 @@ abstract public class Quest extends TimedItem {
 		hours++;
 		if(getHoursToFinish() > 0 && hours >= getHoursToFinish()) {
 			stopTiming();
-			GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(-this.value);
+			GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(-this.getValue());
 			this.setCompleted(true);
 			this.hours = 0;
 			onFailure();
@@ -148,5 +150,21 @@ abstract public class Quest extends TimedItem {
 
 	public void setCardY(double cardY) {
 		this.cardY = cardY;
+	}
+
+	public boolean isRepeatable() {
+		return repeatable;
+	}
+
+	public void setRepeatable(boolean repeatable) {
+		this.repeatable = repeatable;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 }

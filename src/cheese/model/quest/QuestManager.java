@@ -12,6 +12,7 @@ import cheese.model.god.GodType;
 import deserted.model.Agent;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
+import deserted.model.item.ItemType;
 
 public class QuestManager {
 
@@ -76,34 +77,98 @@ public class QuestManager {
 		questList.add(settlement);
 		settlement.addRequirement(hall);
 		
-//		questList.add(new QuestTribute("Dragons Hoard", "My precious... Give me 20 metal!", 50, GodType.NEUTRAL, new Cost(0,0,0,20)));
-//		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
-		questList.add(new QuestTribute("Sacrifice", "I demand a sacrifice of 20 villagers!", 50, GodType.NEUTRAL) {
+		Quest armyQuest = new QuestNumbered("Building Forces", 5, 2, 40, GodType.NEUTRAL) {
+			@Override
+			public void onComplete() {
+				GameSession.getInstance().getInventory().removeItem(ItemType.ARMY, this.getNumber());
+				super.onComplete();
+			}
+
+			@Override
+			public boolean canComplete() {
+				return GameSession.getInstance().getInventory().getItemCount(ItemType.ARMY) >= this.getNumber();
+			}
+			
+			@Override
+			public String getQuestDescription() {
+				return "I must attack my foes - bring me "+this.getNumber()+" men!";
+			}
+		};
+		
+		Quest hoardeQuest = new QuestNumbered("Dragon's Hoarde", 5, 2, 40, GodType.NEUTRAL) {
+			@Override
+			public void onComplete() {
+				GameSession.getInstance().getInventory().removeItem(ItemType.FOOD, this.getNumber());
+				super.onComplete();
+			}
+
+			@Override
+			public boolean canComplete() {
+				return GameSession.getInstance().getInventory().getItemCount(ItemType.FOOD) >= this.getNumber();
+			}
+			
+			@Override
+			public String getQuestDescription() {
+				return "My precious... Give me " + getNumber() + " metal!";
+			}
+		};
+		
+		Quest feedQuest = new QuestNumbered("Feast In My Honour", 5, 2, 40, GodType.NEUTRAL) {
+			@Override
+			public void onComplete() {
+				GameSession.getInstance().getInventory().removeItem(ItemType.FOOD, this.getNumber());
+				super.onComplete();
+			}
+
+			@Override
+			public boolean canComplete() {
+				return GameSession.getInstance().getInventory().getItemCount(ItemType.FOOD) >= this.getNumber();
+			}
+			
+			@Override
+			public String getQuestDescription() {
+				return "I'm very hungry - give me " + getNumber() + " food!";
+			}
+		};
+		
+		Quest sacQuest = new QuestNumbered("Sacrifice!", 5, 2, 40, GodType.NEUTRAL) {
 			@Override
 			public void onComplete() {
 				int count = 0;
 				int i = 0;
 				PlayerManager pm = GameSession.getInstance().getPlayerManager();
-				while(count < 3) {
+				while (count < getNumber()) {
 					Agent agent = pm.getAgents().get(i);
-					if(agent.getState() != AgentState.DEAD) {
+					if (agent.getState() != AgentState.DEAD) {
 						agent.setState(AgentState.DEAD);
 						count++;
 					}
 					i++;
 				}
+				super.onComplete();
 			}
-			
+
 			@Override
 			public boolean canComplete() {
-				int population = GameSession.getInstance().getPlayerManager().getAgents().size();
-				if(population >= 3) {
+				int population = GameSession.getInstance().getPlayerManager()
+						.getAgents().size();
+				if (population >= getNumber()) {
 					return true;
 				}
 				return false;
 			}
-		});
-	}
+			
+			@Override
+			public String getQuestDescription() {
+				return "I demand a sacrifice of " + getNumber() + " villagers!";
+			}
+		};
+		
+		questList.add(sacQuest);
+		questList.add(feedQuest);
+		questList.add(hoardeQuest);
+		questList.add(armyQuest);
+	};
 
 	public List<Quest> getQuestList() {
 		return questList;
@@ -117,16 +182,22 @@ public class QuestManager {
 		ArrayList<GodType> toRemove = new ArrayList<GodType>();
 		
 		for(GodType god: questSlots.keySet()) {
-			if(questSlots.get(god).isCompleted()) {
+			Quest quest = questSlots.get(god);
+			if(quest.isCompleted()) {
 				toRemove.add(god);
-				questList.remove(questSlots.get(god));
+				if(!quest.isRepeatable()) {
+					questList.remove(quest);
+				}
+				else {
+					quest.setCompleted(false);
+					questList.add(quest);
+				}
 			}
 		}
 		
 		for(GodType remove: toRemove) {
 			questSlots.remove(remove);
 		}
-		// TODO: Add a 'repeatable' flag.
 	}
 	
 	public void assignQuest() {
