@@ -802,77 +802,77 @@ public class Play extends BasicGameState implements GameState,
 				}
 				else {
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
-					if (t !=null && t.building != null) {
+					if (t !=null && t.building != null) //{
 						currentBuilding = t.building;
-					} else {
-						// See if we are attacking a monster
-						boolean monsterSelectionHappens = false;
-						boolean playerSelectionHappens = false;
-						Vector2f pos = ts.screenToWorldPos(mouseX, mouseY);
+//					} else {
+//						// See if we are attacking a monster
+//						boolean monsterSelectionHappens = false;
+//						boolean playerSelectionHappens = false;
+//						Vector2f pos = ts.screenToWorldPos(mouseX, mouseY);
 
-						// Rearranged these functions to ensure fighting
-						// monsters
-						// overrides selecting and moving players
-						if (selectedAgent != null) {
-							for (int i = 0; i < monsterManager.monsters.size(); i++) {
-								MonsterUI monster = monsterManager.monsters
-										.get(i);
-								float difX = monster.location.x - pos.x;
-								float difY = monster.location.y - pos.y;
-								float len = (float) Math.sqrt((difX * difX)
-										+ (difY * difY));
-								if (len < 0.5) {
-									if (selectedAgent != null
-											&& selectedAgent.getState() != AgentState.DEAD) {
-										monster.agent.decHealth(20);
-										if (monster.agent.getHealth() <= 0) {
-											monster.agent
-													.setState(AgentState.DEAD);
-											// gs.getInventory().addItem(ItemType.MEAT);
-										}
+//						// Rearranged these functions to ensure fighting
+//						// monsters
+//						// overrides selecting and moving players
+//						if (selectedAgent != null) {
+//							for (int i = 0; i < monsterManager.monsters.size(); i++) {
+//								MonsterUI monster = monsterManager.monsters
+//										.get(i);
+//								float difX = monster.location.x - pos.x;
+//								float difY = monster.location.y - pos.y;
+//								float len = (float) Math.sqrt((difX * difX)
+//										+ (difY * difY));
+//								if (len < 0.5) {
+//									if (selectedAgent != null
+//											&& selectedAgent.getState() != AgentState.DEAD) {
+//										monster.agent.decHealth(20);
+//										if (monster.agent.getHealth() <= 0) {
+//											monster.agent
+//													.setState(AgentState.DEAD);
+//											// gs.getInventory().addItem(ItemType.MEAT);
+//										}
+//
+//										monsterSelectionHappens = true;
+//									}
+//								}
+//							}
+//						}
 
-										monsterSelectionHappens = true;
-									}
-								}
-							}
-						}
+//						if (!monsterSelectionHappens) {
+//							// This code handles mouse selection of other
+//							// players
+//
+//							for (int i = 0; i < playerManager.getPlayers().size(); i++) {
+//								PlayerUI player = playerManager.getPlayers().get(i);
+//								if (player.agent.getState() != AgentState.DEAD) {
+//									float difX = player.location.x - pos.x;
+//									float difY = player.location.y - pos.y;
+//									float len = (float) Math.sqrt((difX * difX)
+//											+ (difY * difY));
+//									if (len < 0.5) {
+//										selectedAgent = player.agent;
+//										playerSelectionHappens = true;
+//									}
+//								}
+//							}
+//						}
 
-						if (!monsterSelectionHappens) {
-							// This code handles mouse selection of other
-							// players
-
-							for (int i = 0; i < playerManager.getPlayers().size(); i++) {
-								PlayerUI player = playerManager.getPlayers().get(i);
-								if (player.agent.getState() != AgentState.DEAD) {
-									float difX = player.location.x - pos.x;
-									float difY = player.location.y - pos.y;
-									float len = (float) Math.sqrt((difX * difX)
-											+ (difY * difY));
-									if (len < 0.5) {
-										selectedAgent = player.agent;
-										playerSelectionHappens = true;
-									}
-								}
-							}
-						}
-
-						if ((!playerSelectionHappens)
-								&& (!monsterSelectionHappens)) {
-							if (selectedAgent != null
-									&& selectedAgent.getState() != AgentState.DEAD) {
-								if (selectedAgent.hasAction()) {
-									selectedAgent.stopAction();
-								}
-								playerManager.getPlayers().get(agents.indexOf(selectedAgent))
-										.moveto(pos.x, pos.y);
-								ts.getCamera().x = playerManager.getPlayers().get(agents
-										.indexOf(selectedAgent)).location.x;
-								ts.getCamera().y = playerManager.getPlayers().get(agents
-										.indexOf(selectedAgent)).location.y;
-								ts.getCamera().isFollowing = true;
-							}
-						}
-					}
+//						if ((!playerSelectionHappens)
+//								&& (!monsterSelectionHappens)) {
+//							if (selectedAgent != null
+//									&& selectedAgent.getState() != AgentState.DEAD) {
+//								if (selectedAgent.hasAction()) {
+//									selectedAgent.stopAction();
+//								}
+//								playerManager.getPlayers().get(agents.indexOf(selectedAgent))
+//										.moveto(pos.x, pos.y);
+//								ts.getCamera().x = playerManager.getPlayers().get(agents
+//										.indexOf(selectedAgent)).location.x;
+//								ts.getCamera().y = playerManager.getPlayers().get(agents
+//										.indexOf(selectedAgent)).location.y;
+//								ts.getCamera().isFollowing = true;
+//							}
+//						}
+//					}
 				}
 			}
 		}
@@ -1070,28 +1070,28 @@ public class Play extends BasicGameState implements GameState,
 		if (ts.getCamera().y > ts.size)
 			ts.getCamera().y = ts.size;
 
-		if (ts.getCamera().isFollowing) {
-			for (PlayerUI p : playerManager.getPlayers()) {
-				if (p.agent == selectedAgent) {
-					ts.getCamera().x = p.location.x;
-					ts.getCamera().y = p.location.y;
-					// if(!SoundManager.isPlaying(SoundManager.walk))
-					// SoundManager.playSound(SoundManager.walk, 0.1f, true);
-					break;
-				}
-			}
-		} else {
-			// SoundManager.stopSound(SoundManager.walk);
-		}
-
-		for (PlayerUI p : playerManager.getPlayers()) {
-			if (p.agent == selectedAgent) {
-				if (p.atDestination) {
-					// SoundManager.stopSound(SoundManager.walk);
-					break;
-				}
-			}
-		}
+//		if (ts.getCamera().isFollowing) {
+//			for (PlayerUI p : playerManager.getPlayers()) {
+//				if (p.agent == selectedAgent) {
+//					ts.getCamera().x = p.location.x;
+//					ts.getCamera().y = p.location.y;
+//					// if(!SoundManager.isPlaying(SoundManager.walk))
+//					// SoundManager.playSound(SoundManager.walk, 0.1f, true);
+//					break;
+//				}
+//			}
+//		} else {
+//			// SoundManager.stopSound(SoundManager.walk);
+//		}
+//
+//		for (PlayerUI p : playerManager.getPlayers()) {
+//			if (p.agent == selectedAgent) {
+//				if (p.atDestination) {
+//					// SoundManager.stopSound(SoundManager.walk);
+//					break;
+//				}
+//			}
+//		}
 	}
 
 	@Override
