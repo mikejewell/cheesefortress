@@ -158,7 +158,7 @@ public class WedgeGFX {
 		
 		Vector2f offsets = camera.getOffsets();
      //   for(int x = 0; x < size; x++){
-        	if (tile.y == row)
+        	if (tile.cornerY == row)
         	{
         		Image buildingImage = building.getCurrentImage();
 	    		scaleX = buildingImage.getWidth()/35;
@@ -167,7 +167,7 @@ public class WedgeGFX {
 	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
 	        	finalX = (((tile.x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
 	    		finalY = (((tile.x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;
-	    		
+	    	
 	    		if(camera.isOnScreen(tile.x, row)){
             			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleYOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}

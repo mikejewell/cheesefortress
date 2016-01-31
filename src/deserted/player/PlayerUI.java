@@ -130,7 +130,7 @@ public class PlayerUI extends TimedItem{
 	public void render(Graphics g, float scale){
 		if(agent.getState() ==  AgentState.DEAD) return;
 		
-		Vector2f screenLocation = ts.worldToScreenPos(location.x+0.5f, location.y+0.5f);
+		Vector2f screenLocation = ts.worldToScreenPos(location.x, location.y);
 		
 		
 		g.setColor(new Color(255,0,0));
@@ -183,7 +183,7 @@ public class PlayerUI extends TimedItem{
 		//Dont bother rendering overlays when the player is dead
 		if (agent.getState()==AgentState.DEAD) return;
 		
-		Vector2f screenLocation = ts.worldToScreenPos(location.x+0.5f, location.y+0.5f);
+		Vector2f screenLocation = ts.worldToScreenPos(location.x, location.y);
 		
 	
 		

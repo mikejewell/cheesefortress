@@ -662,7 +662,7 @@ public class Play extends BasicGameState implements GameState,
 		}
 		mouseX = input.getMouseX();		
 		mouseY = input.getMouseY();
-		System.out.println("World Pos: " + ts.screenToWorldPos(mouseX, mouseY).x + ":" + ts.screenToWorldPos(mouseX, mouseY).y);
+		/*System.out.println("World Pos: " + ts.screenToWorldPos(mouseX, mouseY).x + ":" + ts.screenToWorldPos(mouseX, mouseY).y);
 		Tile tt = ts.getTileFromScreen(mouseX, mouseY);
 		if (tt != null)
 		{
@@ -690,7 +690,7 @@ public class Play extends BasicGameState implements GameState,
 			g.drawRect(pos.x-2, pos.y-2, 4, 4);
 			System.out.println(tt.x + "," + tt.y);
 			//tt.addSprite(SpriteType.WRECKAGE);
-		}
+		}*/
 		
 		if (input.isMousePressed(1) || input.isMousePressed(2)) {
 			currentDragging = null;
