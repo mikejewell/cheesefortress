@@ -662,6 +662,7 @@ public class Play extends BasicGameState implements GameState,
 		}
 		mouseX = input.getMouseX();		
 		mouseY = input.getMouseY();
+		System.out.println("World Pos: " + ts.screenToWorldPos(mouseX, mouseY).x + ":" + ts.screenToWorldPos(mouseX, mouseY).y);
 		Tile tt = ts.getTileFromScreen(mouseX, mouseY);
 		if (tt != null)
 		{
