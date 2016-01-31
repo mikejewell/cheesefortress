@@ -154,8 +154,10 @@ public class WedgeTileSystem {
 				return new WedgeTile(2, Type.GRASS);
 			case ':':
 				return new WedgeTile(3, Type.STONE);
+			case ' ':
+				return new WedgeTile(4, Type.CLIFF);
 			default:
-				return new WedgeTile(0, Type.DIRT);
+				return new WedgeTile(1, Type.DIRT);
 		}
 	}
 	

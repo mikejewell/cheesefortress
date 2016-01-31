@@ -10,7 +10,7 @@ public class WedgeTile {
 		WATER,
 		STONE,
 		CLIFF,
-		GRASS
+		GRASS,
 	}
 	
 	private Type type;	//Tile Type

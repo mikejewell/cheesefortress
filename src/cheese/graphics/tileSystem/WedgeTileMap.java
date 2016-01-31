@@ -38,6 +38,9 @@ public class WedgeTileMap {
 		case 3:
 			r = new int[]{256,320};	//Rock
 			break;
+		case 4:
+			r = new int[]{320,448};	//Cliff
+			break;
 		default:
 			r = new int[]{0,0};
 			break;
