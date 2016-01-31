@@ -148,8 +148,9 @@ public class WedgeGFX {
         	//sprite = SpriteManager.getSprite(type);
         	if(type != null){
         		Image buildingImage = type.getCurrentImage();
-        		scaleXOffset = (buildingImage.getWidth()/2) * camera.zoom;
-	        	scaleYOffset = (buildingImage.getHeight()/2) * camera.zoom;
+        		float aspectRatio = (float)buildingImage.getHeight() / (float)buildingImage.getWidth();
+	        	scaleXOffset = (float)(type.base.scale/2) * camera.zoom;
+	        	scaleYOffset = (float)((type.base.scale*aspectRatio)/2) * camera.zoom;
 	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
 	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
 	    		if(camera.isOnScreen(x, row)){
@@ -169,10 +170,11 @@ public class WedgeGFX {
 		Vector2f offsets = camera.getOffsets();
      //   for(int x = 0; x < size; x++){
         	if (tile.cornerY == row)
-        	{
+        	{        		
         		Image buildingImage = building.getCurrentImage();
-	        	scaleXOffset = (buildingImage.getWidth()/2) * camera.zoom;
-	        	scaleYOffset = (buildingImage.getHeight()/2) * camera.zoom;
+        		float aspectRatio = (float)buildingImage.getHeight() / (float)buildingImage.getWidth();
+	        	scaleXOffset = (float)(building.scale/2) * camera.zoom;
+	        	scaleYOffset = (float)((building.scale*aspectRatio)/2) * camera.zoom;
 	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom);
 	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
 	    		if(camera.isOnScreen(tile.cornerX, row)){
