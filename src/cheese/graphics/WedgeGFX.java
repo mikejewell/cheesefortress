@@ -180,9 +180,8 @@ public class WedgeGFX {
 	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
 	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
 	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
-	    	
-	    		if(camera.isOnScreen(tile.x, row)){
-            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleYOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
+	    		if(camera.isOnScreen(tile.cornerX, row)){
+            			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleXOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
         	}
        // }

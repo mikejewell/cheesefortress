@@ -72,8 +72,10 @@ public class BuildingManager {
 			Vector<BaseBuilding> subBuildings = new Vector<BaseBuilding>();
 			subBuildings.add(herbary);
 
+			FootPrint fp = new FootPrint(1,0,0,1);
+			
 			farm = new ResourceBuilding("Farm", "", fmWorkingImage,
-					fmWorkingImage, fmWorkingImage, subBuildings, 100, 0.1);
+					fmWorkingImage, fmWorkingImage, subBuildings, 100, 0.1, fp);
 			farm.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(farm);
 		}
