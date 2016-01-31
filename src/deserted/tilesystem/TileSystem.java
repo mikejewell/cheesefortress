@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Point;
 
 import cheese.graphics.WedgeCamera;
 import cheese.graphics.WedgeGFX;
+import cheese.graphics.tileSystem.WedgeTile;
 import cheese.graphics.tileSystem.WedgeTileSystem;
 import cheese.model.building.BaseBuilding;
 import deserted.map.LocalMapLoader;
@@ -122,6 +123,11 @@ public class TileSystem {
 		return getTileFromWorld(world.getX(), world.getY());
 	}
 	
+	public WedgeTile getNewTileFromScreen(int x, int y){
+		Vector2f world = screenToWorldPos(x, y);
+		return getNewTileFromWorld(world.getX(), world.getY());
+	}
+	
 	public int getSize(){
 		return size;
 	}
@@ -130,6 +136,10 @@ public class TileSystem {
 		if(x > size || x < 0 || y > size || y < 0)
 			return null;
 		return tiles[(int)x][(int)y];
+	}
+	
+	public WedgeTile getNewTileFromWorld(float x, float y){
+		return ts.getTile((int)x, (int)y);
 	}
 	
 	public Vector2f screenToWorldPos(int scX, int scY){

@@ -23,6 +23,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import cheese.graphics.tileSystem.WedgeTile;
+import cheese.graphics.tileSystem.WedgeTileOverlay.OverlayType;
 import cheese.model.PlayerManager;
 import cheese.model.building.BaseBuilding;
 import cheese.model.building.Building;
@@ -365,9 +367,8 @@ public class Play extends BasicGameState implements GameState,
 			for (PlayerUI player : playerManager.getPlayers()) {
 				float playerRealY = player.location.x + player.location.y;
 				if (player.location.x >= y+0.5f
-						&& player.location.x < y+1.5f){
+						&& player.location.x < y+1.5f)
 					player.render(g, ts.camera.zoom);
-				System.out.println(player.location.x);}
 			}
 
 			ts.render3DBuildings(g, y);	
@@ -662,7 +663,7 @@ public class Play extends BasicGameState implements GameState,
 				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
 				
 				for (Tile tile : currentDragging.getOverlappingTiles(ts,currentDraggingTile)) {
-					if (tile.building != null)
+					if (tile.building != null || tile.id == TileId.WATER)
 						ts.renderTile(g, tile, Color.red);
 					else
 						ts.renderTile(g, tile, Color.blue);
@@ -778,7 +779,7 @@ public class Play extends BasicGameState implements GameState,
 					boolean fail = false;
 					
 					for (Tile tile : currentDragging.getOverlappingTiles(ts,currentDraggingTile)) {
-						if (tile.building != null){ 
+						if (tile.building != null || tile.id == TileId.WATER){ 
 							fail = true;
 						}
 					}
@@ -787,6 +788,7 @@ public class Play extends BasicGameState implements GameState,
 						Building b = new Building(ts, currentDragging, new Vector2f(t.x,t.y));
 						
 						for (Tile tile : b.base.getOverlappingTiles(ts,t)) {
+							ts.getNewTileFromWorld(tile.x, tile.y).setOverlay(OverlayType.EMPTY);;
 							tile.addBuilding(b, false);
 						}
 						t.addBuilding(b, true);

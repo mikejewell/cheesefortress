@@ -107,6 +107,8 @@ public class WedgeTileSystem {
 	}
 	
 	public WedgeTile getTile(int x, int y){
+		if(x > tiles.length || x < 0 || y > tiles.length || y < 0)
+			return null;
 		return tiles[x][y];
 	}
 	

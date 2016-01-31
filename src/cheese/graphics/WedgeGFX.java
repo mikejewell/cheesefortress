@@ -115,16 +115,16 @@ public class WedgeGFX {
     		if(tiles[x][row].getOverlay() != OverlayType.EMPTY){
         		if(tiles[x][row].getOverlay().ordinal() > OverlayType.OVERLAYS3D.ordinal()){
         			finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
-            		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y-(16*camera.zoom);
+            		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y;
         			
             		int[] uvOver = WedgeTileOverlay.getOverlay(tiles[x][row].getOverlay()).getUVs();
             		int width = uvOver[2] - uvOver[0];
             		int height = uvOver[3] - uvOver[1];
             		
             		float xa = finalX-(width/2)*camera.zoom;
-            		float ya = finalY-height*camera.zoom;
+            		float ya = (finalY-height*camera.zoom)+16*camera.zoom;
             		float xb = finalX+(width/2)*camera.zoom;
-            		float yb = finalY;
+            		float yb = finalY+16*camera.zoom;
             		
         			tex.drawEmbedded(xa,ya,xb,yb, uvOver[0], uvOver[1], uvOver[2], uvOver[3]);
         		}
