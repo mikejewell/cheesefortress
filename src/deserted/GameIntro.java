@@ -42,6 +42,9 @@ public class GameIntro extends BasicGameState implements GameState {
 			arg1.enterState(Play.STATE_PLAY);
 			arg1.getState(1).init(arg0, arg1);
 		}
+		if (arg0.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+			arg0.exit();
+		}
 	}
 
 	@Override
