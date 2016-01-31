@@ -14,8 +14,8 @@ public class GameConfig {
 	
 	//Starting resources
 	public static final int STARTING_FOOD = 10;
-	public static final int STARTING_WOOD = 10;
-	public static final int STARTING_STONE = 10;
-	public static final int STARTING_METAL = 10;
+	public static final int STARTING_WOOD = 25;
+	public static final int STARTING_STONE = 1;
+	public static final int STARTING_METAL = 0;
 
 }

@@ -145,7 +145,10 @@ public abstract class BaseBuilding implements IBuilding {
 	}
 	
 	public boolean isTileValidForBuilding(Tile tile) {
-					
+		
+		if (tile.vis == 0)
+			return false;
+		
 		if (tile.building != null){
 			return false;
 		}
