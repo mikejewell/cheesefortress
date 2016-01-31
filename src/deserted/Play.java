@@ -299,30 +299,6 @@ public class Play extends BasicGameState implements GameState,
 		}
 	}
 
-	private void WreckageSpreader(Vector2f wreckageCenter, int treeCount,
-			boolean preferGroupings) {
-		Random randomGenerator = new Random();
-		while (true) {
-			float rad = (randomGenerator.nextInt(20));// *randomGenerator.nextInt(20))/10;
-			float angle = (float) (randomGenerator.nextDouble() * (Math.PI * 2));
-			float x = wreckageCenter.x + (float) Math.asin(angle - Math.PI)
-					* rad;
-			float y = wreckageCenter.y + (float) Math.acos(angle - Math.PI)
-					* rad;
-
-			Tile tile = ts.getTileFromWorld(x, y);
-			if (tile != null) {
-				if (tile.numSprites() == 0) {
-					treeCount -= 1;
-					tile.addSprite(SpriteType.WRECKAGE);
-				}
-			}
-			if (treeCount == 0)
-				return;
-		}
-
-	}
-
 	private void RandomTileObject(TileId tileType, TileId tileDestType,
 			int treeCount, boolean preferGroupings) {
 		Random randomGenerator = new Random();
@@ -430,12 +406,6 @@ public class Play extends BasicGameState implements GameState,
 		g.drawRect(0, quest_bar_y, container.getWidth(), quest_bar_height);
 		g.setColor(Color.lightGray);
 		g.fillRect(0, quest_bar_y, container.getWidth(), quest_bar_height);
-
-		// Action bar
-		g.setColor(Color.gray);
-		g.drawRect(0, action_bar_y, container.getWidth(), action_bar_height);
-		g.setColor(Color.lightGray);
-		g.fillRect(0, action_bar_y, container.getWidth(), action_bar_height);
 
 		// Draw agents
 		g.setColor(Color.lightGray);
@@ -583,73 +553,6 @@ public class Play extends BasicGameState implements GameState,
 
 		ArrayList<Rectangle> actionZones = new ArrayList<Rectangle>();
 		List<BaseAction> validActions = new ArrayList<BaseAction>();
-		if (selectedAgent != null) {
-
-			// Draw Action Bar (TM)
-			int x = 5;
-			validActions = recipeBook.getValidActions(selectedAgent);
-
-			// Detect F-Key presses
-			BaseAction actionHotKeyPressed = null;
-			for (int i = 0; i < validActions.size(); i++) {
-				BaseAction action = validActions.get(i);
-				String name = action.getName();
-
-				if ((i == 0 && (input.isKeyDown(Input.KEY_F1) || input
-						.isKeyDown(Input.KEY_Z)))
-						|| (i == 1 && (input.isKeyDown(Input.KEY_F2) || input
-								.isKeyDown(Input.KEY_X)))
-						|| (i == 2 && (input.isKeyDown(Input.KEY_F3) || input
-								.isKeyDown(Input.KEY_C)))
-						|| (i == 3 && (input.isKeyDown(Input.KEY_F4) || input
-								.isKeyDown(Input.KEY_V)))
-						|| (i == 4 && (input.isKeyDown(Input.KEY_F5) || input
-								.isKeyDown(Input.KEY_B)))
-						|| (i == 5 && (input.isKeyDown(Input.KEY_F6) || input
-								.isKeyDown(Input.KEY_N)))
-						|| (i == 6 && (input.isKeyDown(Input.KEY_F7) || input
-								.isKeyDown(Input.KEY_M)))
-						|| (i == 7 && (input.isKeyDown(Input.KEY_F8) || input
-								.isKeyDown(Input.KEY_COMMA)))
-						|| (i == 8 && (input.isKeyDown(Input.KEY_F9) || input
-								.isKeyDown(Input.KEY_STOP)))
-						|| (i == 9 && (input.isKeyDown(Input.KEY_F10) || input
-								.isKeyDown(Input.KEY_SLASH)))
-						|| (i == 10 && input.isKeyDown(Input.KEY_F11))
-						|| (i == 11 && input.isKeyDown(Input.KEY_F12))) {
-					if (actionKeyPressed != i) {
-						actionKeyPressed = i;
-						actionHotKeyPressed = action;
-					}
-				} else {
-					actionKeyPressed = -1;
-					actionHotKeyPressed = null;
-				}
-
-				int t_w = g.getFont().getWidth(name);
-				int t_h = g.getFont().getHeight(name);
-				int b_w = t_w + 6;
-				int b_h = a_h;
-				int t_y = (a_h - t_h) / 2;
-				int t_x = (b_w - t_w) / 2;
-
-				g.setColor(Color.darkGray);
-				g.drawRect(x, a_y, b_w, b_h);
-				g.setColor(Color.lightGray);
-				g.fillRect(x, a_y, b_w, b_h);
-				g.setColor(Color.black);
-				g.drawString(name, x + t_x, a_y + t_y);
-
-				Rectangle zone = new Rectangle(x, a_y, b_w, b_h);
-				actionZones.add(zone);
-				x += (b_w + 2);
-			}
-
-			// If a key is pressed, run its action here
-			if (actionHotKeyPressed != null) {
-				performAction(actionHotKeyPressed);
-			}
-		}
 
 		if (headerRect.contains(mouseX, mouseY)
 				|| footerRect.contains(mouseX, mouseY)
@@ -725,14 +628,6 @@ public class Play extends BasicGameState implements GameState,
 					if (r.contains(mouseX, mouseY)) {
 						currentDragging = validBuildings.get(buildingZones
 								.indexOf(r));
-					}
-				}
-
-				// Player selection
-				for (int i = 0; i < agentZones.size(); i++) {
-					Rectangle agentZone = agentZones.get(i);
-					if (agentZone.contains(mouseX, mouseY)) {
-						selectedAgent = agents.get(i);
 					}
 				}
 

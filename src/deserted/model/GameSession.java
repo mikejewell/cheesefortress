@@ -48,7 +48,7 @@ public class GameSession {
 
 		this.gameTimer = 0;
 		this.timeSurvived = 0;
-		int year = (int) (2010 + (Math.round(Math.random() * 5) - 10));
+		int year = (int) (1009 + (Math.round(Math.random() * 5) - 10));
 		int month = (int) Math.ceil(Math.random() * 12);
 		int day = (int) Math.ceil(Math.random() * 27);
 		int hour = (int) (Math.random() * 24);

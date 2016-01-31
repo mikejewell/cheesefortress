@@ -108,6 +108,30 @@ public class WedgeTileSystem {
 		}
 	}
 	
+	public void addRocks(float density){
+		Random r = new Random();
+		int rocks = (int)(tiles.length*tiles.length*density);
+		int x, y;
+		for(int i = 0; i < rocks; i++){
+			x = r.nextInt(tiles.length);
+			y = r.nextInt(tiles.length);
+			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == OverlayType.EMPTY)
+			{
+				switch(r.nextInt(3)){
+					case 0:
+						tiles[x][y].setOverlay(OverlayType.ROCK1);	
+						break;
+					case 1:
+						tiles[x][y].setOverlay(OverlayType.ROCK2);	
+						break;
+					case 2:
+						tiles[x][y].setOverlay(OverlayType.ROCK3);	
+						break;
+				}
+			}
+		}
+	}
+	
 	public WedgeTile[][] getTiles() {
 		return tiles;
 	}

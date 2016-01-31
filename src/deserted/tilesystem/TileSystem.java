@@ -75,6 +75,7 @@ public class TileSystem {
 		ts.addSticks(0.005f);
 		ts.addBushes(0.03f);
 		ts.addTrees(0.07f);
+		ts.addRocks(0.002f);
 		
 		
 		setTileMap("dg_edging132.gif");

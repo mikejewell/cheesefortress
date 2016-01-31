@@ -12,7 +12,10 @@ public class WedgeTileOverlay {
 		TREE1,
 		TREE2,
 		TREE3,
-		TREE4
+		TREE4,
+		ROCK1,
+		ROCK2,
+		ROCK3
 	}
 	
 	public int[] uvs;
@@ -28,6 +31,9 @@ public class WedgeTileOverlay {
 			new WedgeTileOverlay(448, 832, 640, 1024),
 			new WedgeTileOverlay(0, 832, 64, 1024),
 			new WedgeTileOverlay(64, 832, 128, 1024),
+			new WedgeTileOverlay(0, 320, 64, 384),
+			new WedgeTileOverlay(64, 320, 128, 384),
+			new WedgeTileOverlay(128, 320, 192, 384),
 	};
 	
 	public WedgeTileOverlay(int u, int v, int u2, int v2){
