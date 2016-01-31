@@ -492,7 +492,7 @@ public class BuildingManager {
 			Vector<Image> idleImage = new Vector<Image>();
 			idleImage.add(new Image("images/buildings/Well/Well_00000.png"));
 			well = new ResourceBuilding("Well", "", idleImage, idleImage,
-					idleImage, null, 100, 0.1);
+					idleImage, null, 100, 0.15);
 			well.setCost(new Cost(0, 2, 2, 0));
 			addBuilding(well);
 		}

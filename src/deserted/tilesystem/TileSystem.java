@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -161,6 +162,9 @@ public class TileSystem {
 		gfx.render3DBuildings(ts, g, row);
 	}
 	
+	public void renderTile(Graphics g, Tile tile, Color c){
+		gfx.renderTile(ts, g, tile, c);
+	}
 	
 	private boolean isOnScreen(float x, float y){
 		Vector2f sc = camera.worldToScreenPos(x, y);

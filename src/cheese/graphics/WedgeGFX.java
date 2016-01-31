@@ -157,8 +157,9 @@ public class WedgeGFX {
 		float resTimesScale = camera.tileRes * camera.zoom;
 		
 		Vector2f offsets = camera.getOffsets();
-        for(int x = 0; x < tiles[0].length; x++){        	
-        	type = tiles[x][row].tile.getBuildingToDraw();
+        for(int x = 0; x < tiles[0].length; x++){  
+        	Tile tile = tiles[x][row].tile;
+        	type = tile.getBuildingToDraw();
         	//sprite = SpriteManager.getSprite(type);
         	if(type != null){
         		Image buildingImage = type.getCurrentImage();
@@ -166,8 +167,8 @@ public class WedgeGFX {
 	        	scaleXOffset = (scaleX - 1)*resTimesScale*0.5f;
 	        	scaleY = buildingImage.getHeight()/35;
 	        	scaleYOffset = (scaleY - 1)*resTimesScale*0.5f;
-	        	finalX = (((x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
-	    		finalY = (((x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;     		
+	        	finalX = (((tile.x-camera.x)*32)+((row-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((tile.x-camera.x)*16)-((row-camera.y)*16))*camera.zoom-offsets.y;  		
 	    		if(camera.isOnScreen(x, row)){
             			g.drawImage(buildingImage, finalX-scaleXOffset, finalY-scaleXOffset, finalX+scaleXOffset, finalY+scaleYOffset, 0,0,buildingImage.getWidth(), buildingImage.getHeight());
 	        	}
@@ -233,6 +234,25 @@ public class WedgeGFX {
             	}
             }
 		}
+	}
+	
+	public void renderTile(WedgeTileSystem ts,Graphics g, Tile tile, Color c){
+		float finalX, finalY;
+	
+		Vector2f offsets = camera.getOffsets();
+         	   		
+		finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x-(32*camera.zoom); 
+		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y;
+			    		
+		Polygon p = new Polygon();
+		p.addPoint((int)(finalX-32*camera.zoom), (int)finalY);
+		p.addPoint((int)finalX, (int)(finalY+16*camera.zoom));
+		p.addPoint((int)(finalX+32*camera.zoom), (int)finalY);
+		p.addPoint((int)finalX, (int)(finalY-16*camera.zoom));
+		        		
+     
+    	g.setColor(new Color(c.r, c.g, c.b, 0.1f));   
+    	g.fill(p);
 	}
 	
 }
