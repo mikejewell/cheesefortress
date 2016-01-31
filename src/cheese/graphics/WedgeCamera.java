@@ -53,6 +53,8 @@ public class WedgeCamera {
 	
 	public Vector2f worldToScreenPos(float worldX, float worldY){
 		Vector2f offsets = getOffsets();
+		worldX -= 0.5f;
+		worldY -= 0.5f;
 		float finalX = (((worldX-(x))*32)+((worldY-(y))*32))*zoom-offsets.x; 
 		float finalY = (((worldX-(x))*16)-((worldY-(y))*16))*zoom-offsets.y; 
 		return new Vector2f(finalX, finalY);

@@ -139,7 +139,7 @@ public class VariantChooser {
 
     private boolean convert(Tile tile, TileSystem.TileId toId) {
         tile.id = toId;
-        return setVariantAround(tile.x,tile.y);
+        return setVariantAround(tile.cornerX,tile.cornerY);
     }
 
     private boolean blanken(Tile tile) {

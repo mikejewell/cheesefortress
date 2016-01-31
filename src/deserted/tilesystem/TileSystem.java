@@ -92,8 +92,8 @@ public class TileSystem {
 		
 		for(int x = 0; x < size; x++){
 			for(int y = 0; y < size; y++){
-				getTile(x, y).x = x;
-				getTile(x, y).y = y;
+				getTile(x, y).x = x + 0.5f;
+				getTile(x, y).y = y + 0.5f;
 				ts.getTile(x,y).tile =getTile(x, y); 
 			}
 		}

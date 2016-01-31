@@ -37,13 +37,16 @@ public class Tile {
     private ArrayList<SpriteData> sprites;
 
     public int vis = 0; //0 = unseen, 1 = seen, 2 = visible
-    public int x, y;
-
+    public float x, y;
+    public int cornerX, cornerY;
+    
     public Tile(TileSystem.TileId id, int x, int y, int vis){
         this.id = id;
         this.vis = vis;
-        this.x = x;
-        this.y = y;
+        this.x = ((float)x) +0.5f;
+        this.y = ((float)y)+0.5f;
+        this.cornerX = x;
+        this.cornerY = y;
         this.attrHealth = 10;
         
         sprites = new ArrayList<>();
@@ -52,8 +55,11 @@ public class Tile {
     public Tile(TileSystem.TileId id, int x, int y, int vis, int variant){
         this.id = id;
         this.vis = vis;
-        this.x = x;
-        this.y = y;
+        this.x = (float)x+0.5f;
+        this.y = (float)y+0.5f;
+        
+        this.cornerX = x;
+        this.cornerY = y;
         this.variant = variant;
         this.attrHealth = 10;
         
