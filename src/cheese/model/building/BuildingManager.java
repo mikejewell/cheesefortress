@@ -11,6 +11,7 @@ import deserted.model.GameSession;
 import deserted.model.Inventory;
 import deserted.model.item.ItemType;
 import deserted.player.PlayerUI;
+import deserted.tilesystem.TileSystem;
 
 public class BuildingManager {
 	ArrayList<Building> buildingsInPlay;
