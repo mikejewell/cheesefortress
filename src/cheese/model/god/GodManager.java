@@ -80,6 +80,7 @@ Catastrophe lightningCatastrophe = new Catastrophe() {
 				if(time % 60 < 10){
 					if(rand.nextFloat() < 0.7f){
 						GameSession.getInstance().queueCatastrophe(this);
+						GameSession.getInstance().getMessenger().addMessage("ZAPPPP!!!!!", Color.yellow, 20);
 					}else{
 						flash = 0;
 					}

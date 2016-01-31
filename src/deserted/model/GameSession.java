@@ -11,6 +11,7 @@ import cheese.model.building.BuildingManager;
 import cheese.model.god.Catastrophe;
 import cheese.model.god.GodManager;
 import cheese.model.quest.QuestManager;
+import deserted.Messenger;
 import deserted.model.item.ItemType;
 import deserted.player.PlayerReachedDestinationEvent;
 
@@ -34,6 +35,8 @@ public class GameSession {
 	private QuestManager questManager;
 	private PlayerManager playerManager;
 	private GodManager godManager;
+	
+	private Messenger messenger;
 	
 	private double probabilitySettler = 1.0;
 	private double probabilityFood = 1.0;
@@ -190,5 +193,13 @@ public class GameSession {
 			c.render(g);
 		}
 		catastrophes.clear();
+	}
+	
+	public void setMessenger(Messenger messenger){
+		this.messenger = messenger;
+	}
+	
+	public Messenger getMessenger(){
+		return messenger;
 	}
 }

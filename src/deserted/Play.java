@@ -145,12 +145,14 @@ public class Play extends BasicGameState implements GameState,
 		questManager = gs.getQuestManager();
 		playerManager = gs.getPlayerManager();
 		gs.setPlay(this);
+		
 
 		questManager.assignQuest();
 		// Vector2f wreckageCenter = WreckageLocationDecider();
 
 		selectedItems = new ArrayList<Item>();
 		messenger = new Messenger();
+		gs.setMessenger(messenger);
 
 		questBackground = new Image("images/backgrounds/quest_card.jpg");
 
