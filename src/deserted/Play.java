@@ -904,6 +904,8 @@ public class Play extends BasicGameState implements GameState,
 		}
 		questManager.flush();
 
+		questManager.assignQuest();
+		
 		for (PlayerUI player : playerManager.getPlayers()) {
 			if (player.bored) {
 				if (buildingManager.getBuildingsInPlay().size() > 0) {
