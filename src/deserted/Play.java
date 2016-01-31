@@ -862,12 +862,14 @@ public class Play extends BasicGameState implements GameState,
 			return "Cheese is everyone's favourite food.";
 		case STONE:
 			return "Breaks bones.";
-		case CHEESE:
-			return "Cheese. Yes, the stuff the moon's made of.";
+		case EQUIPMENT:
+			return "Supplies for your army.";
 		case METAL:
 			return "Harder than rock.";
 		case WOOD:
 			return "From trees.";
+		case ARMY:
+			return "In case of invaders!";
 		default:
 			return "";
 		}
