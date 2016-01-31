@@ -87,7 +87,14 @@ public class WedgeTileSystem {
 			y = r.nextInt(tiles.length);
 			if(tiles[x][y].getId() != 0 && tiles[x][y].getOverlay() == OverlayType.EMPTY && tiles[x][y].getId() != 3)
 			{
-				tiles[x][y].setOverlay(OverlayType.TREE1);
+				switch(r.nextInt(2)){
+					case 0:
+						tiles[x][y].setOverlay(OverlayType.TREE1);	
+						break;
+					case 1:
+						tiles[x][y].setOverlay(OverlayType.TREE2);	
+						break;
+				}
 			}
 		}
 	}

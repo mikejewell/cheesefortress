@@ -166,12 +166,12 @@ public class PlayerUI extends TimedItem{
 		
 		if (playerControlled) {
 			g.setColor(new Color(0,0,255));
-			Vector2f lastPoint = ts.worldToScreenPos(location.x+0.5f, location.y+0.5f);
+			Vector2f lastPoint = ts.worldToScreenPos(location.x, location.y);
 			for(int i =destinations.size()-1; i>=0 ; i--)
 			{
 				Tile dest = destinations.get(i);
 				Vector2f pos = new Vector2f(dest.x, dest.y);
-	            Vector2f destPos = ts.worldToScreenPos(pos.x+0.5f, pos.y+0.5f);
+	            Vector2f destPos = ts.worldToScreenPos(pos.x, pos.y);
 	            g.drawLine(destPos.x, destPos.y, lastPoint.x, lastPoint.y);
 	            lastPoint = destPos;
 			}
@@ -274,22 +274,22 @@ public class PlayerUI extends TimedItem{
 		if (destinations.size() > 1)
 		{
 		    destTile = destinations.get(destinations.size()-1);
-			currentDestination = new Vector2f(destTile.x+0.5f, destTile.y+0.5f);
+			currentDestination = new Vector2f(destTile.x, destTile.y);
 		}
 		
 	
 		
 		//average walk speed 1.4m per second
 		float playerWalkSpeedMS = 1.4f;
-		if (ts.getTileFromWorld(location.x+0.5f, location.y+0.5f).id == TileId.WATER)
+		if (ts.getTileFromWorld(location.x, location.y).id == TileId.WATER)
 		{
 			playerWalkSpeedMS = 0.3f;
 		}
-		if (ts.getTileFromWorld(location.x+0.5f, location.y+0.5f).id == TileId.ROCK)
+		if (ts.getTileFromWorld(location.x, location.y).id == TileId.ROCK)
 		{
 			playerWalkSpeedMS = 1f;
 		}
-		if (ts.getTileFromWorld(location.x+0.5f, location.y+0.5f).id == TileId.SNOW)
+		if (ts.getTileFromWorld(location.x, location.y).id == TileId.SNOW)
 		{
 			playerWalkSpeedMS = 0.6f;
 		}
