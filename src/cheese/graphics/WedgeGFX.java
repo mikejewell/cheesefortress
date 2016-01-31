@@ -184,10 +184,8 @@ public class WedgeGFX {
 		for(int x = 0; x < tiles[0].length; x++){
             for(int y = 0; y < tiles[0].length; y++){           	
     		
-            	Tile tile = tiles[x][y].tile;
-            	
-	        	finalX = (((tile.x-camera.x)*32)+((tile.y-camera.y)*32))*camera.zoom-offsets.x; 
-	    		finalY = (((tile.x-camera.x)*16)-((tile.y-camera.y)*16))*camera.zoom-offsets.y;
+	        	finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y+(16*camera.zoom);
 	    			    		
 	    		Polygon p = new Polygon();
         		p.addPoint((int)(finalX-32*camera.zoom), (int)finalY);
