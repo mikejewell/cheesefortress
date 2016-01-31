@@ -53,7 +53,7 @@ public class Game extends StateBasedGame {
 
 			appgc = new AppGameContainer(new Game("Vikings vs Gods: Cheese Fortress"));
 			appgc.setVSync(true);
-			appgc.setDisplayMode(1280, 1024, false);
+			appgc.setDisplayMode(2048, 1152, false);
 			appgc.setTargetFrameRate(gd.getDisplayMode().getRefreshRate());
 			appgc.setIcon("images/icons/WindowIcon32.png");
 			appgc.start();
