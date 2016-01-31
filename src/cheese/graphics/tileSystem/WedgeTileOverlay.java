@@ -22,6 +22,7 @@ public class WedgeTileOverlay {
 			new WedgeTileOverlay(320, 768, 384, 832),
 			new WedgeTileOverlay(64, 768, 128, 832),
 			null,
+			new WedgeTileOverlay(128, 832, 192, 960),
 	};
 	
 	public WedgeTileOverlay(int u, int v, int u2, int v2){
