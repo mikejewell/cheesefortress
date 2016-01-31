@@ -11,6 +11,8 @@ import org.newdawn.slick.geom.Polygon;
 
 import cheese.graphics.tileSystem.WedgeTile;
 import cheese.graphics.tileSystem.WedgeTileMap;
+import cheese.graphics.tileSystem.WedgeTileOverlay;
+import cheese.graphics.tileSystem.WedgeTileOverlay.OverlayType;
 import cheese.graphics.tileSystem.WedgeTileSystem;
 import cheese.model.building.BaseBuilding;
 import cheese.model.building.Building;
@@ -39,6 +41,7 @@ public class WedgeGFX {
     	float finalX, finalY;
     	
     	tex.startUse();
+
     	for(int x = 0; x < tiles.length; x++){
     		for(int y = tiles.length-1; y >= 0; y--){
     			int[] uv = tileMap.getUV(tiles[x][y].getId());
@@ -55,6 +58,7 @@ public class WedgeGFX {
           		tex.drawEmbedded(xa, ya, xb, yb, uv[0], uv[1], uv[0]+64, uv[1]+64);
         		if(tiles[x][y].getOverlay() >= 100){
         			tex.drawEmbedded(xa,ya,xb,yb, uvOver[0], uvOver[1], uvOver[0]+64, uvOver[1]+64);
+
         		}
     		}
     	}
