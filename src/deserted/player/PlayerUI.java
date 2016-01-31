@@ -11,6 +11,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import cheese.model.TimedItem;
+import cheese.model.building.Building;
+import cheese.model.building.BuildingManager;
 import deserted.model.Agent;
 import deserted.model.AgentState;
 import deserted.model.GameSession;
@@ -22,6 +24,7 @@ import deserted.tilesystem.TileSystem.TileId;
 
 public class PlayerUI extends TimedItem{
 
+	BuildingManager bm;
 	TileSystem ts;
 	public Agent agent;
 	
@@ -44,10 +47,14 @@ public class PlayerUI extends TimedItem{
 	public boolean bored = false;
 	private boolean playerControlled = false;
 	
+	public boolean dying = false;
+	
 	public PlayerUI(Agent agentIn) throws SlickException
 	{
 		agent = agentIn;
 		ts = TileSystem.getInstance();
+
+		bm = GameSession.getInstance().getBuildingManager();
 		
 		imageWidth = 64;
 		imageHeight = 64;
@@ -249,7 +256,24 @@ public class PlayerUI extends TimedItem{
 		}
 
 		super.update(deltaTime);
-			
+		
+		if (agent.getHealth() < 10) {
+			if (!dying) {
+				//See if there is a tombstone on the map and start heading there to die
+				for (Building building : bm.getBuildingsInPlay()) {
+					if (building.base.getName().toLowerCase().contains("dead")) {
+						this.moveto(building.location.x, building.location.y);
+					}
+				}
+			}
+			dying = true;			
+		}
+		else
+		{
+			dying = false;
+		}
+		
+		if (!dying){
 		if (atDestination) { 
 			timeToWaitAtDestination -= deltaTime;
 			if (timeToWaitAtDestination<0) {
@@ -257,6 +281,9 @@ public class PlayerUI extends TimedItem{
 			}			
 			return;
 		}
+		}
+		
+		
 		
 		
 		animationFrame += deltaTime*10;
@@ -320,6 +347,9 @@ public class PlayerUI extends TimedItem{
 		
 		}
 		
+		
+		
+		
 
 		Tile tile = ts.getTileFromWorld(location.x+0.5f, location.y+0.5f);
 		agent.setTile(tile);
@@ -337,7 +367,7 @@ public class PlayerUI extends TimedItem{
     }
     
     protected void firePlayerReachedDestinationEvent()
-    {
+    {    	
         if (_listeners != null && !_listeners.isEmpty())
         {
             Enumeration<PlayerReachedDestinationEvent> e = _listeners.elements();
