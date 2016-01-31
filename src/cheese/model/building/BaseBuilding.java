@@ -9,6 +9,7 @@ import org.newdawn.slick.SlickException;
 import cheese.model.Cost;
 import deserted.tilesystem.Tile;
 import deserted.tilesystem.TileSystem;
+import deserted.tilesystem.TileSystem.TileId;
 
 public abstract class BaseBuilding implements IBuilding {
 
@@ -122,6 +123,8 @@ public abstract class BaseBuilding implements IBuilding {
 	}
 	
 	
+	
+	
 	public Vector<Tile> getOverlappingTiles(TileSystem ts, Tile root) {
 		Vector<Tile> tiles = new Vector<Tile>();
 		
@@ -139,6 +142,41 @@ public abstract class BaseBuilding implements IBuilding {
 		}
 		
 		return tiles;
+	}
+	
+	public boolean isTileValidForBuilding(Tile tile) {
+					
+		if (tile.building != null){
+			return false;
+		}
+	
+		if (name.toLowerCase().contains("fisher")) {
+			if (tile.id == TileId.WATER) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		if (tile.id == TileId.WATER) {
+			return false;
+		}
+
+		if (name.toLowerCase().contains("mine")) {
+			if (tile.id != TileId.ROCK)
+				return false;
+		}
+		
+		if (name.toLowerCase().contains("clay") || name.toLowerCase().contains("herb")) {
+			if (tile.id == TileId.ROCK)
+				return false;
+		}
+		
+		
+		
+		return true;
 	}
 	
 
