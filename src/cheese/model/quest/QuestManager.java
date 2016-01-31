@@ -104,8 +104,6 @@ public class QuestManager {
 				else if(s2.size() > 0) {
 					s2.get(0).setOffered(true);
 				}
-				
-				super.onComplete();
 			}
 			
 			@Override
