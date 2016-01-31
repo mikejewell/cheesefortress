@@ -10,7 +10,9 @@ public class WedgeTileOverlay {
 		STICK2,
 		OVERLAYS3D,
 		TREE1,
-		TREE2
+		TREE2,
+		TREE3,
+		TREE4
 	}
 	
 	public int[] uvs;
@@ -24,6 +26,8 @@ public class WedgeTileOverlay {
 			null,
 			new WedgeTileOverlay(128, 768, 192, 896),
 			new WedgeTileOverlay(448, 832, 640, 1024),
+			new WedgeTileOverlay(0, 832, 64, 1024),
+			new WedgeTileOverlay(64, 832, 128, 1024),
 	};
 	
 	public WedgeTileOverlay(int u, int v, int u2, int v2){
