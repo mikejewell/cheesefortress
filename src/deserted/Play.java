@@ -162,7 +162,7 @@ public class Play extends BasicGameState implements GameState,
 		recipeBook = new RecipeBook();
 
 		monsterManager = new MonsterManager(ts, playerManager.getPlayers());
-		godManager = new GodManager();
+		godManager = gs.getGodManager();
 
 		for(int i=0; i<GameConfig.NUMBER_AGENTS; i++) {
 			PlayerUI player = playerManager.addPlayer(this);
@@ -395,8 +395,6 @@ public class Play extends BasicGameState implements GameState,
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 
-		
-	
 		Input input = container.getInput();
 
 		renderWorld(g);

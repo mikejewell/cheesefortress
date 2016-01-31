@@ -12,6 +12,7 @@ abstract public class Quest extends TimedItem {
 	private String questName;
 	private String questDescription;
 	private GodType god;
+	private GodType actualGod;
 	private double validFrom;
 	
 	//Relationship value to god
@@ -24,6 +25,7 @@ abstract public class Quest extends TimedItem {
 		this.setQuestDescription(questDescription);
 		this.setGod(god);
 		this.hours = 0;
+		this.value = value;
 		this.setCompleted(false);
 	}
 	
@@ -32,6 +34,7 @@ abstract public class Quest extends TimedItem {
 	public void complete() {
 		QuestManager questManager = GameSession.getInstance().getQuestManager();
 		questManager.assignQuest();
+		GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(this.value);
 		onComplete();
 		this.setCompleted(true);
 	}
@@ -45,7 +48,7 @@ abstract public class Quest extends TimedItem {
 		hours++;
 		if(hours >= getHoursToFinish()) {
 			stopTiming();
-			GameSession.getInstance().getQuestManager().assignQuest();
+			GameSession.getInstance().getGodManager().getGod(actualGod).changeRelationship(-this.value);
 			this.setCompleted(true);
 			this.hours = 0;
 			onFailure();
@@ -101,5 +104,13 @@ abstract public class Quest extends TimedItem {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+
+	public GodType getActualGod() {
+		return actualGod;
+	}
+
+	public void setActualGod(GodType actualGod) {
+		this.actualGod = actualGod;
 	}
 }

@@ -232,11 +232,9 @@ public class PlayerUI extends TimedItem{
 	
 	@Override
 	public void onTick() {
-		System.out.println("Feed? "+agent.getFood());
 		if(GameSession.getInstance().getInventory().getItemCount(ItemType.FOOD) > 1) {
 			if(agent.getFood() < 80) {
 				if((Math.random()*10) < 0.5) {
-					System.out.println("Feed");
 					agent.incFood(20);
 					GameSession.getInstance().getInventory().removeItem(ItemType.FOOD, 1);
 				}

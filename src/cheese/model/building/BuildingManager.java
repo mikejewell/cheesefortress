@@ -44,13 +44,16 @@ public class BuildingManager {
 					workingImage, null, 5000, 0.6) {
 				@Override
 				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.FOOD);
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
 				}
 
 				@Override
 				public double getDuration() {
-					return 24 * 60;
+					return 8 * 60;
 				}
 			};
 			herbary.setCost(new Cost(0, 1, 3, 3));
@@ -249,7 +252,20 @@ public class BuildingManager {
 						"images/buildings/UH/as_mine5x5/work/45/"
 								+ getNumber2(i) + ".png"));
 			megaMine = new ResourceBuilding("Mega Mine", "", idleImage,
-					idleImage, workingImage, null, 100);
+					idleImage, workingImage, null, 100) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.STONE);
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.METAL);
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
 			megaMine.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(megaMine);
 		}
@@ -268,7 +284,18 @@ public class BuildingManager {
 			subBuildings.add(megaMine);
 
 			goldMine = new ResourceBuilding("Gold Mine", "", gmProgressImage,
-					gmIdleImage, gmWorkingImage, subBuildings, 100);
+					gmIdleImage, gmWorkingImage, subBuildings, 100) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.METAL);
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
 			goldMine.setCost(new Cost(0, 1, 3, 3));
 			addBuilding(goldMine);
 		}
@@ -292,10 +319,10 @@ public class BuildingManager {
 
 				@Override
 				public double getDuration() {
-					return 24 * 60;
+					return 8 * 60;
 				}
 			};
-			clayPit.setCost(new Cost(0, 1, 3, 3));
+			clayPit.setCost(new Cost(0, 2, 0, 2));
 			addBuilding(clayPit);
 		}
 
@@ -343,10 +370,10 @@ public class BuildingManager {
 
 				@Override
 				public double getDuration() {
-					return 12 * 60;
+					return 8 * 60;
 				}
 			};
-			lumberJack.setCost(new Cost(0, 1, 3, 3));
+			lumberJack.setCost(new Cost(0, 2, 0, 0));
 			addBuilding(lumberJack);
 		}
 
@@ -395,7 +422,18 @@ public class BuildingManager {
 			subBuildings.add(weaponSmith);
 
 			blacksmith = new ResourceBuilding("Blacksmith", "", idleImage,
-					idleImage, idleImage, subBuildings, 100, 0.43);
+					idleImage, idleImage, subBuildings, 100, 0.43) {
+				@Override
+				public void onBuildingTick(Building building) {
+					GameSession.getInstance().getInventory()
+							.addItem(ItemType.METAL);
+				}
+
+				@Override
+				public double getDuration() {
+					return 8 * 60;
+				}
+			};
 			blacksmith.setCost(new Cost(0, 2, 2, 2));
 			addBuilding(blacksmith);
 		}
@@ -429,13 +467,19 @@ public class BuildingManager {
 					idleImage, idleImage, subBuildings, 100, 0.6) {
 				@Override
 				public void onBuildingTick(Building building) {
-					GameSession.getInstance().getInventory()
-							.addItem(ItemType.FOOD);
+					if (Math.random() < GameSession.getInstance()
+							.getProbabilityFood()) {
+						GameSession.getInstance().getInventory()
+								.addItem(ItemType.FOOD);
+					}
+					else {
+						System.out.println("No food for you");
+					}
 				}
 
 				@Override
 				public double getDuration() {
-					return 12 * 60;
+					return 8 * 60;
 				}
 			};
 			hunterTent.setCost(new Cost(0, 2, 0, 0));
@@ -465,12 +509,15 @@ public class BuildingManager {
 					if (inv.getItemCount(ItemType.FOOD) > 2) {
 						GameSession gs = GameSession.getInstance();
 						if (gs.getPlayerManager().getAgents().size() >= 2) {
-							inv.removeItem(ItemType.FOOD, 2);
-							try {
-								PlayerUI player = gs.getPlayerManager()
-										.addPlayer(gs.getPlay());
-								player.location = building.location;
-							} catch (SlickException se) {
+							if (Math.random() < GameSession.getInstance()
+									.getProbabilitySettler()) {
+								inv.removeItem(ItemType.FOOD, 2);
+								try {
+									PlayerUI player = gs.getPlayerManager()
+											.addPlayer(gs.getPlay());
+									player.location = building.location;
+								} catch (SlickException se) {
+								}
 							}
 						}
 					}

@@ -1,12 +1,11 @@
 package deserted.model;
 
-import java.util.ArrayList;
-
 import org.joda.time.LocalDateTime;
 import org.newdawn.slick.SlickException;
 
 import cheese.model.PlayerManager;
 import cheese.model.building.BuildingManager;
+import cheese.model.god.GodManager;
 import cheese.model.quest.QuestManager;
 import deserted.model.item.ItemType;
 import deserted.player.PlayerReachedDestinationEvent;
@@ -30,6 +29,10 @@ public class GameSession {
 	private BuildingManager buildingManager;
 	private QuestManager questManager;
 	private PlayerManager playerManager;
+	private GodManager godManager;
+	
+	private double probabilitySettler = 1.0;
+	private double probabilityFood = 1.0;
 
 	private GameSession() {
 		this.setCompleted(false);
@@ -59,6 +62,7 @@ public class GameSession {
 		try {
 			this.setBuildingManager(new BuildingManager());
 			this.setQuestManager(new QuestManager());
+			this.setGodManager(new GodManager());
 		} catch (SlickException se) {
 			System.err.println("Slick exception :(");
 		}
@@ -144,5 +148,29 @@ public class GameSession {
 	
 	public PlayerReachedDestinationEvent getPlay() {
 		return this.play;
+	}
+
+	public double getProbabilitySettler() {
+		return probabilitySettler;
+	}
+
+	public void setProbabilitySettler(double probabilitySettler) {
+		this.probabilitySettler = probabilitySettler;
+	}
+
+	public double getProbabilityFood() {
+		return probabilityFood;
+	}
+
+	public void setProbabilityFood(double probabilityFood) {
+		this.probabilityFood = probabilityFood;
+	}
+
+	public GodManager getGodManager() {
+		return godManager;
+	}
+
+	public void setGodManager(GodManager godManager) {
+		this.godManager = godManager;
 	}
 }
