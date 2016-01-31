@@ -177,6 +177,11 @@ public abstract class BaseBuilding implements IBuilding {
 				return false;
 		}
 		
+		if (fowArea < 2) {
+			if (tile.vis < 40) {
+				return false;
+			}
+		}
 		
 		
 		return true;
