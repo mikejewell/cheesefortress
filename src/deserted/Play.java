@@ -152,9 +152,8 @@ public class Play extends BasicGameState implements GameState,
 		selectedItems = new ArrayList<Item>();
 		messenger = new Messenger();
 
-		stickFigure = new Image("images/icons/stickperson.png");
 		questBackground = new Image("images/backgrounds/quest_card.jpg");
-
+		
 		itemImages = new HashMap<ItemType, Image>();
 		for (ItemType type : ItemType.values()) {
 			Item item = ItemFactory.createItem(type);
@@ -250,6 +249,8 @@ public class Play extends BasicGameState implements GameState,
 		agentRect = new Rectangle(ag_x, ag_y, agent_bar_width, agent_bar_height);
 		questRect = new Rectangle(0, quest_bar_y, container.getWidth(),
 				quest_bar_height);
+		
+		
 	}
 
 //	private void RandomTileObject(TileId tileType, SpriteType spriteType,
@@ -416,23 +417,41 @@ public class Play extends BasicGameState implements GameState,
 			for (int i = 0; i < currentBuildingOptions.size(); i++) {
 				BaseBuilding building = currentBuildingOptions.get(i);
 
-				int y = ag_y + i * 60;
-				int pad = 7;
+				int y = ag_y+25 + i * 60;
+				int pad = 3;
 				if (!currentBuildingReady) {
 					g.setColor(Color.gray);
 				}
 				else {
 					if (buildingManager.canBuyBuilding(building)) {
-						g.setColor(Color.black);
+						g.setColor(Color.green);
 					} else {
-						g.setColor(Color.red);
+						g.setColor(Color.green.darker());
 					}
 				}
-				g.drawString(building.getName(), ag_x + pad + 70, y + pad);
 
-				building.renderBuilding(ag_x, y, 50, 50);
-
-				Rectangle rect = new Rectangle(ag_x, y, 50, 50);
+				Rectangle rect = new Rectangle(ag_x+2, y-3, agent_bar_width-2, 50+3);
+				g.draw(rect);			
+				g.drawString(building.getName(), ag_x + pad + 70, y);
+				String s[] = building.getCost().toString().split(",");
+				switch(s.length){
+				case 1:
+					g.drawString(s[0], ag_x + pad + 70, y+14);
+					break;
+				case 2:
+					g.drawString(s[0] + ", " + s[1], ag_x + pad + 70, y+14);
+					break;
+				case 3:
+					g.drawString(s[0] + ", " + s[1]+ ",", ag_x + pad + 70, y+14);
+					g.drawString(s[2], ag_x + pad + 70, y+25);
+					break;
+				case 4:
+					g.drawString(s[0] + ", " + s[1]+ ",", ag_x + pad + 70, y+14);
+					g.drawString(s[2] + ", " + s[3], ag_x + pad + 70, y+25);
+					break;
+				}
+				
+				building.renderBuilding(ag_x+5, y, 50, 50);
 
 				if (currentBuildingReady) {
 					if (buildingManager.canBuyBuilding(building)) {
@@ -495,23 +514,25 @@ public class Play extends BasicGameState implements GameState,
 
 				g.drawString(quest.getQuestDescription(), x + 5, y + 30);
 
-				// Draw timer
-				int timer_h = 18;
-				int timer_y = (y + h) - timer_h - 45;
-				int timer_x = x + 5;
-				int timer_w = w - 10;
-				g.setColor(Color.green);
-				g.fillRect(timer_x, timer_y, timer_w, timer_h);
-
-				double percentComplete = (quest.getHoursElapsed() / quest
-						.getHoursToFinish());
+				if(quest.getHoursToFinish() > 0) {
+					// Draw timer
+					int timer_h = 18;
+					int timer_y = (y + h) - timer_h - 45;
+					int timer_x = x + 5;
+					int timer_w = w - 10;
+					g.setColor(Color.green.darker());
+					g.fillRect(timer_x, timer_y, timer_w, timer_h);
+	
+					double percentComplete = (quest.getHoursElapsed() / quest
+							.getHoursToFinish());
+					
+					g.setColor(Color.red.darker());
+					g.fillRect(timer_x, timer_y, (int)(timer_w*percentComplete), timer_h);
+	
+					g.setColor(Color.green.darker().darker());
+					g.drawRect(timer_x, timer_y, timer_w, timer_h);
+				}
 				
-				g.setColor(Color.red);
-				g.fillRect(timer_x, timer_y, (int)(timer_w*percentComplete), timer_h);
-
-				g.setColor(Color.green.darker());
-				g.drawRect(timer_x, timer_y, timer_w, timer_h);
-
 				if (quest.canComplete()) {
 					// Draw Complete button
 					String name = "Complete";
@@ -561,6 +582,9 @@ public class Play extends BasicGameState implements GameState,
 					g.fillRect(x + f_h - w, f_y + f_h - h, w, h);
 					g.setColor(Color.black);
 					g.drawString("" + count, x + f_h - w, f_y + f_h - h);
+					
+					g.setColor(Color.black);
+					g.drawString(items.get(i).name(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M"))/2);
 				}
 				
 			} else {
@@ -570,9 +594,6 @@ public class Play extends BasicGameState implements GameState,
 			
 			g.setColor(Color.darkGray);
 			g.drawRect(x - 1, f_y - 1, f_h + 2, f_h + 2);
-			
-			g.setColor(Color.black);
-			g.drawString(ItemType.values()[i].toString(), x + f_h + 6, f_y + (f_h - g.getFont().getHeight("M"))/2);
 		}
 		// Draw toolTips
 		int mouseX = input.getMouseX();

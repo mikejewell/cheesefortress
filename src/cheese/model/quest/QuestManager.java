@@ -18,38 +18,66 @@ public class QuestManager {
 	private List<Quest> questList;
 	private HashMap<GodType, Quest> questSlots;
 	private GodType[] order = {GodType.THOR, GodType.FREYA, GodType.HEL, GodType.LOKI, GodType.TRIBE};
+	private ArrayList<Quest> completedQuests;
 	
 	public QuestManager() {
 		this.questSlots = new HashMap<GodType, Quest>();
 		// TODO make all the quests
 		this.questList = new ArrayList<Quest>();
+		this.completedQuests = new ArrayList<Quest>();
 
 		// Tribe Quests
-		questList.add(new QuestBuilding("Big Farma", "We need food to keep our villagers\nalive - please build a farm!", 50, GodType.TRIBE, "Farm") {
-			@Override
-			public double getHoursToFinish() {
-				return 48;
-			}
-			
-			@Override
-			public void onComplete() {
-				GameSession.getInstance().getInventory().addItem(ItemType.FOOD, 5);
-			}
-			
-			@Override
-			public void onFailure() {
-				System.out.println("Failure");
-			}
-		});
-		questList.add(new QuestBuilding("Hall Effect", "If we want to build anything, we'll\nneed a Town Hall.", 50, GodType.TRIBE, "Town Hall"));
-		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there\nthat we could be eating!", 50, GodType.TRIBE, "Hunter Abode"));
-		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get\nresources from other villages.", 50, GodType.TRIBE, "Stable"));
+//		QuestBuilding farm = new QuestBuilding("Big Farma", "We need food to keep our villagers\nalive - please build a farm!", 50, GodType.TRIBE, "Farm") {
+//			@Override
+//			public double getHoursToFinish() {
+//				return 48;
+//			}
+//			
+//			@Override
+//			public void onComplete() {
+//				GameSession.getInstance().getInventory().addItem(ItemType.FOOD, 5);
+//			}
+//			
+//			@Override
+//			public void onFailure() {
+//				System.out.println("Failure");
+//			}
+//		};
+		
+		QuestBuilding farm = new QuestBuilding("Big Farma", "We need food to keep our villagers\nalive - please build a farm!", 50, GodType.TRIBE, "Farm");
+		QuestBuilding hall = new QuestBuilding("Hall Effect", "If we want to build anything, we'll\nneed a Town Hall.", 50, GodType.TRIBE, "Town Hall");
+		QuestBuilding hunter = new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there\nthat we could be eating!", 50, GodType.TRIBE, "Hunter Abode");
+		QuestBuilding stable = new QuestBuilding("Unstable Situation", "If we had some horses, we could get\nresources from other villages.", 50, GodType.TRIBE, "Stable");		
+		QuestBuilding lumberjack = new QuestBuilding("Got Wood?", "A lumberjack would be fantastic for\nour wood production.", 50, GodType.TRIBE, "Lumber Jack");
+		QuestBuilding blacksmith = new QuestBuilding("Heavy Metal", "With a blacksmith, we could turn\nproduction up to 11!", 50, GodType.TRIBE, "Blacksmith");
+		QuestBuilding settlement = new QuestBuilding("Settlers Too", "We could always do with more volunteers\nfor sacrifices...", 50, GodType.TRIBE, "Settlement");
+		QuestBuilding barracks = new QuestBuilding("Barracks", "Build a barracks", 50, GodType.TRIBE, "Barracks");
+		
+		questList.add(hall);
+		
+		questList.add(hunter);
+		hunter.addRequirement(hall);
+		
+		questList.add(barracks);
+		barracks.addRequirement(hall);
+		
+		questList.add(stable);
+		stable.addRequirement(barracks);
+		
+		questList.add(farm);
+		farm.addRequirement(hunter);
+		
+		questList.add(lumberjack);
+		lumberjack.addRequirement(hall);
+		
+		questList.add(blacksmith);
+		blacksmith.addRequirement(hall);
+		
+		questList.add(settlement);
+		settlement.addRequirement(hall);
 		
 		questList.add(new QuestTribute("Dragons Hoard", "My precious... Give me 20 metal!", 50, GodType.NEUTRAL, new Cost(0,0,0,20)));
 		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
-		
-		// Shuffle
-		Collections.shuffle(questList);
 	}
 
 	public List<Quest> getQuestList() {
@@ -62,6 +90,7 @@ public class QuestManager {
 	
 	public void flush() {
 		ArrayList<GodType> toRemove = new ArrayList<GodType>();
+		
 		for(GodType god: questSlots.keySet()) {
 			if(questSlots.get(god).isCompleted()) {
 				toRemove.add(god);
@@ -76,12 +105,7 @@ public class QuestManager {
 	}
 	
 	public void assignQuest() {
-		// How many slots are currently taken?
-//		 TODO: Only allow 1 quest for now
-//		if(takenSlots() > 1) {
-//			return;
-//		}
-		
+
 		GodType god = pickGod();
 		Quest quest = pickQuest(god);
 		if(quest != null) {
@@ -104,16 +128,44 @@ public class QuestManager {
 			return null;
 		}
 		
-		int index = r.nextInt(options.size());
-		return options.get(index);
+		// Filter ones we can actually do.
+		ArrayList<Quest> filtered = new ArrayList<Quest>();
+		for(Quest quest: options) {
+			boolean canAdd = true;
+			System.out.println("Check requirements for "+quest.getQuestName());
+			for(Quest required: quest.getRequirements()) {
+				System.out.println("Do we have "+required.getQuestName());
+				if(!this.completedQuests.contains(required)) {
+					System.out.println("No");
+					canAdd = false;
+				}
+			}
+			if(canAdd) {
+				filtered.add(quest);
+			}
+		}
+		
+		if(filtered.size() == 0) {
+			System.out.println("No options after filtering");
+			return null;
+		}
+		int index = r.nextInt(filtered.size());
+		return filtered.get(index);
 	}
 	
 	public ArrayList<Quest> questsForGod(GodType god) {
 
 		ArrayList<Quest> options = new ArrayList<Quest>();
 		for(Quest quest: questList) {
-			if(quest.getGod() == god || quest.getGod() == GodType.NEUTRAL) {
+			
+			// A NEUTRAL quest can apply to any god, but not the tribe.
+			if(god != GodType.TRIBE && (quest.getGod() == god || quest.getGod() == GodType.NEUTRAL)) {
 				options.add(quest);
+			}
+			else {
+				if(quest.getGod() == god) {
+					options.add(quest);
+				}
 			}
 		}
 		return options;
@@ -163,6 +215,11 @@ public class QuestManager {
 	
 	public Quest getQuest(GodType god) {
 		return questSlots.get(god);
+	}
+
+	public void addCompletedQuest(Quest quest) {
+		this.completedQuests.add(quest);
+		
 	}
 	
 }
