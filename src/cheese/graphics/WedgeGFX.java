@@ -38,22 +38,26 @@ public class WedgeGFX {
     	
     	
     	float finalX, finalY;
-    	float x = camera.x;
-    	float y = camera.y;
-    	
+        	
     	tex.startUse();
-    	for(int i = 0; i < tiles.length; i++){
-    		for(int j = tiles.length-1; j >= 0; j--){
-    			int[] uv = tileMap.getUV(tiles[i][j].getId());
+    	for(int x = 0; x < tiles.length; x++){
+    		for(int y = tiles.length-1; y >= 0; y--){
+    			int[] uv = tileMap.getUV(tiles[x][y].getId());
     			
-    			finalX = offsets.x;
-    			finalY = offsets.y;
-   			
-        		tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uv[0], uv[1], uv[0]+64, uv[1]+64);
-        		if(tiles[i][j].getOverlay() != OverlayType.EMPTY){
-	        		if(tiles[i][j].getOverlay().ordinal() < OverlayType.OVERLAYS3D.ordinal()){
-	        			int[] uvOver = WedgeTileOverlay.getOverlay(tiles[i][j].getOverlay()).getUVs();
-	        			tex.drawEmbedded((((j-y)*32)+((i-x)*32))*camera.zoom-finalX, (((i-x)*16)-((j-y)*16))*camera.zoom-finalY, (((j-y)*32)+((i-x)*32)+64)*camera.zoom-finalX, (((i-x)*16)-((j-y)*16)+64)*camera.zoom-finalY, uvOver[0], uvOver[1], uvOver[0]+64, uvOver[1]+64);
+    			
+    			finalX = (((x-camera.x)*32)+((y-camera.y)*32))*camera.zoom-offsets.x; 
+	    		finalY = (((x-camera.x)*16)-((y-camera.y)*16))*camera.zoom-offsets.y;
+    			
+	    		float xa = finalX-32*camera.zoom;
+	    		float ya = finalY-32*camera.zoom;
+	    		float xb = finalX+32*camera.zoom;
+	    		float yb = finalY+32*camera.zoom;
+	    		
+        		tex.drawEmbedded(xa,ya,xb,yb, uv[0], uv[1], uv[0]+64, uv[1]+64);
+        		if(tiles[x][y].getOverlay() != OverlayType.EMPTY){
+	        		if(tiles[x][y].getOverlay().ordinal() < OverlayType.OVERLAYS3D.ordinal()){
+	        			int[] uvOver = WedgeTileOverlay.getOverlay(tiles[x][y].getOverlay()).getUVs();
+	        			tex.drawEmbedded(xa,ya,xb,yb, uvOver[0], uvOver[1], uvOver[0]+64, uvOver[1]+64);
 	        		}
         		}
     		}
