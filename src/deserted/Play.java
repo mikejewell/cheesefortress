@@ -363,9 +363,11 @@ public class Play extends BasicGameState implements GameState,
 		for (int y = 0; y < ts.size; y++) {
 			ts.renderGroundSprites(g, y);
 			for (PlayerUI player : playerManager.getPlayers()) {
-				if (player.location.y >= y - 0.4f
-						&& player.location.y < y + 0.6f)
+				float playerRealY = player.location.x + player.location.y;
+				if (player.location.x >= y+0.5f
+						&& player.location.x < y+1.5f){
 					player.render(g, ts.camera.zoom);
+				System.out.println(player.location.x);}
 			}
 
 			ts.render3DBuildings(g, y);	

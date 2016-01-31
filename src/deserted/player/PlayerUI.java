@@ -151,17 +151,11 @@ public class PlayerUI extends TimedItem{
 			if (xdif >0 && ydif<0) direction = 1;
 			if (xdif <0 && ydif<0) direction = 3;
 			
-			
-
-			
-			
 		}
 		Image realPlayer = getPlayerImage(direction);
 
-		realPlayer.draw(screenLocation.x-15*scale,screenLocation.y-15*scale,
-				screenLocation.x+15*scale,screenLocation.y+15*scale,0,0,imageWidth, imageHeight);
-
-		
+		realPlayer.draw(screenLocation.x-24*scale,screenLocation.y-48*scale,
+				screenLocation.x+24*scale,screenLocation.y,0,0,imageWidth, imageHeight);
 		
 		
 		if (playerControlled) {
