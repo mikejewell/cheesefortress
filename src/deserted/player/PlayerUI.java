@@ -256,21 +256,12 @@ public class PlayerUI extends TimedItem{
 		}
 
 		super.update(deltaTime);
-			
-		if (atDestination) { 
-			timeToWaitAtDestination -= deltaTime;
-			if (timeToWaitAtDestination<0) {
-				bored = true;
-			}			
-			return;
-		}
-		
 		
 		if (agent.getHealth() < 10) {
 			if (!dying) {
 				//See if there is a tombstone on the map and start heading there to die
 				for (Building building : bm.getBuildingsInPlay()) {
-					if (building.base.getName().toLowerCase().contains("tomb")) {
+					if (building.base.getName().toLowerCase().contains("dead")) {
 						this.moveto(building.location.x, building.location.y);
 					}
 				}
@@ -281,6 +272,19 @@ public class PlayerUI extends TimedItem{
 		{
 			dying = false;
 		}
+		
+		if (!dying){
+		if (atDestination) { 
+			timeToWaitAtDestination -= deltaTime;
+			if (timeToWaitAtDestination<0) {
+				bored = true;
+			}			
+			return;
+		}
+		}
+		
+		
+		
 		
 		animationFrame += deltaTime*10;
 		//Some basic movement code - a bit elaborate tbh
