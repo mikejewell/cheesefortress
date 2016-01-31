@@ -261,7 +261,6 @@ public class QuestManager {
 		ArrayList<Quest> options = questsForGod(god);
 
 		if (options.size() == 0) {
-			System.out.println("No options for quest");
 			return null;
 		}
 
@@ -269,12 +268,8 @@ public class QuestManager {
 		ArrayList<Quest> filtered = new ArrayList<Quest>();
 		for (Quest quest : options) {
 			boolean canAdd = true;
-			System.out
-					.println("Check requirements for " + quest.getQuestName());
 			for (Quest required : quest.getRequirements()) {
-				System.out.println("Do we have " + required.getQuestName());
 				if (!this.completedQuests.contains(required)) {
-					System.out.println("No");
 					canAdd = false;
 				}
 			}
@@ -284,7 +279,6 @@ public class QuestManager {
 		}
 
 		if (filtered.size() == 0) {
-			System.out.println("No options after filtering");
 			return null;
 		}
 		int index = r.nextInt(filtered.size());
@@ -292,12 +286,8 @@ public class QuestManager {
 	}
 
 	public ArrayList<Quest> questsForGod(GodType god) {
-		System.out.println("God: " + god);
-
 		ArrayList<Quest> options = new ArrayList<Quest>();
 		for (Quest quest : questList) {
-			System.out.println("Test " + quest.getQuestName() + ","
-					+ quest.getGod());
 
 			if (god == GodType.TRIBE) {
 				if (quest.getGod() == GodType.TRIBE) {
@@ -319,19 +309,15 @@ public class QuestManager {
 
 		ArrayList<GodType> options = new ArrayList<GodType>();
 		for (GodType god : order) {
-			System.out.println("Checking god: " + god);
 
 			if (!hasQuest(god)) {
-				System.out.println("God " + god + " has no quest");
 				if (questsForGod(god).size() > 0) {
-					System.out.println("Have some quests we can use");
 					options.add(god);
 				}
 			}
 		}
 
 		if (options.size() == 0) {
-			System.out.println("No options for god");
 			return null;
 		}
 
