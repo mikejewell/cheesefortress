@@ -25,7 +25,7 @@ public class QuestManager {
 		this.questList = new ArrayList<Quest>();
 
 		// Tribe Quests
-		questList.add(new QuestBuilding("Big Farma", "We need food to keep our villagers alive - please build a farm!", 50, GodType.TRIBE, "Farm") {
+		questList.add(new QuestBuilding("Big Farma", "We need food to keep our villagers\nalive - please build a farm!", 50, GodType.TRIBE, "Farm") {
 			@Override
 			public double getHoursToFinish() {
 				return 48;
@@ -41,9 +41,9 @@ public class QuestManager {
 				System.out.println("Failure");
 			}
 		});
-		questList.add(new QuestBuilding("Hall Effect", "If we want to build anything, we'll need a Town Hall.", 50, GodType.TRIBE, "Town Hall"));
-		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there that we could be eating!", 50, GodType.TRIBE, "Hunter Abode"));
-		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get resources from other villages.", 50, GodType.TRIBE, "Stable"));
+		questList.add(new QuestBuilding("Hall Effect", "If we want to build anything, we'll\nneed a Town Hall.", 50, GodType.TRIBE, "Town Hall"));
+		questList.add(new QuestBuilding("Hunter Gatherer", "There's a load of wildlife out there\nthat we could be eating!", 50, GodType.TRIBE, "Hunter Abode"));
+		questList.add(new QuestBuilding("Unstable Situation", "If we had some horses, we could get\nresources from other villages.", 50, GodType.TRIBE, "Stable"));
 		
 		questList.add(new QuestTribute("Dragons Hoard", "My precious... Give me 20 metal!", 50, GodType.NEUTRAL, new Cost(0,0,0,20)));
 		questList.add(new QuestTribute("Feed Me", "I'm very hungry - give me 20 food!", 50, GodType.NEUTRAL, new Cost(20,0,0,0)));
@@ -87,6 +87,8 @@ public class QuestManager {
 		if(quest != null) {
 			quest.setValidFrom(GameSession.getInstance().getTimeSurvived());
 			quest.setActualGod(god);
+			quest.setCardX(Math.random());
+			quest.setCardY(Math.random());
 			questSlots.put(god, quest);
 			questList.remove(quest);
 			quest.startTiming();

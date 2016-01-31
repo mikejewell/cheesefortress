@@ -116,7 +116,7 @@ public class Play extends BasicGameState implements GameState,
 	BaseBuilding currentDragging = null;
 	Tile currentDraggingTile = null;
 	Building currentBuilding = null;
-	
+
 	private Rectangle questRect;
 
 	private int quest_bar_pad;
@@ -124,8 +124,10 @@ public class Play extends BasicGameState implements GameState,
 	private BuildingManager buildingManager;
 
 	private QuestManager questManager;
-	
+
 	private PlayerManager playerManager;
+
+	private Image questBackground;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -151,6 +153,7 @@ public class Play extends BasicGameState implements GameState,
 		messenger = new Messenger();
 
 		stickFigure = new Image("images/icons/stickperson.png");
+		questBackground = new Image("images/backgrounds/quest_card.jpg");
 
 		itemImages = new HashMap<ItemType, Image>();
 		for (ItemType type : ItemType.values()) {
@@ -166,11 +169,11 @@ public class Play extends BasicGameState implements GameState,
 		monsterManager = new MonsterManager(ts, playerManager.getPlayers());
 		godManager = gs.getGodManager();
 
-		for(int i=0; i<GameConfig.NUMBER_AGENTS; i++) {
+		for (int i = 0; i < GameConfig.NUMBER_AGENTS; i++) {
 			PlayerUI player = playerManager.addPlayer(this);
 			player.setRandomLocation(wreckageCenter);
 		}
-		
+
 		selectedAgent = playerManager.getAgents().get(0);
 		ts.getCamera().x = playerManager.getPlayers().get(0).location.x;
 		ts.getCamera().y = playerManager.getPlayers().get(0).location.y;
@@ -194,12 +197,13 @@ public class Play extends BasicGameState implements GameState,
 
 		messenger.addMessage("Use WASD or ARROW keys to move the camera.",
 				Color.green, 20);
-		messenger.addMessage("Build a town hall first and do other quests for your tribe.",
+		messenger.addMessage(
+				"Build a town hall first and do other quests for your tribe.",
 				Color.green, 20);
-		messenger.addMessage("You must do tasks for your Gods to survive.", Color.green,
-				20);
-		messenger.addMessage("Your Vikings are far from home.", Color.green,
-				20);
+		messenger.addMessage("You must do tasks for your Gods to survive.",
+				Color.green, 20);
+		messenger
+				.addMessage("Your Vikings are far from home.", Color.green, 20);
 
 		// Initialise UI Variables---------------------------------------
 
@@ -210,7 +214,7 @@ public class Play extends BasicGameState implements GameState,
 		h_h = header_height - (2 * header_pad);
 
 		quest_bar_y = header_height;
-		quest_bar_height = 80;
+		quest_bar_height = 160;
 		quest_bar_pad = 0;
 		quest_width = ((container.getWidth() - 250) / 5) - (quest_bar_pad * 5);
 
@@ -342,16 +346,16 @@ public class Play extends BasicGameState implements GameState,
 			ts.renderGroundSprites(g, y);
 			for (PlayerUI player : playerManager.getPlayers()) {
 				float playerRealY = player.location.x + player.location.y;
-				if (player.location.x >= y+0.5f
-						&& player.location.x < y+1.5f)
+				if (player.location.x >= y + 0.5f
+						&& player.location.x < y + 1.5f)
 					player.render(g, ts.camera.zoom);
 			}
 
-			ts.render3DBuildings(g, y);	
+			ts.render3DBuildings(g, y);
 			if (currentDragging != null && currentDraggingTile != null) {
 				ts.render3DBuilding(g, y, currentDraggingTile, currentDragging);
 			}
-			
+
 			ts.render3DSprites(g, y);
 
 			monsterManager.render(g, ts.camera.zoom, y);
@@ -383,7 +387,7 @@ public class Play extends BasicGameState implements GameState,
 		messenger.render(g, container.getHeight());
 
 		currentDraggingTile = null;
-		
+
 		// Header
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, container.getWidth(), header_height);
@@ -443,7 +447,6 @@ public class Play extends BasicGameState implements GameState,
 			}
 		}
 
-
 		List<Agent> agents = playerManager.getAgents();
 		List<Rectangle> agentZones = new ArrayList<Rectangle>();
 
@@ -469,15 +472,48 @@ public class Play extends BasicGameState implements GameState,
 				- quest_button_height - 5;
 		for (int i = 0; i < order.length; i++) {
 			int x = quest_zone_x + (i * quest_width) + (i * quest_bar_pad);
+			int y = quest_bar_y + quest_y_pad;
+
+			int w = quest_width;
+			int h = (quest_bar_height - quest_y_pad);
+
+			int src_width = questBackground.getWidth();
+			int src_height = questBackground.getHeight();
+
 			g.setColor(Color.black);
-			g.fillRect(x, quest_bar_y + quest_y_pad, quest_width,
-					quest_bar_height - quest_y_pad);
+			g.fillRect(x, y, w, h);
 
 			if (questManager.hasQuest(order[i])) {
 				Quest quest = questManager.getQuest(order[i]);
-				g.setColor(Color.white);
-				g.drawString(quest.getQuestName(), x + 5, quest_bar_y
-						+ quest_y_pad + 5);
+
+				int src_x = (int) (quest.getCardX() * (src_width - w));
+				int src_y = (int) (quest.getCardY() * (src_height - h));
+				g.drawImage(questBackground, x, y, x + w, y + h, src_x, src_y,
+						src_x + w, src_y + h);
+
+				g.setColor(Color.black);
+				g.drawRect(x, y, w, h);
+
+				g.drawString(quest.getQuestName(), x + 5, y + 5);
+
+				g.drawString(quest.getQuestDescription(), x + 5, y + 30);
+
+				// Draw timer
+				int timer_h = 18;
+				int timer_y = (y + h) - timer_h - 45;
+				int timer_x = x + 5;
+				int timer_w = w - 10;
+				g.setColor(Color.green);
+				g.fillRect(timer_x, timer_y, timer_w, timer_h);
+
+				double percentComplete = (quest.getHoursElapsed() / quest
+						.getHoursToFinish());
+				
+				g.setColor(Color.red);
+				g.fillRect(timer_x, timer_y, (int)(timer_w*percentComplete), timer_h);
+
+				g.setColor(Color.green.darker());
+				g.drawRect(timer_x, timer_y, timer_w, timer_h);
 
 				if (quest.canComplete()) {
 					// Draw Complete button
@@ -564,47 +600,34 @@ public class Play extends BasicGameState implements GameState,
 			if (currentDragging != null) {
 
 				currentDraggingTile = ts.getTileFromScreen(mouseX, mouseY);
-				
-				for (Tile tile : currentDragging.getOverlappingTiles(ts,currentDraggingTile)) {
+
+				for (Tile tile : currentDragging.getOverlappingTiles(ts,
+						currentDraggingTile)) {
 					if (tile.building != null || tile.id == TileId.WATER)
 						ts.renderTile(g, tile, Color.red);
 					else
 						ts.renderTile(g, tile, Color.blue);
 				}
-			}			
+			}
 		}
-		mouseX = input.getMouseX();		
+		mouseX = input.getMouseX();
 		mouseY = input.getMouseY();
-		/*System.out.println("World Pos: " + ts.screenToWorldPos(mouseX, mouseY).x + ":" + ts.screenToWorldPos(mouseX, mouseY).y);
-		Tile tt = ts.getTileFromScreen(mouseX, mouseY);
-		if (tt != null)
-		{
-			tt.vis = 100;
-			
-			Vector2f pos = ts.camera.worldToScreenPos(tt.x, tt.y);
-		
-			if (tt.id == TileId.WATER)
-			{
-				g.setColor(Color.green);
-			}
-			else if (tt.id == TileId.ROCK)
-			{
-				g.setColor(Color.yellow);
-			}
-			else if (tt.id == TileId.SNOW)
-			{
-				g.setColor(Color.green);
-			}
-			else
-			{
-				g.setColor(Color.red);
-			}
-			
-			g.drawRect(pos.x-2, pos.y-2, 4, 4);
-			System.out.println(tt.x + "," + tt.y);
-			//tt.addSprite(SpriteType.WRECKAGE);
-		}*/
-		
+		/*
+		 * System.out.println("World Pos: " + ts.screenToWorldPos(mouseX,
+		 * mouseY).x + ":" + ts.screenToWorldPos(mouseX, mouseY).y); Tile tt =
+		 * ts.getTileFromScreen(mouseX, mouseY); if (tt != null) { tt.vis = 100;
+		 * 
+		 * Vector2f pos = ts.camera.worldToScreenPos(tt.x, tt.y);
+		 * 
+		 * if (tt.id == TileId.WATER) { g.setColor(Color.green); } else if
+		 * (tt.id == TileId.ROCK) { g.setColor(Color.yellow); } else if (tt.id
+		 * == TileId.SNOW) { g.setColor(Color.green); } else {
+		 * g.setColor(Color.red); }
+		 * 
+		 * g.drawRect(pos.x-2, pos.y-2, 4, 4); System.out.println(tt.x + "," +
+		 * tt.y); //tt.addSprite(SpriteType.WRECKAGE); }
+		 */
+
 		if (input.isMousePressed(1) || input.isMousePressed(2)) {
 			currentDragging = null;
 		}
@@ -670,104 +693,109 @@ public class Play extends BasicGameState implements GameState,
 				if (currentDragging != null) {
 
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
-					
+
 					boolean fail = false;
-					
-					for (Tile tile : currentDragging.getOverlappingTiles(ts,currentDraggingTile)) {
-						if (tile.building != null || tile.id == TileId.WATER){ 
+
+					for (Tile tile : currentDragging.getOverlappingTiles(ts,
+							currentDraggingTile)) {
+						if (tile.building != null || tile.id == TileId.WATER) {
 							fail = true;
 						}
 					}
-					
+
 					if (!fail) {
-						Building b = new Building(ts, currentDragging, new Vector2f(t.x,t.y));
-						
-						for (Tile tile : b.base.getOverlappingTiles(ts,t)) {
-							ts.getNewTileFromWorld(tile.x, tile.y).setOverlay(OverlayType.EMPTY);;
+						Building b = new Building(ts, currentDragging,
+								new Vector2f(t.x, t.y));
+
+						for (Tile tile : b.base.getOverlappingTiles(ts, t)) {
+							ts.getNewTileFromWorld(tile.x, tile.y).setOverlay(
+									OverlayType.EMPTY);
+							;
 							tile.addBuilding(b, false);
 						}
 						t.addBuilding(b, true);
-	
+
 						buildingManager.addBuildingInPlay(b);
 						buildingManager.buyBuilding(b.base);
-	
+
 						currentDragging = null;
 						currentDraggingTile = null;
 					}
-				}
-				else {
+				} else {
 					Tile t = ts.getTileFromScreen(mouseX, mouseY);
-					if (t !=null && t.building != null) //{
+					if (t != null && t.building != null) // {
 						currentBuilding = t.building;
-//					} else {
-//						// See if we are attacking a monster
-//						boolean monsterSelectionHappens = false;
-//						boolean playerSelectionHappens = false;
-//						Vector2f pos = ts.screenToWorldPos(mouseX, mouseY);
+					// } else {
+					// // See if we are attacking a monster
+					// boolean monsterSelectionHappens = false;
+					// boolean playerSelectionHappens = false;
+					// Vector2f pos = ts.screenToWorldPos(mouseX, mouseY);
 
-//						// Rearranged these functions to ensure fighting
-//						// monsters
-//						// overrides selecting and moving players
-//						if (selectedAgent != null) {
-//							for (int i = 0; i < monsterManager.monsters.size(); i++) {
-//								MonsterUI monster = monsterManager.monsters
-//										.get(i);
-//								float difX = monster.location.x - pos.x;
-//								float difY = monster.location.y - pos.y;
-//								float len = (float) Math.sqrt((difX * difX)
-//										+ (difY * difY));
-//								if (len < 0.5) {
-//									if (selectedAgent != null
-//											&& selectedAgent.getState() != AgentState.DEAD) {
-//										monster.agent.decHealth(20);
-//										if (monster.agent.getHealth() <= 0) {
-//											monster.agent
-//													.setState(AgentState.DEAD);
-//											// gs.getInventory().addItem(ItemType.MEAT);
-//										}
-//
-//										monsterSelectionHappens = true;
-//									}
-//								}
-//							}
-//						}
+					// // Rearranged these functions to ensure fighting
+					// // monsters
+					// // overrides selecting and moving players
+					// if (selectedAgent != null) {
+					// for (int i = 0; i < monsterManager.monsters.size(); i++)
+					// {
+					// MonsterUI monster = monsterManager.monsters
+					// .get(i);
+					// float difX = monster.location.x - pos.x;
+					// float difY = monster.location.y - pos.y;
+					// float len = (float) Math.sqrt((difX * difX)
+					// + (difY * difY));
+					// if (len < 0.5) {
+					// if (selectedAgent != null
+					// && selectedAgent.getState() != AgentState.DEAD) {
+					// monster.agent.decHealth(20);
+					// if (monster.agent.getHealth() <= 0) {
+					// monster.agent
+					// .setState(AgentState.DEAD);
+					// // gs.getInventory().addItem(ItemType.MEAT);
+					// }
+					//
+					// monsterSelectionHappens = true;
+					// }
+					// }
+					// }
+					// }
 
-//						if (!monsterSelectionHappens) {
-//							// This code handles mouse selection of other
-//							// players
-//
-//							for (int i = 0; i < playerManager.getPlayers().size(); i++) {
-//								PlayerUI player = playerManager.getPlayers().get(i);
-//								if (player.agent.getState() != AgentState.DEAD) {
-//									float difX = player.location.x - pos.x;
-//									float difY = player.location.y - pos.y;
-//									float len = (float) Math.sqrt((difX * difX)
-//											+ (difY * difY));
-//									if (len < 0.5) {
-//										selectedAgent = player.agent;
-//										playerSelectionHappens = true;
-//									}
-//								}
-//							}
-//						}
+					// if (!monsterSelectionHappens) {
+					// // This code handles mouse selection of other
+					// // players
+					//
+					// for (int i = 0; i < playerManager.getPlayers().size();
+					// i++) {
+					// PlayerUI player = playerManager.getPlayers().get(i);
+					// if (player.agent.getState() != AgentState.DEAD) {
+					// float difX = player.location.x - pos.x;
+					// float difY = player.location.y - pos.y;
+					// float len = (float) Math.sqrt((difX * difX)
+					// + (difY * difY));
+					// if (len < 0.5) {
+					// selectedAgent = player.agent;
+					// playerSelectionHappens = true;
+					// }
+					// }
+					// }
+					// }
 
-//						if ((!playerSelectionHappens)
-//								&& (!monsterSelectionHappens)) {
-//							if (selectedAgent != null
-//									&& selectedAgent.getState() != AgentState.DEAD) {
-//								if (selectedAgent.hasAction()) {
-//									selectedAgent.stopAction();
-//								}
-//								playerManager.getPlayers().get(agents.indexOf(selectedAgent))
-//										.moveto(pos.x, pos.y);
-//								ts.getCamera().x = playerManager.getPlayers().get(agents
-//										.indexOf(selectedAgent)).location.x;
-//								ts.getCamera().y = playerManager.getPlayers().get(agents
-//										.indexOf(selectedAgent)).location.y;
-//								ts.getCamera().isFollowing = true;
-//							}
-//						}
-//					}
+					// if ((!playerSelectionHappens)
+					// && (!monsterSelectionHappens)) {
+					// if (selectedAgent != null
+					// && selectedAgent.getState() != AgentState.DEAD) {
+					// if (selectedAgent.hasAction()) {
+					// selectedAgent.stopAction();
+					// }
+					// playerManager.getPlayers().get(agents.indexOf(selectedAgent))
+					// .moveto(pos.x, pos.y);
+					// ts.getCamera().x = playerManager.getPlayers().get(agents
+					// .indexOf(selectedAgent)).location.x;
+					// ts.getCamera().y = playerManager.getPlayers().get(agents
+					// .indexOf(selectedAgent)).location.y;
+					// ts.getCamera().isFollowing = true;
+					// }
+					// }
+					// }
 				}
 			}
 		}
@@ -827,7 +855,6 @@ public class Play extends BasicGameState implements GameState,
 			throws SlickException {
 		boolean alive = false;
 
-
 		List<Agent> agents = playerManager.getAgents();
 		for (int i = 0; i < agents.size(); i++) {
 			if (agents.get(i).getState() != AgentState.DEAD) {
@@ -854,26 +881,26 @@ public class Play extends BasicGameState implements GameState,
 		for (Building building : buildingManager.getBuildingsInPlay()) {
 			building.update(seconds);
 		}
-		
+
 		Collection<Quest> quests = questManager.getCurrentQuests();
-		for (Quest quest: quests) {
+		for (Quest quest : quests) {
 			quest.update(seconds);
 		}
 		questManager.flush();
-		
-		
-		
+
 		for (PlayerUI player : playerManager.getPlayers()) {
 			if (player.bored) {
 				if (buildingManager.getBuildingsInPlay().size() > 0) {
 					Random r = new Random();
-					int index = (int)(r.nextDouble() * buildingManager.getBuildingsInPlay().size());
-					Building b = buildingManager.getBuildingsInPlay().get(index);
-					player.moveto(b.location.x,  b.location.y, false);
+					int index = (int) (r.nextDouble() * buildingManager
+							.getBuildingsInPlay().size());
+					Building b = buildingManager.getBuildingsInPlay()
+							.get(index);
+					player.moveto(b.location.x, b.location.y, false);
 				}
 			}
 		}
-		
+
 		ts.update(playerManager.getPlayers(), gs, seconds);
 		gs.update(seconds);
 		messenger.update(seconds);
@@ -934,22 +961,26 @@ public class Play extends BasicGameState implements GameState,
 		}
 
 		if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
-			ts.getCamera().move(-20 / ts.camera.zoom * delta, -20 / ts.camera.zoom * delta);
+			ts.getCamera().move(-20 / ts.camera.zoom * delta,
+					-20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
-			ts.getCamera().move(-20 / ts.camera.zoom * delta, 20 / ts.camera.zoom * delta);
+			ts.getCamera().move(-20 / ts.camera.zoom * delta,
+					20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
-			ts.getCamera().move(20 / ts.camera.zoom * delta, 20 / ts.camera.zoom * delta);
+			ts.getCamera().move(20 / ts.camera.zoom * delta,
+					20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
-			ts.getCamera().move(20 / ts.camera.zoom * delta, -20 / ts.camera.zoom * delta);
+			ts.getCamera().move(20 / ts.camera.zoom * delta,
+					-20 / ts.camera.zoom * delta);
 			ts.getCamera().isFollowing = false;
 		}
 
@@ -965,28 +996,28 @@ public class Play extends BasicGameState implements GameState,
 		if (ts.getCamera().y > ts.size)
 			ts.getCamera().y = ts.size;
 
-//		if (ts.getCamera().isFollowing) {
-//			for (PlayerUI p : playerManager.getPlayers()) {
-//				if (p.agent == selectedAgent) {
-//					ts.getCamera().x = p.location.x;
-//					ts.getCamera().y = p.location.y;
-//					// if(!SoundManager.isPlaying(SoundManager.walk))
-//					// SoundManager.playSound(SoundManager.walk, 0.1f, true);
-//					break;
-//				}
-//			}
-//		} else {
-//			// SoundManager.stopSound(SoundManager.walk);
-//		}
-//
-//		for (PlayerUI p : playerManager.getPlayers()) {
-//			if (p.agent == selectedAgent) {
-//				if (p.atDestination) {
-//					// SoundManager.stopSound(SoundManager.walk);
-//					break;
-//				}
-//			}
-//		}
+		// if (ts.getCamera().isFollowing) {
+		// for (PlayerUI p : playerManager.getPlayers()) {
+		// if (p.agent == selectedAgent) {
+		// ts.getCamera().x = p.location.x;
+		// ts.getCamera().y = p.location.y;
+		// // if(!SoundManager.isPlaying(SoundManager.walk))
+		// // SoundManager.playSound(SoundManager.walk, 0.1f, true);
+		// break;
+		// }
+		// }
+		// } else {
+		// // SoundManager.stopSound(SoundManager.walk);
+		// }
+		//
+		// for (PlayerUI p : playerManager.getPlayers()) {
+		// if (p.agent == selectedAgent) {
+		// if (p.atDestination) {
+		// // SoundManager.stopSound(SoundManager.walk);
+		// break;
+		// }
+		// }
+		// }
 	}
 
 	@Override

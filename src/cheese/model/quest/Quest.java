@@ -1,10 +1,7 @@
 package cheese.model.quest;
 
-import java.util.List;
-
 import cheese.model.TimedItem;
 import cheese.model.god.GodType;
-
 import deserted.model.GameSession;
 
 abstract public class Quest extends TimedItem {
@@ -14,6 +11,9 @@ abstract public class Quest extends TimedItem {
 	private GodType god;
 	private GodType actualGod;
 	private double validFrom;
+	
+	private double cardX;
+	private double cardY;
 	
 	//Relationship value to god
 	private int value;
@@ -41,6 +41,10 @@ abstract public class Quest extends TimedItem {
 	
 	public double getHoursToFinish() {
 		return 24;
+	}
+	
+	public int getHoursElapsed() {
+		return this.hours;
 	}
 	
 	@Override
@@ -112,5 +116,21 @@ abstract public class Quest extends TimedItem {
 
 	public void setActualGod(GodType actualGod) {
 		this.actualGod = actualGod;
+	}
+
+	public double getCardX() {
+		return cardX;
+	}
+
+	public void setCardX(double cardX) {
+		this.cardX = cardX;
+	}
+
+	public double getCardY() {
+		return cardY;
+	}
+
+	public void setCardY(double cardY) {
+		this.cardY = cardY;
 	}
 }
