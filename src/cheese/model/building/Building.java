@@ -9,7 +9,9 @@ import org.newdawn.slick.Image;
 import cheese.model.TimedItem;
 
 import deserted.model.GameSession;
+import deserted.tilesystem.Tile;
 import deserted.tilesystem.TileSystem;
+import deserted.tilesystem.TileSystem.TileId;
 
 public class Building extends TimedItem {
 	TileSystem ts;
@@ -61,6 +63,9 @@ public class Building extends TimedItem {
 
 	}
 
+	
+
+	
 	public boolean isOffered() {
 		return isOffered;
 	}

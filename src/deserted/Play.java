@@ -607,7 +607,7 @@ public class Play extends BasicGameState implements GameState,
 
 				for (Tile tile : currentDragging.getOverlappingTiles(ts,
 						currentDraggingTile)) {
-					if (tile.building != null || tile.id == TileId.WATER)
+					if (!currentDragging.isTileValidForBuilding(tile))
 						ts.renderTile(g, tile, Color.red);
 					else
 						ts.renderTile(g, tile, Color.blue);
@@ -702,7 +702,7 @@ public class Play extends BasicGameState implements GameState,
 
 					for (Tile tile : currentDragging.getOverlappingTiles(ts,
 							currentDraggingTile)) {
-						if (tile.building != null || tile.id == TileId.WATER) {
+						if (!currentDragging.isTileValidForBuilding(tile)) {
 							fail = true;
 						}
 					}
